@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ SESSION['APP'] }} · Documentation GitHub</title>
+  <link rel="stylesheet" href="{{ SESSION['DIRECTORY'] }}/static/styles/vendor/github-markdown-dark.css">
+  <link rel="stylesheet" href="{{ SESSION['DIRECTORY'] }}/static/styles/pages/documentation.css">
+  {% block head_extra %}{% endblock %}
+</head>
+<body class="doc-page">
+  <header class="doc-topbar">
+    <div class="doc-topbar__brand">
+      <span class="doc-topbar__octo">GH</span>
+      <div class="doc-topbar__repo">
+        <strong>{{ SESSION['APP'] }}</strong>
+        <span>docs/documentation.md · GitHub style</span>
+      </div>
+    </div>
+    <div class="doc-topbar__badges">
+      <span class="doc-pill doc-pill--accent">Markdown render</span>
+      <span class="doc-pill">Local build</span>
+    </div>
+  </header>
+
+  <main class="doc-main">
+    {% block content %}{% endblock %}
+  </main>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

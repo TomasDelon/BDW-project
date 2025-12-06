@@ -1,38 +1,38 @@
 {#
   Page: documentation.html
-  Purpose: Render the full technical documentation converted from Markdown.
-  Route: /documentation
+  Purpose: Render the technical documentation with a GitHub-like layout.
 #}
-{% extends "base/base.html" %}
+{% extends "base/documentation_base.html" %}
 
-{% block head_extra %}
-{{ super() }}
-<link rel="stylesheet" href="{{ SESSION['DIRECTORY'] }}/static/styles/pages/documentation.css">
-{% endblock %}
+{% block content %}
+<section class="doc-intro">
+  <h1>Documentation – vue GitHub</h1>
+  <p>
+    Contenu de <code>docs/documentation.md</code> rendu avec le style GitHub et les composants
+    personnalisés du document d'origine. Les liens locaux/relatifs sont affichés en texte simple
+    pour éviter les redirections cassées.
+  </p>
+  <div class="doc-intro__meta">
+    <span class="doc-chip"><span class="doc-chip__dot"></span>Source locale</span>
+    <span class="doc-chip"><span class="doc-chip__dot"></span>Mermaid prêt</span>
+    <span class="doc-chip"><span class="doc-chip__dot"></span>Liens locaux désactivés</span>
+  </div>
+</section>
 
-{% block main_content %}
-<section class="documentation-page">
-  <header class="documentation-hero">
-    <div class="documentation-hero__content">
-      <p>Documentation technique complète</p>
-      <h1>Morpion Masters · Guide BDW</h1>
-      <p>
-        Cette page reprend l'intégralité du document <code>docs/documentation.md</code> avec sa
-        mise en forme, ses diagrammes Mermaid et ses blocs explicatifs. Elle sert de référence
-        unique pour la soutenance et la reprise du projet.
-      </p>
+<section class="doc-body">
+  <div class="doc-file-header">
+    <div class="doc-file-path">
+      <span class="doc-file-name">documentation.md</span>
+      <span class="doc-file-note">GitHub CSS + styles du Markdown original</span>
     </div>
-    <div class="documentation-hero__actions">
-      <a href="{{ SESSION['DIRECTORY'] }}/docs/documentation.md" target="_blank" rel="noopener noreferrer">
-        📄 Ouvrir le Markdown
-      </a>
-      <a href="{{ SESSION['DIRECTORY'] }}/docs/documentation.md" download>
-        ⬇️ Télécharger (MD)
-      </a>
+    <div class="doc-file-actions">
+      <span class="doc-pill doc-pill--accent">GitHub CSS</span>
+      <span class="doc-pill">Composants BDW</span>
+      <span class="doc-pill">Mode sombre</span>
     </div>
-  </header>
+  </div>
 
-  <article class="documentation-article" data-documentation>
+  <article class="markdown-body doc-markdown" data-doc-content>
     {{ REQUEST_VARS['documentation_html'] | safe }}
   </article>
 </section>
@@ -43,10 +43,26 @@
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <script>
 (() => {
-  const article = document.querySelector('[data-documentation]');
+  const article = document.querySelector('[data-doc-content]');
   if (!article) {
     return;
   }
+
+  const stripBrokenLinks = () => {
+    article.querySelectorAll('a[href]').forEach((anchor) => {
+      const href = anchor.getAttribute('href') || '';
+      if (href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto:')) {
+        anchor.setAttribute('target', '_blank');
+        anchor.setAttribute('rel', 'noreferrer noopener');
+        return;
+      }
+
+      const span = document.createElement('span');
+      span.className = 'doc-link-disabled';
+      span.textContent = anchor.textContent || href;
+      anchor.replaceWith(span);
+    });
+  };
 
   const normalizeMermaidBlocks = () => {
     const legacyBlocks = article.querySelectorAll('pre code.language-mermaid');
@@ -60,16 +76,21 @@
     });
   };
 
-  normalizeMermaidBlocks();
-
-  const mermaidBlocks = article.querySelectorAll('.mermaid');
-  if (mermaidBlocks.length > 0 && window.mermaid) {
+  const renderMermaid = () => {
+    const mermaidBlocks = article.querySelectorAll('.mermaid');
+    if (mermaidBlocks.length === 0 || !window.mermaid) {
+      return;
+    }
     mermaid.initialize({
       startOnLoad: false,
       theme: 'dark',
     });
     mermaid.run({ nodes: mermaidBlocks });
-  }
+  };
+
+  stripBrokenLinks();
+  normalizeMermaidBlocks();
+  renderMermaid();
 })();
 </script>
 {% endblock %}
