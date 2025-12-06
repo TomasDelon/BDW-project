@@ -1,0 +1,152 @@
+/* ============================================
+   Morpion Selector Component (components/morpion_selector.html)
+   ============================================ */
+.morpion-selector {
+  margin: var(--spacing-xl) 0;
+  padding: var(--spacing-lg);
+  background: var(--gradient-card);
+  border-radius: var(--radius-lg);
+  border: 3px solid rgba(62, 65, 164, 0.3);
+  transition: var(--transition-base);
+  position: relative;
+}
+
+.morpion-selector::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: var(--radius-lg);
+  padding: 2px;
+  background: linear-gradient(45deg, currentColor, transparent, currentColor);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.morpion-selector__title {
+  color: var(--accent-cyan);
+  margin-bottom: var(--spacing-sm);
+  font-size: 1.6rem;
+}
+
+.morpion-selector__hint {
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+}
+
+.play-form {
+  max-width: min(100%, 1600px);
+  width: 100%;
+  margin: 0 auto;
+}
+
+.morpion-selector__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: calc(var(--spacing-sm) * 0.75);
+  margin-bottom: var(--spacing-lg);
+}
+
+.morpion-selector__option {
+  cursor: pointer;
+  position: relative;
+}
+
+.morpion-selector__input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.morpion-selector__label {
+  display: inline-flex;
+  width: 100%;
+}
+
+.morpion-selector__card {
+  position: relative;
+  background: rgba(15, 15, 26, 0.85);
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-md);
+  border: 3px solid rgba(62, 65, 164, 0.45);
+  transition: var(--transition-base);
+  text-align: center;
+  min-height: 120px;
+  width: 100%;
+  max-width: 170px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35), inset 0 0 12px rgba(255, 255, 255, 0.05);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.morpion-selector__card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.5), transparent, rgba(255, 215, 0, 0.45));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.morpion-selector__input:checked + .morpion-selector__label .morpion-selector__card,
+.morpion-selector__label.selected .morpion-selector__card {
+  border-color: var(--accent-gold);
+  box-shadow: 0 15px 30px rgba(255, 215, 0, 0.45), inset 0 0 18px rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.morpion-selector__label:hover .morpion-selector__card {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 12px 26px rgba(0, 255, 255, 0.3);
+}
+
+.morpion-selector__card img {
+  width: var(--img-morpion-selector);
+  height: auto;
+  max-height: var(--img-morpion-selector);
+  object-fit: contain;
+  margin-bottom: 0.3rem;
+  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.45));
+}
+
+.morpion-selector__name {
+  font-weight: 700;
+  font-size: 0.65rem;
+  color: var(--text-primary);
+  margin: 0.3rem 0;
+  text-transform: uppercase;
+}
+
+.morpion-stats-mini {
+  display: flex;
+  gap: 0.3rem;
+  justify-content: center;
+  font-size: 0.6rem;
+  color: var(--accent-gold);
+  font-weight: 600;
+  flex-wrap: wrap;
+  letter-spacing: 0.4px;
+}
+
+/* Play Actions */
+.play-actions {
+  text-align: center;
+  margin-top: var(--spacing-lg);
+}
+
+/* Responsive styles moved to layout/responsive.css */

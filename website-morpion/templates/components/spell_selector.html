@@ -1,0 +1,29 @@
+{#
+  Composant: spell_selector.html
+  Objectif: Liste des sorts disponibles sous forme de radios auto-submit.
+#}
+{% set spells = [
+  {'key': 'boule_de_feu', 'icon': '🔥', 'label': 'Boule de feu', 'desc': 'Inflige 3 dégâts (coût 2 mana)'},
+  {'key': 'soin', 'icon': '💚', 'label': 'Soin', 'desc': 'Restaure 2 HP (coût 1 mana)'},
+  {'key': 'armageddon', 'icon': '💥', 'label': 'Armageddon', 'desc': 'Détruit une case (coût 5 mana)'}
+] %}
+<div class="spell-selector">
+  <h3>✨ Sorts disponibles</h3>
+  <div class="spell-options">
+    {% for spell in spells %}
+    <label class="spell-option">
+      <input type="radio"
+             class="spell-radio auto-submit-radio"
+             name="select_spell"
+             value="{{ spell.key }}"
+             form="spell-type-form"
+             {% if selected_spell_type == spell.key %}checked{% endif %}>
+      <span class="spell-icon">{{ spell.icon }}</span>
+      <div class="spell-details">
+        <span class="spell-name">{{ spell.label }}</span>
+        <span class="spell-desc">{{ spell.desc }}</span>
+      </div>
+    </label>
+    {% endfor %}
+  </div>
+</div>

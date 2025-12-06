@@ -1,0 +1,34 @@
+{#
+  Component: position_selector.html
+  Purpose: Selector for choosing grid position (row/col)
+  Props:
+    - grid_size: Size of the grid
+  Usage:
+    {% include 'components/position_selector.html' %}
+#}
+<div class="position-selection" id="position-selector">
+  <h4>📍 Position sur la grille :</h4>
+  <p class="position-help" style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
+    💡 <strong>Astuce :</strong> Cliquez directement sur une case vide de la grille ci-dessus pour placer votre morpion !
+  </p>
+  <div class="position-inputs">
+    <div class="input-group">
+      <label for="row">Ligne :</label>
+      <select name="row" id="row">
+        {% for r in range(grid_size) %}
+        <option value="{{ r }}">{{ r + 1 }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    
+    <div class="input-group">
+      <label for="col">Colonne :</label>
+      <select name="col" id="col">
+        {% for c in range(grid_size) %}
+        <option value="{{ c }}">{{ c + 1 }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,21 @@
+/* ============================================
+   Création d'équipe - Layout Only
+   ============================================ */
+.create-team-section {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.team-creation-form {
+    background: rgba(37, 37, 64, 0.6);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(62, 65, 164, 0.3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.team-creation-form .deck-info {
+    order: -1;
+}

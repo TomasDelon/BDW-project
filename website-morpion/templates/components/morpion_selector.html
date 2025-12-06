@@ -1,0 +1,29 @@
+{#
+  Component: morpion_selector.html
+  Purpose: Selector for choosing a morpion to play
+  Props:
+    - available_morpions: List of morpions available to play
+  Usage:
+    {% include 'components/morpion_selector.html' %}
+#}
+{% from 'macros/morpions.html' import morpion_image, morpion_stats with context %}
+<div class="morpion-selector__list">
+  {% for morpion in available_morpions %}
+  {% set input_id = "play-morpion-" ~ morpion.id_morpion %}
+  <div class="morpion-selector__option">
+    <input type="radio"
+           class="morpion-selector__input"
+           id="{{ input_id }}"
+           name="morpion_id"
+           value="{{ morpion.id_morpion }}"
+           required>
+    <label class="morpion-selector__label" for="{{ input_id }}">
+      <div class="morpion-selector__card">
+        {{ morpion_image(morpion, size='selector', title=morpion.name) }}
+        <span class="morpion-selector__name">{{ morpion.name }}</span>
+        {{ morpion_stats(morpion, 'selector') }}
+      </div>
+    </label>
+  </div>
+  {% endfor %}
+</div>

@@ -1,0 +1,455 @@
+/**
+ * Styles for the ERD diagram page
+ */
+
+.erd-section {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.erd-section h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--accent-amber);
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.erd-description {
+  margin-bottom: 2rem;
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  text-align: center;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mermaid-container {
+  background: var(--gradient-card);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  overflow-x: auto;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 255, 255, 0.1);
+  border: 2px solid rgba(90, 93, 212, 0.4);
+  position: relative;
+  transition: var(--transition-base);
+}
+
+.mermaid-container::before,
+.mermaid-container::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+  opacity: 0.6;
+}
+
+.mermaid-container::before {
+  top: 0;
+}
+
+.mermaid-container::after {
+  bottom: 0;
+}
+
+.mermaid-container:hover {
+  border-color: rgba(0, 255, 255, 0.6);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), 0 0 30px rgba(0, 255, 255, 0.2), 0 0 15px rgba(0, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.mermaid {
+  background: transparent;
+}
+
+.erd-diagram-image {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-md);
+  filter: drop-shadow(0 0 30px var(--accent-cyan));
+}
+
+/* Dark theme adjustments for Mermaid */
+.mermaid svg {
+  background: transparent !important;
+  max-width: 1200px !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+/* Colores para las entidades del diagrama ER */
+.mermaid svg .entityBox {
+  fill: var(--bg-card) !important;
+  stroke: var(--accent-cyan) !important;
+  stroke-width: 2px !important;
+  filter: drop-shadow(0 4px 8px rgba(0, 255, 255, 0.3));
+  rx: 4px;
+  ry: 4px;
+}
+
+.mermaid svg .entityLabel {
+  fill: var(--accent-amber) !important;
+  font-weight: 700 !important;
+  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6)) !important;
+  letter-spacing: 0.5px !important;
+}
+
+.mermaid svg .attributeBoxOdd {
+  fill: rgba(26, 26, 46, 0.6) !important;
+  stroke: rgba(0, 255, 255, 0.3) !important;
+  stroke-width: 1px !important;
+}
+
+.mermaid svg .attributeBoxEven {
+  fill: rgba(26, 26, 46, 0.4) !important;
+  stroke: rgba(0, 255, 255, 0.3) !important;
+  stroke-width: 1px !important;
+}
+
+.mermaid svg .entityLabel[id*="attr"] {
+  fill: var(--text-primary) !important;
+  font-size: 10.2px !important;
+}
+
+.mermaid svg .entityLabel[id*="attr"][id*="key"] {
+  fill: var(--accent-cyan) !important;
+  font-weight: 600 !important;
+  filter: drop-shadow(0 0 4px rgba(0, 255, 255, 0.5)) !important;
+}
+
+.mermaid svg .entityLabel[id*="attr"][id*="type"] {
+  fill: var(--blue-light) !important;
+  font-style: italic !important;
+}
+
+/* Colores para las relaciones */
+.mermaid svg .relationshipLine {
+  stroke: var(--accent-cyan) !important;
+  stroke-width: 2px !important;
+  filter: drop-shadow(0 0 3px rgba(0, 255, 255, 0.5));
+}
+
+.mermaid svg .relationshipLabelBox {
+  fill: rgba(90, 93, 212, 0.8) !important;
+  stroke: var(--accent-cyan) !important;
+  stroke-width: 1.5px !important;
+  rx: 4px;
+  ry: 4px;
+  filter: drop-shadow(0 2px 4px rgba(0, 255, 255, 0.3));
+}
+
+.mermaid svg .relationshipLabel {
+  fill: var(--accent-cyan) !important;
+  font-weight: 600 !important;
+  font-size: 9px !important;
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.6) !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* Colores para las líneas de conexión */
+.mermaid svg line {
+  stroke: var(--accent-cyan) !important;
+}
+
+.mermaid svg path {
+  stroke: var(--accent-cyan) !important;
+  stroke-width: 1.2px !important;
+  fill: none;
+}
+
+/* Estilos para hacer los elementos más finos y elegantes */
+/* Hace los círculos de cardinalidad más pequeños */
+.mermaid svg .erMarker circle {
+  r: 5 !important;
+  stroke-width: 1px !important;
+  stroke: var(--accent-cyan) !important;
+}
+
+/* Hace las patas de cuervo más finas */
+.mermaid svg .erConnector {
+  stroke-width: 1.2px !important;
+  stroke: var(--accent-cyan) !important;
+}
+
+/* Hace los textos de las relaciones más pequeños y limpios */
+.mermaid svg .relationLabel {
+  font-size: 9px !important;
+  fill: var(--text-secondary) !important;
+}
+
+/* Reduce la distancia entre entidades (reduce padding interno) */
+.mermaid svg .er .box {
+  padding: 4px 8px !important;
+}
+
+/* Hace los bordes de las tablas más finos */
+.mermaid svg rect.er {
+  stroke-width: 1.2px !important;
+}
+
+/* Ajusta el grosor de todas las líneas del diagrama ER */
+.mermaid svg .er line {
+  stroke-width: 1.2px !important;
+}
+
+.mermaid svg .er path {
+  stroke-width: 1.2px !important;
+}
+
+/* Estilos para el esquema relacional */
+.relational-schema-container {
+  margin-top: 3rem;
+}
+
+.relational-schema-container h2 {
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+  color: var(--accent-amber);
+  text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.relational-schema {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  background: var(--gradient-card);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 255, 255, 0.1);
+  border: 1px solid rgba(90, 93, 212, 0.4);
+  position: relative;
+}
+
+.relational-schema::before,
+.sql-schema::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+  opacity: 0.6;
+}
+
+.schema-table,
+.sql-table {
+  background: linear-gradient(135deg, var(--bg-light) 0%, rgba(26, 26, 46, 0.8) 100%);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  border: 2px solid rgba(0, 255, 255, 0.2);
+  transition: var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.schema-table::before,
+.sql-table::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.schema-table:hover::before,
+.sql-table:hover::before {
+  left: 100%;
+}
+
+.schema-table:hover,
+.sql-table:hover {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 8px 24px rgba(0, 255, 255, 0.4), 0 0 15px rgba(0, 255, 255, 0.2);
+  transform: translateY(-5px) scale(1.02);
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(15, 15, 26, 0.9) 100%);
+}
+
+.sql-table {
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.schema-code {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+  margin: 0;
+  white-space: pre;
+  background: transparent;
+  overflow-x: auto;
+}
+
+/* Estilos para claves primarias (PK) - subrayadas */
+.schema-code .pk {
+  text-decoration: underline;
+  text-decoration-color: var(--accent-cyan);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  color: var(--accent-cyan);
+  font-weight: 600;
+}
+
+/* Estilos para claves foráneas (FK) - con símbolo # */
+.schema-code .fk {
+  color: var(--accent-gold);
+  font-weight: 500;
+}
+
+.schema-code .fk-underline {
+  text-decoration: underline;
+  text-decoration-color: var(--accent-gold);
+  text-decoration-style: dotted;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+/* Estilos para el esquema SQL */
+.sql-schema-container {
+  margin-top: 3rem;
+}
+
+.sql-schema-container h2 {
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+  color: var(--accent-amber);
+  text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.sql-schema {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 1.5rem;
+  background: var(--gradient-card);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 255, 255, 0.1);
+  border: 1px solid rgba(90, 93, 212, 0.4);
+  position: relative;
+}
+
+
+.sql-code {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+  margin: 0;
+  white-space: pre;
+  background: transparent;
+  overflow-x: auto;
+  overflow-y: auto;
+  cursor: text;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Estilos para sintaxis SQL */
+.sql-code .sql-keyword {
+  color: var(--accent-cyan);
+  font-weight: 600;
+}
+
+.sql-code .sql-table-name {
+  color: var(--accent-gold);
+  font-weight: 600;
+}
+
+.sql-code .sql-pk {
+  color: var(--accent-cyan);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--accent-cyan);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.sql-code .sql-fk {
+  color: var(--accent-gold);
+  font-weight: 500;
+}
+
+.sql-code .sql-column {
+  color: var(--text-primary);
+}
+
+.sql-code .sql-type {
+  color: var(--blue-light);
+  font-style: italic;
+}
+
+.sql-code .sql-check {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.sql-code .sql-comment {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.sql-code .sql-string {
+  color: var(--accent-amber);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .erd-section {
+    padding: 1rem;
+  }
+
+  .mermaid-container {
+    padding: 1rem;
+  }
+
+  .relational-schema {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .schema-code {
+    font-size: 0.85rem;
+  }
+
+  .sql-schema {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .sql-code {
+    font-size: 0.75rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .relational-schema {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .sql-schema {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

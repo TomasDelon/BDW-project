@@ -1,0 +1,25 @@
+{#
+  Macros: ui.html
+  Purpose: Reusable macros for UI elements
+  
+  Available Macros:
+    - hero_section(title, description): Display hero section with title and description
+    - empty_state(message, action_text, action_url): Display empty state with optional CTA
+#}
+
+{# Macro: Hero Section #}
+{% macro hero_section(title, description) %}
+<section class="hero">
+  <h2>{{ title }}</h2>
+  <p>{{ description }}</p>
+</section>
+{% endmacro %}
+
+{# Macro: Empty State #}
+{% macro empty_state(message, action_text=None, action_url=None) %}
+<p class="empty-message">{{ message }}</p>
+{% if action_text and action_url %}
+<a href="{{ action_url }}" class="btn btn-create-link">{{ action_text }}</a>
+{% endif %}
+{% endmacro %}
+

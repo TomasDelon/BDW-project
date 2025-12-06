@@ -1,0 +1,45 @@
+{#
+  Component: game_cell.html
+  Purpose: Single cell of the game grid
+  Props:
+    - cell: Cell data (None if empty, or dict with team_id and morpion_id)
+    - row: Row index
+    - col: Column index
+    - game: Game object
+    - team1_morpions: List of team 1 morpions
+    - team2_morpions: List of team 2 morpions
+  Usage:
+    {% include 'components/game_cell.html' %}
+#}
+{% from 'macros/morpions.html' import morpion_image with context %}
+<td class="game-grid__cell{% if cell %} game-grid__cell--occupied{% else %} game-grid__cell--empty{% endif %}"
+    data-row="{{ row }}"
+    data-col="{{ col }}">
+  {% if cell %}
+    {# Cellule occupée : afficher le morpion #}
+    {% set team_id = cell['team_id'] %}
+    {% set morpion_id = cell['morpion_id'] %}
+    {% set team_color = game['team1_color'] if team_id == game['team1_id'] else game['team2_color'] %}
+    {% set morpions_list = team1_morpions if team_id == game['team1_id'] else team2_morpions %}
+    {% set morpion = morpions_list | selectattr('id_morpion', 'equalto', morpion_id) | first %}
+    
+    <div class="game-grid__cell-content" style="border-color: {{ team_color }}; background-color: {{ team_color }}22;">
+      {% if morpion %}
+      {{ morpion_image(morpion, size='cell', title=morpion.name) }}
+      <span class="game-grid__morpion-name">{{ morpion.name }}</span>
+      {% else %}
+      <span>?</span>
+      {% endif %}
+    </div>
+  {% else %}
+    {# Cellule vide - botón submit para placer un morpion #}
+    <button type="submit" 
+            name="position" 
+            value="{{ row }},{{ col }}"
+            class="game-grid__empty-button"
+            form="game-form"
+            title="Cliquez pour placer votre morpion ici">
+      <span class="game-grid__cell-coords">({{ row }},{{ col }})</span>
+    </button>
+  {% endif %}
+</td>

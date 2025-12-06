@@ -1,0 +1,27 @@
+/* ============================================
+   Game Setup Page - Layout Only
+   Page-specific layout for game setup
+   ============================================ */
+.game-setup-section {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.game-setup-form {
+  background: linear-gradient(135deg, var(--bg-card) 0%, rgba(37, 37, 64, 0.8) 100%);
+  padding: 2.5rem;
+  border-radius: 15px;
+  border: 1px solid rgba(62, 65, 164, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .game-setup-section {
+    padding: 0;
+  }
+
+  .game-setup-form {
+    padding: 1.5rem;
+  }
+}

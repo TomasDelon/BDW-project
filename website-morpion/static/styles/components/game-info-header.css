@@ -1,0 +1,112 @@
+/* ============================================
+   Game Info Header Component (components/game_info_header.html)
+   ============================================ */
+.game-info {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(62, 65, 164, 0.2) 0%, rgba(45, 47, 122, 0.2) 100%);
+  border-radius: 15px;
+  border: 2px solid rgba(62, 65, 164, 0.3);
+}
+
+.team-info {
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.team-info.active {
+  transform: scale(1.1);
+  z-index: 10;
+}
+
+.team-badge {
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  box-shadow: 0 4px 20px currentColor, inset 0 0 20px rgba(255, 255, 255, 0.1);
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7), 0 0 10px rgba(255, 255, 255, 0.3);
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.team-badge::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.2) 50%, transparent 70%);
+  animation: shine 3s infinite;
+}
+
+/* Animations moved to core/animations.css */
+
+.team-info.active .team-badge {
+  transform: scale(1.05);
+  box-shadow: 0 6px 30px currentColor, inset 0 0 25px rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.5);
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.turn-indicator {
+  margin-top: 0.8rem;
+  font-size: 1.1rem;
+  color: var(--accent-gold);
+  font-weight: 600;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.vs {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+/* Game Status */
+.game-status {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: rgba(15, 15, 26, 0.5);
+  border-radius: 10px;
+  flex-wrap: wrap;
+}
+
+.game-status span {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.game-over-badge {
+  background: linear-gradient(135deg, var(--primary-red) 0%, var(--red-dark) 100%);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  color: var(--text-primary) !important;
+  font-weight: 700 !important;
+  box-shadow: 0 0 15px rgba(165, 1, 28, 0.5);
+}
+
+/* Game Over Actions */
+.game-over-actions {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+
+.game-over-actions .btn-primary,
+.game-over-actions .btn-secondary {
+  min-width: 200px;
+}
+
+/* Responsive styles moved to layout/responsive.css */

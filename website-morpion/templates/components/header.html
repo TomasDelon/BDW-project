@@ -1,0 +1,14 @@
+{#
+  Component: header.html
+  Purpose: Main header with logo, title and baseline
+  Props: Uses SESSION variables (APP, BASELINE, DIRECTORY)
+#}
+<header>
+	<div>
+		<a href="/">
+			<img src="{{ SESSION['DIRECTORY'] }}/static/img/logos/logo.png" alt="Logo Morpion Masters">
+		</a>
+	</div>
+	<h1>{{ SESSION['APP'] }}</h1>
+	<strong>{{ SESSION['BASELINE'] }}</strong>
+</header>

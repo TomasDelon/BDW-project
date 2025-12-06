@@ -1,0 +1,62 @@
+.deck-info {
+    background: linear-gradient(135deg, rgba(165, 1, 28, 0.2) 0%, rgba(62, 65, 164, 0.2) 100%);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin: var(--spacing-lg) 0;
+    border: 2px solid var(--primary-red);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.team-creation-form {
+    counter-reset: selected-morpions;
+}
+
+.team-creation-form .morpion-checkbox:checked {
+    counter-increment: selected-morpions;
+}
+
+.team-creation-form .selected-count {
+    position: relative;
+    display: inline-block;
+    min-width: 2ch;
+    color: transparent;
+    line-height: 1;
+}
+
+.team-creation-form .selected-count::after {
+    content: counter(selected-morpions);
+    color: var(--accent-cyan);
+    position: absolute;
+    inset: 0;
+}
+
+.deck-counter {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    text-shadow: var(--shadow-gold);
+}
+
+.deck-counter .selected-count {
+    color: transparent;
+    font-size: 1.5rem;
+}
+
+.deck-hint {
+    flex: 1;
+    margin: 0;
+    text-align: center;
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+@media (max-width: 968px) {
+    .deck-info {
+        flex-direction: column;
+        text-align: center;
+    }
+}

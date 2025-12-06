@@ -1,0 +1,19 @@
+{#
+  Component: team_header.html
+  Purpose: Header section of a team card
+  Props:
+    - team: Team object with (name, color, created_at)
+  Usage:
+    {% include 'components/team_header.html' %}
+#}
+<div class="team-header">
+  <div class="team-color-badge-large" style="background-color: {{ team.color }};"></div>
+  <div class="team-info">
+    <h3 class="team-name">{{ team.name }}</h3>
+    <p class="team-meta">
+      <span class="team-color-label">Couleur: <strong>{{ team.color }}</strong></span>
+      <span class="team-date">Créée le: {{ team.created_at.strftime('%d/%m/%Y') if team.created_at else 'N/A' }}</span>
+    </p>
+  </div>
+</div>
+

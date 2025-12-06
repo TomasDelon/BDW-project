@@ -1,0 +1,151 @@
+{% extends "base/base.html" %}
+
+{% from 'macros/design_system.html' import section_card, alert_box %}
+{% from 'macros/forms.html' import input_text, input_number %}
+
+{% block head_extra %}
+<link rel="stylesheet" href="{{ SESSION['DIRECTORY'] }}/static/styles/pages/morpion_create.css">
+{% endblock %}
+
+{% block main_content %}
+<div class="morpion-create-page">
+  {% call section_card(
+    "🧬 Créer un Morpion personnalisé",
+    "Définissez ses statistiques et ajoutez son portrait pour l'utiliser dans vos équipes.",
+    icon="🧬"
+  ) %}
+
+  {% include 'components/message.html' %}
+
+  {% call alert_box('info', 'Instructions rapides') %}
+  <ul class="instructions-list">
+    <li>{{ REQUEST_VARS['instructions']['stats'] }}</li>
+    <li>{{ REQUEST_VARS['instructions']['image'] }}</li>
+    <li>{{ REQUEST_VARS['instructions']['upload'] }}</li>
+  </ul>
+  {% endcall %}
+
+  <form id="morpion-form" method="POST" class="morpion-create-form">
+    <div class="morpion-create-grid">
+      <div class="form-panel">
+        <div class="form-section">
+          <h3>Identité</h3>
+          {{ input_text(
+            'morpion_name',
+            'Nom du morpion',
+            REQUEST_VARS['form_data']['name'],
+            'Ex: Foudre Rouge',
+            required=true,
+            maxlength=50
+          ) }}
+        </div>
+
+        <div class="form-section">
+          <div class="section-title">
+            <div>
+              <h3>Statistiques</h3>
+              <p>Répartissez exactement 15 points.</p>
+            </div>
+            <div id="stats-total" class="stats-total">
+              Total: <span id="total-value">0</span> / 15
+              <span id="total-status"></span>
+            </div>
+          </div>
+
+          <div class="stats-grid">
+            {{ input_number(
+              'hp',
+              '❤️ HP',
+              REQUEST_VARS['form_data']['hp'] or '4',
+              min=1,
+              max=100,
+              required=true
+            ) }}
+            {{ input_number(
+              'attack',
+              '⚔️ Attaque',
+              REQUEST_VARS['form_data']['attack'] or '4',
+              min=1,
+              max=100,
+              required=true
+            ) }}
+            {{ input_number(
+              'mana',
+              '✨ Mana',
+              REQUEST_VARS['form_data']['mana'] or '4',
+              min=1,
+              max=100,
+              required=true
+            ) }}
+            {{ input_number(
+              'accuracy',
+              '🎯 Précision',
+              REQUEST_VARS['form_data']['accuracy'] or '3',
+              min=1,
+              max=100,
+              required=true
+            ) }}
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" id="submit-btn" class="btn btn-primary btn-submit" disabled>
+            Créer le morpion
+          </button>
+          <a href="/liste-equipes" class="btn btn-secondary">Annuler</a>
+        </div>
+      </div>
+
+      <div class="image-panel">
+        <div class="form-section">
+          <div class="section-title">
+            <div>
+              <h3>Portrait du morpion</h3>
+              <p>Capture via webcam ou import d'un fichier.</p>
+            </div>
+          </div>
+
+          <div class="image-actions">
+            <button type="button" id="start-webcam-btn" class="btn btn-secondary">
+              📷 Démarrer la webcam
+            </button>
+            <button type="button" id="capture-btn" class="btn btn-primary" style="display:none;">
+              📸 Capturer
+            </button>
+            <button type="button" id="stop-webcam-btn" class="btn btn-secondary" style="display:none;">
+              ⏹️ Arrêter
+            </button>
+            <label for="upload-input" class="btn btn-primary btn-upload">
+              📁 Importer une image
+              <input type="file" id="upload-input" accept="image/png, image/jpeg">
+            </label>
+          </div>
+
+          <div id="webcam-container" class="media-box" style="display:none;">
+            <video id="webcam-video" autoplay playsinline></video>
+            <canvas id="webcam-canvas" style="display:none;"></canvas>
+          </div>
+
+          <div id="preview-container" class="media-box" style="display:none;">
+            <div class="preview-header">
+              <h4>Aperçu</h4>
+              <button type="button" id="clear-image-btn" class="btn btn-secondary">
+                🗑️ Supprimer
+              </button>
+            </div>
+            <img id="image-preview" alt="Aperçu du morpion">
+          </div>
+
+          <input type="hidden" id="image_data" name="image_data">
+        </div>
+      </div>
+    </div>
+  </form>
+
+  {% endcall %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ SESSION['DIRECTORY'] }}/static/js/morpion_create.js"></script>
+{% endblock %}

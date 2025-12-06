@@ -1,0 +1,18 @@
+{#
+  Component: morpion_mini_card.html
+  Purpose: Mini card for displaying a morpion in a list
+  Props:
+    - morpion: Morpion object with (name, hp, attack, mana, accuracy, image_url)
+  Usage:
+    {% for morpion in team.morpions %}
+      {% include 'components/morpion_mini_card.html' %}
+    {% endfor %}
+#}
+{% from 'macros/morpions.html' import morpion_image, morpion_stats with context %}
+<div class="morpion-mini-card">
+  {{ morpion_image(morpion, size='mini', extra_class='', title=morpion.name) }}
+  <div class="morpion-mini-info">
+    <span class="morpion-mini-name">{{ morpion.name }}</span>
+    {{ morpion_stats(morpion, 'mini-card') }}
+  </div>
+</div>

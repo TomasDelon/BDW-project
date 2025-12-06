@@ -1,0 +1,59 @@
+# Définition d'un tableau de routes au format TOML (https://toml.io/)
+# - url : chemin dans l'URL
+# - controleur : chemin vers le fichier du controleur
+# - template : chemin vers le fichier de template
+
+[[routes]]
+url = ""
+controleur = "controllers/home.py"
+template = "templates/pages/home.html"
+
+[[routes]]
+url = "equipe"
+controleur = "controllers/team_create.py"
+template = "templates/pages/team_create.html"
+
+[[routes]]
+url = "liste-equipes"
+controleur = "controllers/team_list.py"
+template = "templates/pages/team_list.html"
+
+[[routes]]
+url = "creer-morpion"
+controleur = "controllers/morpion_create.py"
+template = "templates/pages/morpion_create.html"
+
+[[routes]]
+url = "partie"
+controleur = "controllers/game.py"
+template = "templates/pages/game_setup.html"
+
+[[routes]]
+url = "partie-avancee"
+controleur = "controllers/game_advanced.py"
+template = "templates/pages/game_advanced_setup.html"
+
+[[routes]]
+url = "partie-avancee-fragment"
+controleur = "controllers/game_advanced.py"
+template = "templates/pages/game_advanced_play.html"
+
+[[routes]]
+url = "diagramme-bd"
+controleur = "controllers/data_diagram.py"
+template = "templates/pages/data_diagram.html"
+
+[[routes]]
+url = "documentation"
+controleur = "controllers/documentation.py"
+template = "templates/pages/documentation.html"
+
+[[routes]]
+url = "statistiques-avancees"
+controleur = "controllers/stats_advanced.py"
+template = "templates/pages/stats_advanced.html"
+
+[[routes]]
+url = "affiche-projet"
+controleur = "controllers/affiche.py"
+template = "templates/pages/affiche_projet.html"

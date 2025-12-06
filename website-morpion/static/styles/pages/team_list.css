@@ -1,0 +1,255 @@
+/* ============================================
+   Liste des équipes - Page Specific Styles
+   Team card styles moved to components/team-card.css
+   ============================================ */
+.teams-list-section {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.teams-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+}
+
+.team-color-badge-large {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 3px solid var(--text-primary);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    flex-shrink: 0;
+}
+
+.team-color-label strong {
+    color: var(--text-primary);
+}
+
+.team-date {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.team-morpions {
+    margin-bottom: var(--spacing-md);
+}
+
+.morpions-header {
+    margin-bottom: var(--spacing-sm);
+}
+
+.morpions-header h4 {
+    color: var(--accent-gold);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.no-morpions {
+    color: var(--text-secondary);
+    text-align: center;
+    padding: var(--spacing-sm);
+    font-style: italic;
+}
+
+.team-actions {
+    display: flex;
+    justify-content: center;
+    padding-top: var(--spacing-sm);
+    border-top: 2px solid rgba(62, 65, 164, 0.3);
+}
+
+.delete-form {
+    margin: 0;
+    width: 100%;
+}
+
+/* Botones movidos a buttons.css */
+
+/* Game Items inside Team Card */
+.team-games {
+    margin-bottom: var(--spacing-md);
+    padding: 0.2rem;
+    background: rgba(15, 15, 26, 0.35);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(62, 65, 164, 0.35);
+    transition: var(--transition-base);
+}
+
+.team-games summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius-md);
+    gap: var(--spacing-sm);
+}
+
+.team-games summary::-webkit-details-marker {
+    display: none;
+}
+
+.team-games[open] {
+    border-color: var(--accent-cyan);
+    box-shadow: var(--shadow-blue-hover);
+}
+
+.games-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: var(--spacing-md);
+}
+
+.games-summary__title {
+    color: var(--accent-gold);
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.games-summary__meta {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.games-summary__chevron {
+    width: 12px;
+    height: 12px;
+    border-right: 2px solid var(--accent-cyan);
+    border-bottom: 2px solid var(--accent-cyan);
+    transform: rotate(-45deg);
+    transition: var(--transition-base);
+}
+
+.team-games[open] .games-summary__chevron {
+    transform: rotate(45deg);
+}
+
+.team-games__body {
+    margin-top: 0.5rem;
+    border-top: 1px solid rgba(62, 65, 164, 0.3);
+    padding: 0.75rem 0.5rem 0.5rem;
+    max-height: 240px;
+    overflow-y: auto;
+}
+
+.games-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.game-item {
+    background: rgba(37, 37, 64, 0.6);
+    border-radius: var(--radius-sm);
+    padding: 0.5rem 0.75rem;
+    border-left: 3px solid var(--primary-blue);
+    transition: var(--transition-fast);
+}
+
+.game-item:hover {
+    background: rgba(62, 65, 164, 0.3);
+    border-left-color: var(--accent-cyan);
+}
+
+.game-teams {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+    flex-wrap: wrap;
+}
+
+.game-team {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.vs {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 400;
+}
+
+.game-info {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem;
+    row-gap: 0.1rem;
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.1;
+}
+
+.game-info > * {
+    margin: 0;
+}
+
+.game-date {
+    color: var(--text-secondary);
+}
+
+.game-status {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.game-status.finished {
+    background: rgba(0, 255, 0, 0.2);
+    color: #00ff00;
+}
+
+.game-status.ongoing {
+    background: rgba(255, 215, 0, 0.2);
+    color: var(--accent-gold);
+}
+
+.game-winner {
+    color: var(--accent-gold);
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.game-config {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+    .teams-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .morpions-mini-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .teams-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .team-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .morpions-mini-grid {
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    }
+}

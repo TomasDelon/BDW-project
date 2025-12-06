@@ -1,0 +1,90 @@
+/* ============================================
+   Badges Component - Consolidated Badge Styles
+   Replaces: team-color-badge, winner-color-badge, stat-badge
+   ============================================ */
+
+/* ============================================
+   Base Badge
+   ============================================ */
+.badge {
+    display: inline-block;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+/* ============================================
+   Badge Sizes
+   ============================================ */
+.badge--sm {
+    width: 16px;
+    height: 16px;
+    margin: 0 6px;
+    border: 2px solid var(--text-primary);
+}
+
+.badge--md {
+    width: 20px;
+    height: 20px;
+    margin: 0 8px;
+    border: 2px solid var(--text-primary);
+}
+
+.badge--lg {
+    width: 50px;
+    height: 50px;
+    border: 3px solid var(--text-primary);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    flex-shrink: 0;
+}
+
+/* ============================================
+   Badge Variants
+   ============================================ */
+.badge--glow {
+    box-shadow: 0 0 8px currentColor;
+}
+
+.badge--winner {
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+
+.badge--team-color {
+    border: 2px solid var(--text-primary);
+}
+
+/* ============================================
+   Stat Badge (pill shape)
+   ============================================ */
+.stat-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.2rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.85rem;
+    color: var(--text-primary);
+}
+
+.stat-badge__value {
+    font-weight: 700;
+}
+
+.stat-badge--warning {
+    border-color: rgba(246, 195, 67, 0.4);
+    background: rgba(246, 195, 67, 0.12);
+}
+
+.stat-badge--success {
+    border-color: rgba(76, 217, 100, 0.4);
+    background: rgba(76, 217, 100, 0.12);
+}
+
+.stat-badge--error {
+    border-color: rgba(255, 107, 107, 0.4);
+    background: rgba(255, 107, 107, 0.12);
+}
+
+

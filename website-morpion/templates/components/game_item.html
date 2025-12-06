@@ -1,0 +1,38 @@
+{#
+  Component: game_item.html
+  Purpose: Display a game entry in a list
+  Props:
+    - game: Game object with (team1_name, team1_color, team2_name, team2_color, started_at, ended_at, winner_name, grid_size, max_turns)
+  Usage:
+    {% for game in team.games %}
+      {% include 'components/game_item.html' %}
+    {% endfor %}
+#}
+<div class="game-item">
+  <div class="game-teams">
+    <span class="game-team" style="color: {{ game.team1_color }};">
+      {{ game.team1_name }}
+    </span>
+    <span class="vs">vs</span>
+    <span class="game-team" style="color: {{ game.team2_color }};">
+      {{ game.team2_name }}
+    </span>
+  </div>
+  <div class="game-info">
+    <span class="game-date">
+      {{ game.started_at.strftime('%d/%m/%Y %H:%M') if game.started_at else 'N/A' }}
+    </span>
+    {% if game.ended_at %}
+    <span class="game-status finished">Terminée</span>
+    {% else %}
+    <span class="game-status ongoing">En cours</span>
+    {% endif %}
+    {% if game.winner_name %}
+    <span class="game-winner">🏆 {{ game.winner_name }}</span>
+    {% endif %}
+  </div>
+  <div class="game-config">
+    Grille: {{ game.grid_size }}x{{ game.grid_size }} | Max tours: {{ game.max_turns }}
+  </div>
+</div>
+

@@ -1,0 +1,142 @@
+/* ============================================
+   TEAM CARD - Reusable Component
+   Used in team list and statistics pages
+   ============================================ */
+
+.team-card {
+    background: var(--gradient-card);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    border: 2px solid rgba(62, 65, 164, 0.3);
+    box-shadow: var(--shadow-md);
+    transition: var(--transition-base);
+}
+
+.team-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-blue-hover);
+    border-color: var(--accent-cyan);
+}
+
+.team-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid rgba(62, 65, 164, 0.3);
+}
+
+.team-info {
+    flex: 1;
+}
+
+.team-name {
+    color: var(--accent-cyan);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.team-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.team-stats {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-sm);
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    background: rgba(15, 15, 26, 0.5);
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(62, 65, 164, 0.3);
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.stat-value {
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.stat-value.wins {
+    color: var(--accent-gold);
+}
+
+.stat-value.losses {
+    color: var(--primary-red);
+}
+
+.stat-value.draws {
+    color: var(--text-secondary);
+}
+
+/* Morpion Mini Grid - Reusable */
+.morpions-mini-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 0.75rem;
+}
+
+.morpion-mini-card {
+    background: rgba(15, 15, 26, 0.5);
+    border-radius: var(--radius-sm);
+    padding: 0.5rem;
+    border: 1px solid rgba(62, 65, 164, 0.3);
+    transition: var(--transition-fast);
+    text-align: center;
+}
+
+.morpion-mini-card:hover {
+    background: rgba(62, 65, 164, 0.3);
+    border-color: var(--accent-cyan);
+    transform: scale(1.05);
+}
+
+.morpion-mini-card img {
+    width: var(--img-morpion-mini);
+    height: var(--img-morpion-mini);
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 0.5rem;
+    border: 2px solid var(--primary-blue);
+}
+
+.morpion-mini-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.morpion-mini-name {
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.morpion-mini-stats {
+    display: flex;
+    justify-content: space-around;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    flex-wrap: wrap;
+    gap: 0.25rem;
+}
+

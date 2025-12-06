@@ -1,0 +1,26 @@
+{#
+  Composant: action_selector.html
+  Objectif: Afficher les actions disponibles (placement, attaque, sort) avec radios auto-submit.
+#}
+{% set action_labels = {
+  'place': {'icon': '📍', 'label': 'Positionner'},
+  'attack': {'icon': '⚔️', 'label': 'Attaquer'},
+  'spell': {'icon': '✨', 'label': 'Sorts'}
+} %}
+<div class="action-selector">
+  <h3>🎮 Choisissez votre action</h3>
+  <div class="action-options">
+    {% for action_key, data in action_labels.items() %}
+    <label class="action-option">
+      <input type="radio"
+             class="action-radio auto-submit-radio"
+             name="action"
+             value="{{ action_key }}"
+             form="action-switcher-form"
+             {% if selected_action == action_key %}checked{% endif %}>
+      <span class="action-icon">{{ data.icon }}</span>
+      <span class="action-label">{{ data.label }}</span>
+    </label>
+    {% endfor %}
+  </div>
+</div>

@@ -1,0 +1,43 @@
+{#
+  Component: game_info_header.html
+  Purpose: Display game info header with team badges and turn indicator
+  Props:
+    - game: Game object with team info
+    - current_player: Current player (1 or 2)
+    - game_over: Boolean indicating if game is over
+    - current_turn: Current turn number
+  Usage:
+    {% include 'components/game_info_header.html' %}
+#}
+{% from 'macros/teams.html' import team_badge %}
+
+<div class="game-info">
+  <div class="team-info team1 {% if current_player == 1 and not game_over %}active{% endif %}">
+    <div class="team-badge" style="background-color: {{ game['team1_color'] }}">
+      {{ game['team1_name'] }}
+    </div>
+    {% if current_player == 1 and not game_over %}
+    <div class="turn-indicator">⬅️ À vous de jouer</div>
+    {% endif %}
+  </div>
+  
+  <div class="vs">VS</div>
+  
+  <div class="team-info team2 {% if current_player == 2 and not game_over %}active{% endif %}">
+    <div class="team-badge" style="background-color: {{ game['team2_color'] }}">
+      {{ game['team2_name'] }}
+    </div>
+    {% if current_player == 2 and not game_over %}
+    <div class="turn-indicator">À vous de jouer ➡️</div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="game-status">
+  <span>🎯 Tour {{ current_turn }} / {{ game['max_turns'] }}</span>
+  <span>📏 Grille {{ game['grid_size'] }}x{{ game['grid_size'] }}</span>
+  {% if game_over %}
+  <span class="game-over-badge">✔️ Partie terminée</span>
+  {% endif %}
+</div>
+

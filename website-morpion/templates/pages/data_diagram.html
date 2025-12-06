@@ -1,0 +1,200 @@
+{#
+  Page: data_diagram.html
+  Purpose: Display ERD diagram of the database
+  Route: /diagramme-bd
+#}
+{% extends "base/base.html" %}
+
+{% block head_extra %}
+{{ super() }}
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+mermaid.initialize({
+  startOnLoad: true,
+  theme: "neutral",
+  themeVariables: {
+    primaryColor: "#101b2f",
+    primaryTextColor: "#e5f3ff",
+    primaryBorderColor: "#37c5ff",
+    lineColor: "#35b1ff",
+    secondaryColor: "#0b223d",
+    tertiaryColor: "#0c2f54",
+    fontSize: "14px"
+  }
+});
+</script>
+{% endblock %}
+
+{% block main_content %}
+
+<section class="erd-section">
+  <h1>📊 Diagramme Entité-Association</h1>
+  <p class="erd-description">
+    Ce diagramme représente la structure de la base de données du système de jeu de morpions.
+    Il montre les entités principales et leurs relations.
+  </p>
+
+  <div class="mermaid-container">
+<pre class="mermaid">
+flowchart LR
+classDef entity fill:#0f1b33,stroke:#37c5ff,stroke-width:2px,color:#e5f3ff,rx:8,ry:8;
+classDef rel fill:#0c253f,stroke:#37c5ff,stroke-width:1.5px,color:#9ad7ff,rx:32,ry:32;
+
+MORPION["<b>MORPION</b><br/><u>id_morpion</u><br/>name, hp, attack<br/>mana, accuracy<br/>image_url, created_at"]:::entity
+TEAM["<b>TEAM</b><br/><u>id_team</u><br/>name UNIQUE<br/>color UNIQUE<br/>created_at"]:::entity
+GAME_CONFIG["<b>GAME_CONFIG</b><br/><u>id_config</u><br/>grid_size<br/>max_turns<br/>game_mode<br/>created_at"]:::entity
+GAME["<b>GAME</b><br/><u>id_game</u><br/>id_config<br/>id_team1, id_team2<br/>id_winner<br/>started_at, ended_at"]:::entity
+GAME_LOG["<b>GAME_LOG</b><br/><u>id_log</u><br/><u style='text-decoration-style:dotted'>id_game</u><br/>log_num<br/>message<br/>created_at"]:::entity
+
+BELONGS((belongs_to)):::rel
+PLAYS((plays)):::rel
+WINS((wins)):::rel
+CONFIGURES((configures)):::rel
+LOGS((logs)):::rel
+
+MORPION -- "0,n" --- BELONGS
+BELONGS -- "6,8" --- TEAM
+TEAM -- "0,n" --- PLAYS
+PLAYS -- "2,2" --- GAME
+TEAM -- "0,1" --- WINS
+WINS -- "0,1" --- GAME
+GAME_CONFIG -- "0,n" --- CONFIGURES
+CONFIGURES -- "1,1" --- GAME
+GAME -- "1,n" --- LOGS
+LOGS -- "(1,1)" --- GAME_LOG
+</pre>
+  </div>
+
+  <div class="relational-schema-container">
+    <h2>📋 Schéma Relationnel</h2>
+    <div class="relational-schema">
+      <div class="schema-table">
+        <pre class="schema-code">MORPION(
+  <span class="pk">id_morpion</span>,
+  name,
+  hp,
+  attack,
+  mana,
+  accuracy,
+  image_url,
+  created_at
+)</pre>
+      </div>
+      <div class="schema-table">
+        <pre class="schema-code">TEAM(
+  <span class="pk">id_team</span>,
+  name,
+  color,
+  created_at
+)</pre>
+      </div>
+      <div class="schema-table">
+        <pre class="schema-code">TEAM_MORPION(
+  <span class="fk">#team_id</span>,
+  <span class="fk">#morpion_id</span>
+)</pre>
+      </div>
+      <div class="schema-table">
+        <pre class="schema-code">GAME_CONFIG(
+  <span class="pk">id_config</span>,
+  grid_size,
+  max_turns,
+  game_mode,
+  created_at
+)</pre>
+      </div>
+      <div class="schema-table">
+        <pre class="schema-code">GAME(
+  <span class="pk">id_game</span>,
+  <span class="fk">#id_config</span>,
+  <span class="fk">#id_team1</span>,
+  <span class="fk">#id_team2</span>,
+  <span class="fk">#id_winner</span>,
+  started_at,
+  ended_at
+)</pre>
+      </div>
+      <div class="schema-table">
+        <pre class="schema-code">GAME_LOG(
+  <span class="pk">id_log</span>,
+  <span class="fk fk-underline">#id_game</span>,
+  log_num,
+  message,
+  created_at
+)</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="sql-schema-container">
+    <h2>💾 Schéma SQL</h2>
+    <div class="sql-schema">
+      <div class="sql-table">
+        <pre class="sql-code"><span class="sql-keyword">CREATE TABLE</span> <span class="sql-table-name">morpion</span> (
+  <span class="sql-pk">id_morpion</span> <span class="sql-type">SERIAL</span> <span class="sql-keyword">PRIMARY KEY</span>,
+  <span class="sql-column">name</span> <span class="sql-type">VARCHAR(100)</span> <span class="sql-keyword">NOT NULL UNIQUE</span>,
+  <span class="sql-column">hp</span> <span class="sql-type">INTEGER</span> <span class="sql-keyword">NOT NULL</span> <span class="sql-check">CHECK (hp >= 1 AND hp <= 100)</span>,
+  <span class="sql-column">attack</span> <span class="sql-type">INTEGER</span> <span class="sql-keyword">NOT NULL</span> <span class="sql-check">CHECK (attack >= 1 AND attack <= 100)</span>,
+  <span class="sql-column">mana</span> <span class="sql-type">INTEGER</span> <span class="sql-keyword">NOT NULL</span> <span class="sql-check">CHECK (mana >= 1 AND mana <= 100)</span>,
+  <span class="sql-column">accuracy</span> <span class="sql-type">INTEGER</span> <span class="sql-keyword">NOT NULL</span> <span class="sql-check">CHECK (accuracy >= 1 AND accuracy <= 100)</span>,
+  <span class="sql-column">image_url</span> <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+  <span class="sql-column">created_at</span> <span class="sql-type">TIMESTAMP</span> <span class="sql-keyword">DEFAULT CURRENT_TIMESTAMP</span>,
+  <span class="sql-check">CHECK (hp + attack + mana + accuracy = 15)</span>
+);</pre>
+      </div>
+      <div class="sql-table">
+        <pre class="sql-code"><span class="sql-keyword">CREATE TABLE</span> <span class="sql-table-name">team</span> (
+  <span class="sql-pk">id_team</span> <span class="sql-type">SERIAL</span> <span class="sql-keyword">PRIMARY KEY</span>,
+  <span class="sql-column">name</span> <span class="sql-type">VARCHAR(80)</span> <span class="sql-keyword">NOT NULL</span>,
+  <span class="sql-column">color</span> <span class="sql-type">VARCHAR(40)</span> <span class="sql-keyword">NOT NULL UNIQUE</span>,
+  <span class="sql-column">created_at</span> <span class="sql-type">TIMESTAMP</span> <span class="sql-keyword">DEFAULT CURRENT_TIMESTAMP</span>,
+  <span class="sql-keyword">UNIQUE</span>(name, color)
+);</pre>
+      </div>
+      <div class="sql-table">
+        <pre class="sql-code"><span class="sql-keyword">CREATE TABLE</span> <span class="sql-table-name">team_morpion</span> (
+  <span class="sql-fk">team_id</span> <span class="sql-type">INTEGER</span> <span class="sql-keyword">REFERENCES</span> <span class="sql-table-name">team</span>(id_team) <span class="sql-keyword">ON DELETE CASCADE</span>,
+  <span class="sql-fk">morpion_id</span> <span class="sql-type">INTEGER</span> <span class="sql-keyword">REFERENCES</span> <span class="sql-table-name">morpion</span>(id_morpion) <span class="sql-keyword">ON DELETE CASCADE</span>,
+  <span class="sql-keyword">PRIMARY KEY</span> (team_id, morpion_id)
+);</pre>
+      </div>
+      <div class="sql-table">
+        <pre class="sql-code"><span class="sql-keyword">CREATE TABLE</span> <span class="sql-table-name">game_config</span> (
+  <span class="sql-pk">id_config</span> <span class="sql-type">SERIAL</span> <span class="sql-keyword">PRIMARY KEY</span>,
+  <span class="sql-column">grid_size</span> <span class="sql-type">INTEGER</span> <span class="sql-keyword">NOT NULL</span> <span class="sql-check">CHECK (grid_size IN (3, 4))</span>,
+  <span class="sql-column">max_turns</span> <span class="sql-type">INTEGER</span> <span class="sql-keyword">NOT NULL</span> <span class="sql-check">CHECK (max_turns >= 5 AND max_turns <= 50)</span>,
+  <span class="sql-column">game_mode</span> <span class="sql-type">VARCHAR(20)</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-string">'normale'</span>,
+  <span class="sql-column">created_at</span> <span class="sql-type">TIMESTAMP</span> <span class="sql-keyword">DEFAULT CURRENT_TIMESTAMP</span>
+);</pre>
+      </div>
+      <div class="sql-table">
+        <pre class="sql-code"><span class="sql-keyword">CREATE TABLE</span> <span class="sql-table-name">game</span> (
+  <span class="sql-pk">id_game</span> <span class="sql-type">SERIAL</span> <span class="sql-keyword">PRIMARY KEY</span>,
+  <span class="sql-fk">id_config</span> <span class="sql-type">INTEGER</span> <span class="sql-keyword">NOT NULL</span> <span class="sql-keyword">REFERENCES</span> <span class="sql-table-name">game_config</span>(id_config) <span class="sql-keyword">ON DELETE CASCADE</span>,
+  <span class="sql-fk">id_team1</span> <span class="sql-type">INTEGER</span> <span class="sql-keyword">NOT NULL</span> <span class="sql-keyword">REFERENCES</span> <span class="sql-table-name">team</span>(id_team) <span class="sql-keyword">ON DELETE CASCADE</span>,
+  <span class="sql-fk">id_team2</span> <span class="sql-type">INTEGER</span> <span class="sql-keyword">NOT NULL</span> <span class="sql-keyword">REFERENCES</span> <span class="sql-table-name">team</span>(id_team) <span class="sql-keyword">ON DELETE CASCADE</span>,
+  <span class="sql-fk">id_winner</span> <span class="sql-type">INTEGER</span> <span class="sql-keyword">REFERENCES</span> <span class="sql-table-name">team</span>(id_team) <span class="sql-keyword">ON DELETE SET NULL</span>,
+  <span class="sql-column">started_at</span> <span class="sql-type">TIMESTAMP</span> <span class="sql-keyword">DEFAULT CURRENT_TIMESTAMP</span>,
+  <span class="sql-column">ended_at</span> <span class="sql-type">TIMESTAMP</span>,
+  <span class="sql-check">CHECK (id_team1 != id_team2)</span>,
+  <span class="sql-check">CHECK (id_winner IS NULL OR id_winner IN (id_team1, id_team2))</span>
+);</pre>
+      </div>
+      <div class="sql-table">
+        <pre class="sql-code"><span class="sql-keyword">CREATE TABLE</span> <span class="sql-table-name">game_log</span> (
+  <span class="sql-pk">id_log</span> <span class="sql-type">SERIAL</span> <span class="sql-keyword">PRIMARY KEY</span>,
+  <span class="sql-fk">id_game</span> <span class="sql-type">INTEGER</span> <span class="sql-keyword">NOT NULL</span> <span class="sql-keyword">REFERENCES</span> <span class="sql-table-name">game</span>(id_game) <span class="sql-keyword">ON DELETE CASCADE</span>,
+  <span class="sql-column">log_num</span> <span class="sql-type">INTEGER</span> <span class="sql-keyword">NOT NULL</span>,
+  <span class="sql-column">message</span> <span class="sql-type">TEXT</span> <span class="sql-keyword">NOT NULL</span>,
+  <span class="sql-column">created_at</span> <span class="sql-type">TIMESTAMP</span> <span class="sql-keyword">DEFAULT CURRENT_TIMESTAMP</span>,
+  <span class="sql-keyword">UNIQUE</span>(id_game, log_num)
+);</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include 'components/message.html' %}
+
+{% endblock %}
+{% block scripts %}{% endblock %}

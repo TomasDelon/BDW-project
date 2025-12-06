@@ -1,0 +1,118 @@
+{#
+  Page: game_advanced_setup.html
+  Purpose: Setup form for creating a new advanced game
+  Route: /partie-avancee (when no game_id)
+#}
+{% extends "base/base.html" %}
+
+{# Import macros #}
+{% from 'macros/design_system.html' import section_card, alert_box %}
+{% from 'macros/forms.html' import select_dropdown, input_number, form_actions %}
+
+{% block head_extra %}
+{% endblock %}
+
+{% block main_content %}
+
+{% if REQUEST_VARS.get('page_mode') == 'play' %}
+  {# On délègue le rendu du mode jeu au template dédié #}
+  {% include 'pages/game_advanced_play.html' %}
+{% else %}
+<div class="game-setup-section">
+  {% call section_card(
+    "⚔️ Nouvelle partie avancée de Morpion Masters",
+    "Mode avancé avec combats et sorts ! Choisissez deux équipes, la taille de la grille et le nombre maximum de tours.",
+    icon="⚔️"
+  ) %}
+
+  {% call alert_box('info', "🔥 Mode Avancé") %}
+    <p>Dans ce mode, vous pouvez :</p>
+    <ul>
+      <li><strong>Placer des morpions</strong> sur la grille</li>
+      <li><strong>Attaquer</strong> les morpions adverses adjacents</li>
+      <li><strong>Lancer des sorts</strong> : Boule de feu, Soin, Armageddon</li>
+    </ul>
+    <p>Les morpions ont des points de vie, de mana et de réussite qui évoluent pendant la partie.</p>
+  {% endcall %}
+
+  {% include 'components/message.html' %}
+
+  {% if REQUEST_VARS.get('game_created_id') %}
+  <div class="game-created-box">
+    <p>🎉 <strong>La partie avancée a été créée avec succès !</strong></p>
+    <p>ID de la partie : <strong>#{{ REQUEST_VARS['game_created_id'] }}</strong></p>
+    <p>La partie a été enregistrée dans la base de données.</p>
+    <div class="created-actions">
+      <a href="partie-avancee/{{ REQUEST_VARS['game_created_id'] }}" class="btn btn-primary">▶️ Commencer la partie</a>
+      <a href="partie-avancee" class="btn btn-secondary">➕ Nouvelle partie</a>
+    </div>
+  </div>
+  {% elif REQUEST_VARS['teams']|length >= 2 %}
+  <form method="POST" class="game-setup-form">
+    {% set team_options = [] %}
+    {% for team in REQUEST_VARS['teams'] %}
+      {% set _ = team_options.append({
+        'value': team.id_team,
+        'text': team.name ~ ' (' ~ team.color ~ ') - ' ~ team.morpion_count ~ ' morpions'
+      }) %}
+    {% endfor %}
+
+    {{ select_dropdown(
+      'team1_id',
+      '⚔️ Équipe 1',
+      team_options,
+      required=true,
+      empty_option_text='-- Choisir une équipe --'
+    ) }}
+
+    {{ select_dropdown(
+      'team2_id',
+      '🛡️ Équipe 2',
+      team_options,
+      required=true,
+      empty_option_text='-- Choisir une équipe --'
+    ) }}
+
+    {% set grid_options = [] %}
+    {% for size in REQUEST_VARS['allowed_grid_sizes'] %}
+      {% set _ = grid_options.append({
+        'value': size,
+        'text': size ~ 'x' ~ size
+      }) %}
+    {% endfor %}
+
+    {{ select_dropdown(
+      'grid_size',
+      '📐 Taille de la grille',
+      grid_options,
+      selected_value=3,
+      required=true,
+      help_text='Choisissez 3x3 pour une partie rapide ou 4x4 pour plus de stratégie'
+    ) }}
+
+    {{ input_number(
+      'max_turns',
+      '🔢 Nombre maximum de tours',
+      value=20,
+      min=5,
+      max=50,
+      required=true,
+      help_text='Un tour = chaque équipe joue une fois. Recommandé : 20 tours pour 3x3, 30 pour 4x4'
+    ) }}
+
+    {{ form_actions(
+      submit_text='🚀 Créer la partie avancée',
+      cancel_url='/'
+    ) }}
+  </form>
+  {% else %}
+  {% call alert_box('warning', "⚠️ Pas assez d'équipes disponibles !") %}
+    <p>Pour jouer, vous devez avoir au moins 2 équipes avec 6 morpions ou plus.</p>
+    <a href="equipe" class="btn btn-primary">Créer une équipe</a>
+  {% endcall %}
+  {% endif %}
+  {% endcall %}
+</div>
+{% endif %}
+
+{% endblock %}

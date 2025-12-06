@@ -1,0 +1,119 @@
+/* ============================================
+   Confirmation Dialog Component (components/confirmation_dialog.html)
+   ============================================ */
+.confirmation-dialog {
+  background: linear-gradient(135deg, rgba(255, 200, 0, 0.15) 0%, rgba(200, 150, 0, 0.15) 100%);
+  border: 3px solid #ffc800;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  margin: var(--spacing-lg) 0;
+  box-shadow: var(--shadow-lg);
+  animation: slideIn 0.3s ease;
+}
+
+.confirmation-content h3 {
+  color: #ffc800;
+  font-size: 1.5rem;
+  margin-bottom: var(--spacing-sm);
+  text-align: center;
+  text-shadow: var(--shadow-gold);
+}
+
+.confirmation-message {
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+  line-height: 1.6;
+}
+
+.confirmation-message strong {
+  color: #ffc800;
+  font-weight: 700;
+}
+
+.games-to-delete {
+  background: rgba(15, 15, 26, 0.5);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  margin: var(--spacing-md) 0;
+  border: 2px solid rgba(255, 200, 0, 0.3);
+}
+
+.games-to-delete h4 {
+  color: #ffc800;
+  font-size: 1.1rem;
+  margin-bottom: var(--spacing-sm);
+  font-weight: 600;
+}
+
+.games-list-confirm {
+  list-style: none;
+  padding: 0 0.5rem 0 0;
+  margin: 0;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.games-list-confirm li {
+  padding: 0.8rem 1rem;
+  margin: var(--spacing-xs) 0;
+  background: rgba(62, 65, 164, 0.2);
+  border-radius: var(--radius-sm);
+  border-left: 4px solid var(--primary-blue);
+  transition: var(--transition-base);
+  color: var(--text-secondary);
+}
+
+.games-list-confirm li:hover {
+  background: rgba(62, 65, 164, 0.3);
+  border-left-color: var(--accent-cyan);
+  transform: translateX(5px);
+}
+
+.confirmation-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  justify-content: center;
+  margin-top: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.confirm-delete-form,
+.cancel-delete-form {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Botones de confirmación - usando estilos estándar con variante danger */
+.btn-confirm-delete {
+  width: 100%;
+  background: var(--gradient-red);
+  color: var(--text-primary);
+  border-color: rgba(165, 1, 28, 0.6);
+  box-shadow: var(--shadow-red-base);
+}
+
+.btn-confirm-delete:hover {
+  background: var(--gradient-red-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-red-hover);
+  border-color: var(--primary-red);
+}
+
+.btn-cancel-delete {
+  width: 100%;
+  background: var(--gradient-blue);
+  color: var(--text-primary);
+  border-color: var(--accent-cyan);
+  box-shadow: var(--shadow-blue);
+}
+
+.btn-cancel-delete:hover {
+  background: var(--gradient-blue-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-blue-hover);
+  border-color: var(--accent-gold);
+}
+
+/* Responsive styles moved to layout/responsive.css */

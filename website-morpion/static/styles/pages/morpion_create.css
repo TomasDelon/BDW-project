@@ -1,0 +1,191 @@
+/* Page de création de morpions personnalisés */
+
+.morpion-create-page {
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+.morpion-create-form {
+    margin-top: var(--spacing-md);
+}
+
+.instructions-list {
+    margin: 0;
+    padding-left: 1.25rem;
+    color: var(--text-secondary);
+}
+
+.instructions-list li {
+    margin-bottom: 0.4rem;
+    list-style: disc;
+}
+
+/* Layout */
+.morpion-create-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.9fr;
+    gap: var(--spacing-lg);
+    align-items: start;
+}
+
+.form-panel,
+.image-panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+/* Sections */
+.form-section {
+    background: var(--gradient-card);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    border: 1px solid rgba(62, 65, 164, 0.25);
+    box-shadow: var(--shadow-md);
+}
+
+.form-section h3 {
+    margin-bottom: var(--spacing-xs);
+    color: var(--accent-gold);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.form-section p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+/* Statistiques */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.stats-grid .form-group {
+    margin-bottom: 0;
+}
+
+.stats-total {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1rem;
+    background: rgba(15, 15, 26, 0.6);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(62, 65, 164, 0.4);
+    color: var(--text-primary);
+    font-weight: 700;
+    box-shadow: var(--shadow-sm);
+}
+
+.stats-total #total-value {
+    color: var(--accent-cyan);
+    font-size: 1.2rem;
+}
+
+.status-valid {
+    color: #00ff9c;
+    font-weight: 700;
+}
+
+.status-warning {
+    color: #ffc800;
+    font-weight: 700;
+}
+
+.status-error {
+    color: #ff6b6b;
+    font-weight: 700;
+}
+
+/* Image */
+.image-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.btn-upload {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-upload input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.media-box {
+    background: rgba(15, 15, 26, 0.5);
+    border: 1px solid rgba(62, 65, 164, 0.3);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    text-align: center;
+    box-shadow: var(--shadow-md);
+}
+
+#webcam-video,
+#image-preview {
+    width: 100%;
+    max-width: 480px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    border: 2px solid var(--accent-cyan);
+    background: #000;
+    margin: 0 auto;
+}
+
+#image-preview {
+    border-color: var(--accent-gold);
+    box-shadow: 0 8px 24px rgba(255, 215, 0, 0.3);
+}
+
+.preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+}
+
+.preview-header h4 {
+    margin: 0;
+    color: var(--accent-gold);
+}
+
+.form-actions {
+    margin-top: var(--spacing-md);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .morpion-create-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .image-actions {
+        flex-direction: column;
+    }
+
+    .section-title {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

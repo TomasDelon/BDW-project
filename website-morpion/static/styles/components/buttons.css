@@ -1,0 +1,124 @@
+/* ============================================
+   Buttons Component (used in macros/forms.html and throughout)
+   ============================================ */
+
+/* Base Button Class - Propiedades comunes a todos los botones */
+.btn {
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-base);
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border: 2px solid;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Primary Button */
+.btn-primary {
+  background: var(--gradient-blue);
+  color: var(--text-primary);
+  border-color: var(--accent-cyan);
+  box-shadow: var(--shadow-blue);
+  font-size: 1.05rem;
+}
+
+.btn-primary:hover {
+  background: var(--gradient-blue-hover);
+  box-shadow: var(--shadow-blue-hover);
+  border-color: var(--accent-gold);
+}
+
+/* Secondary Button */
+.btn-secondary {
+  background: rgba(62, 65, 164, 0.3);
+  color: var(--text-secondary);
+  border-color: rgba(62, 65, 164, 0.5);
+  font-weight: 500;
+}
+
+.btn-secondary:hover {
+  background: rgba(62, 65, 164, 0.5);
+  color: var(--text-primary);
+  border-color: var(--accent-cyan);
+}
+
+/* Large Button Variant */
+.btn-large {
+  font-size: 1.3rem !important;
+  padding: 1.2rem 3rem !important;
+  letter-spacing: 2px;
+}
+
+/* Submit Button Variant (full width in forms) */
+.btn-submit {
+  width: 100%;
+}
+
+/* Reset Button */
+.btn-reset {
+  width: 100%;
+  padding: 0.9rem;
+  background: rgba(165, 1, 28, 0.3);
+  color: var(--text-secondary);
+  border-color: rgba(165, 1, 28, 0.5);
+  font-weight: 600;
+}
+
+.btn-reset:hover {
+  background: rgba(165, 1, 28, 0.5);
+  color: var(--text-primary);
+  border-color: var(--primary-red);
+}
+
+/* Create Link Button (used in empty states) */
+.btn-create-link {
+  display: inline-block;
+  margin-top: var(--spacing-md);
+  padding: 0.9rem 1.8rem;
+  background: var(--gradient-blue);
+  color: var(--text-primary);
+  border-color: var(--accent-cyan);
+  box-shadow: var(--shadow-blue);
+}
+
+.btn-create-link:hover {
+  background: var(--gradient-blue-hover);
+  box-shadow: var(--shadow-blue-hover);
+  border-color: var(--accent-gold);
+}
+
+/* Delete Button (for team deletion) */
+.btn-delete-team {
+  padding: 0.6rem 1.2rem;
+  background: var(--gradient-red);
+  color: var(--text-primary);
+  border-color: rgba(165, 1, 28, 0.6);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.btn-delete-team:hover {
+  background: var(--gradient-red-hover);
+  box-shadow: 0 4px 15px rgba(165, 1, 28, 0.6);
+  border-color: var(--primary-red);
+}

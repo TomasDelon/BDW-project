@@ -1,0 +1,95 @@
+{#
+  Macros: morpions.html
+  Purpose: Helpers for rendering morpion images and stats in different contexts
+#}
+
+{% macro morpion_image(morpion, size='default', extra_class='', title=None, style=None) -%}
+  {%- if morpion is mapping %}
+    {%- set raw_src = morpion.get('image_url', 'sheep.png') %}
+    {%- set display_name = morpion.get('name', '?') %}
+  {%- else %}
+    {%- set raw_src = morpion.image_url %}
+    {%- set display_name = morpion.name %}
+  {%- endif %}
+  {%- if raw_src %}
+    {%- set img_path = raw_src %}
+  {%- else %}
+    {%- set img_path = 'morpions/sheep.png' %}
+  {%- endif %}
+  {%- if img_path and '/' not in img_path %}
+    {%- set img_path = 'morpions/' ~ img_path %}
+  {%- endif %}
+  <img src="{{ SESSION['DIRECTORY'] }}/static/img/{{ img_path }}"
+       alt="{{ display_name }}"
+       title="{{ title or display_name }}"
+       class="morpion-image morpion-image--{{ size }}{% if extra_class %} {{ extra_class }}{% endif %}"
+       {% if style %}style="{{ style }}"{% endif %}
+       onerror="this.src='{{ SESSION['DIRECTORY'] }}/static/img/logos/logo.png'">
+{%- endmacro %}
+
+{% macro morpion_stats(morpion, variant='card', accuracy_format='default') -%}
+  {%- set entries = [
+    ('HP', '❤️', morpion.hp if morpion is not mapping else morpion.get('hp', 0)),
+    ('Attaque', '⚔️', morpion.attack if morpion is not mapping else morpion.get('attack', 0)),
+    ('Mana', '✨', morpion.mana if morpion is not mapping else morpion.get('mana', 0)),
+    ('Précision', '🎯', morpion.accuracy if morpion is not mapping else morpion.get('accuracy', 0))
+  ] %}
+  {% if variant == 'card' %}
+    <div class="card-stats">
+      {% for label, icon, value in entries %}
+      <div class="stat-item">
+        <span class="stat-icon">{{ icon }}</span>
+        <span class="stat-value">{{ value }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  {% elif variant == 'mini-card' %}
+    <div class="morpion-mini-stats">
+      {% for label, icon, value in entries %}
+        <span>{{ icon }}{{ value }}</span>
+      {% endfor %}
+    </div>
+  {% elif variant == 'selector' %}
+    <div class="morpion-stats-mini">
+      {% for label, icon, value in entries %}
+        <span title="{{ label }}">{{ icon }}{{ value }}</span>
+      {% endfor %}
+    </div>
+  {% elif variant == 'cell' %}
+    <div class="morpion-stats">
+      <span class="stat-hp">❤️ {{ entries[0][2] }}</span>
+      <span class="stat-attack">⚔️ {{ entries[1][2] }}</span>
+      <span class="stat-mana">✨ {{ entries[2][2] }}</span>
+      <span class="stat-accuracy">
+        🎯
+        {% if accuracy_format == 'float' %}
+          {{ "%.1f"|format(entries[3][2]) }}
+        {% else %}
+          {{ entries[3][2] }}
+        {% endif %}
+      </span>
+    </div>
+  {% endif %}
+{%- endmacro %}
+
+{# Macro: Morpion Selector Card (Unified) #}
+{% macro morpion_selector_card(morpion, input_type='radio', input_name='morpion_id', is_checked=false, show_stats=true) %}
+<div class="morpion-selector__option">
+  <input type="{{ input_type }}"
+         class="morpion-selector__input"
+         id="morpion-{{ input_name }}-{{ morpion.id_morpion }}"
+         name="{{ input_name }}"
+         value="{{ morpion.id_morpion }}"
+         {% if is_checked %}checked{% endif %}
+         {% if input_type == 'radio' %}required{% endif %}>
+  <label class="morpion-selector__label" for="morpion-{{ input_name }}-{{ morpion.id_morpion }}">
+    <div class="morpion-selector__card">
+      {{ morpion_image(morpion, size='selector', title=morpion.name) }}
+      <span class="morpion-selector__name">{{ morpion.name }}</span>
+      {% if show_stats %}
+        {{ morpion_stats(morpion, 'selector') }}
+      {% endif %}
+    </div>
+  </label>
+</div>
+{% endmacro %}

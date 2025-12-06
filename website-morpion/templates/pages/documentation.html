@@ -1,0 +1,75 @@
+{#
+  Page: documentation.html
+  Purpose: Render the full technical documentation converted from Markdown.
+  Route: /documentation
+#}
+{% extends "base/base.html" %}
+
+{% block head_extra %}
+{{ super() }}
+<link rel="stylesheet" href="{{ SESSION['DIRECTORY'] }}/static/styles/pages/documentation.css">
+{% endblock %}
+
+{% block main_content %}
+<section class="documentation-page">
+  <header class="documentation-hero">
+    <div class="documentation-hero__content">
+      <p>Documentation technique complète</p>
+      <h1>Morpion Masters · Guide BDW</h1>
+      <p>
+        Cette page reprend l'intégralité du document <code>docs/documentation.md</code> avec sa
+        mise en forme, ses diagrammes Mermaid et ses blocs explicatifs. Elle sert de référence
+        unique pour la soutenance et la reprise du projet.
+      </p>
+    </div>
+    <div class="documentation-hero__actions">
+      <a href="{{ SESSION['DIRECTORY'] }}/docs/documentation.md" target="_blank" rel="noopener noreferrer">
+        📄 Ouvrir le Markdown
+      </a>
+      <a href="{{ SESSION['DIRECTORY'] }}/docs/documentation.md" download>
+        ⬇️ Télécharger (MD)
+      </a>
+    </div>
+  </header>
+
+  <article class="documentation-article" data-documentation>
+    {{ REQUEST_VARS['documentation_html'] | safe }}
+  </article>
+</section>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+(() => {
+  const article = document.querySelector('[data-documentation]');
+  if (!article) {
+    return;
+  }
+
+  const normalizeMermaidBlocks = () => {
+    const legacyBlocks = article.querySelectorAll('pre code.language-mermaid');
+    legacyBlocks.forEach((codeBlock) => {
+      const pre = codeBlock.closest('pre');
+      if (!pre) {
+        return;
+      }
+      pre.classList.add('mermaid');
+      pre.innerHTML = codeBlock.textContent;
+    });
+  };
+
+  normalizeMermaidBlocks();
+
+  const mermaidBlocks = article.querySelectorAll('.mermaid');
+  if (mermaidBlocks.length > 0 && window.mermaid) {
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'dark',
+    });
+    mermaid.run({ nodes: mermaidBlocks });
+  }
+})();
+</script>
+{% endblock %}

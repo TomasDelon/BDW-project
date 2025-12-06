@@ -1,0 +1,308 @@
+{#
+  Page: stats_advanced.html (REFACTORED)
+  Purpose: Advanced statistics with reusable components
+  Route: /statistiques-avancees
+#}
+{% extends "base/base.html" %}
+
+{# Import macros #}
+{% from 'macros/ui.html' import hero_section, empty_state %}
+{% from 'macros/teams.html' import team_badge %}
+{% from 'macros/charts.html' import progress_bar, bar_chart_row, stat_card_simple %}
+{% from 'macros/stats.html' import stat_card %}
+{% from 'macros/morpions.html' import morpion_image with context %}
+
+{% block main_content %}
+
+{{ hero_section(
+  "📊 Statistiques Avancées",
+  "Analyse approfondie des performances, tendances et données du jeu"
+) }}
+
+{# Team Performance - Reuses team-card style #}
+<section class="stats-section">
+  <h2>🏆 Performance des Équipes</h2>
+  {% if REQUEST_VARS['stats']['team_performance'] and REQUEST_VARS['stats']['team_performance']|length > 0 %}
+  <div class="stats-grid">
+    {% for team in REQUEST_VARS['stats']['team_performance'] %}
+    <div class="team-card">
+      <div class="team-header">
+        {{ team_badge(team.color, size='md') }}
+        <div class="team-info">
+          <h3 class="team-name">{{ team.name }}</h3>
+        </div>
+      </div>
+      <div class="team-stats">
+        <div class="stat-row">
+          <span class="stat-label">Victoires</span>
+          <span class="stat-value wins">{{ team.wins }}</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Défaites</span>
+          <span class="stat-value losses">{{ team.losses }}</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Nulles</span>
+          <span class="stat-value draws">{{ team.draws }}</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Total</span>
+          <span class="stat-value">{{ team.total_games }}</span>
+        </div>
+      </div>
+      {% if team.total_games > 0 %}
+        {{ progress_bar(team.win_rate, 100, "Taux de victoire", "win-rate") }}
+      {% else %}
+        <p style="color: var(--text-secondary); font-style: italic; text-align: center; margin-top: var(--spacing-sm);">
+          Aucune partie jouée
+        </p>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state" style="text-align: center; padding: var(--spacing-xl);">
+    {{ empty_state("📊 Aucune équipe trouvée. Créez des équipes pour voir leurs statistiques ici.", "Créer une équipe", "/equipe") }}
+  </div>
+  {% endif %}
+</section>
+
+{# Morpion Usage - Reuses morpion-mini-card #}
+<section class="stats-section">
+  <h2>🎮 Morpions les Plus Populaires</h2>
+  {% if REQUEST_VARS['stats']['morpion_usage'] and REQUEST_VARS['stats']['morpion_usage']|length > 0 %}
+  <div class="morpions-mini-grid">
+    {% for morpion in REQUEST_VARS['stats']['morpion_usage'][:8] %}
+    <div class="morpion-mini-card">
+      {{ morpion_image(
+        morpion,
+        size='selector',
+        title=morpion.name,
+        style="width: 80px; height: 80px; object-fit: contain; margin-bottom: var(--spacing-xs); border-radius: 50%; border: 2px solid var(--primary-blue);"
+      ) }}
+      <div class="morpion-mini-info">
+        <div class="morpion-mini-name">{{ morpion.name }}</div>
+        <div class="morpion-mini-stats">
+          <span>❤️ {{ morpion.hp }}</span>
+          <span>⚔️ {{ morpion.attack }}</span>
+          <span>✨ {{ morpion.mana }}</span>
+          <span>🎯 {{ morpion.accuracy }}</span>
+        </div>
+        <div style="margin-top: var(--spacing-xs); font-size: 0.85rem; color: var(--text-secondary);">
+          Utilisé dans {{ morpion.teams_count }} équipe(s)
+        </div>
+        {% if morpion.usage_percentage is defined and morpion.usage_percentage > 0 %}
+          {{ progress_bar(morpion.usage_percentage, 100, None, "usage") }}
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state" style="text-align: center; padding: var(--spacing-xl);">
+    {{ empty_state("🎮 Aucun morpion trouvé") }}
+  </div>
+  {% endif %}
+</section>
+
+{# Win Rate Ranking #}
+<section class="stats-section">
+  <h2>🥇 Classement par Taux de Victoire</h2>
+  {% if REQUEST_VARS['stats']['team_ranking'] and REQUEST_VARS['stats']['team_ranking']|length > 0 %}
+  <div class="ranking-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Rang</th>
+          <th>Équipe</th>
+          <th>Parties</th>
+          <th>Victoires</th>
+          <th>Taux de victoire</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for team in REQUEST_VARS['stats']['team_ranking'] %}
+        <tr>
+          <td class="rank">
+            {% if loop.index == 1 %}🥇
+            {% elif loop.index == 2 %}🥈
+            {% elif loop.index == 3 %}🥉
+            {% else %}{{ loop.index }}
+            {% endif %}
+          </td>
+          <td class="team-cell">
+            {{ team_badge(team.color, size='sm') }}
+            <span class="team-name">{{ team.name }}</span>
+          </td>
+          <td class="number">{{ team.total_games }}</td>
+          <td class="number">{{ team.wins }}</td>
+          <td class="winrate-cell">
+            <span class="winrate-value">{{ team.win_rate }}%</span>
+            <div class="mini-bar bar-container">
+              <div class="bar-fill bar-winrate" style="width: {{ team.win_rate }}%"></div>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state" style="text-align: center; padding: var(--spacing-xl);">
+    {{ empty_state("🥇 Aucune partie terminée. Jouez et terminez des parties pour voir le classement.", "Jouer une partie", "/partie") }}
+  </div>
+  {% endif %}
+</section>
+
+{# Deadly Morpions #}
+<section class="stats-section">
+  <h2>💀 Morpions les Plus Redoutables</h2>
+  <p class="section-description">Classement basé sur la puissance de combat (Attaque × 2 + HP + Mana × 1.5)</p>
+  <div class="morpions-mini-grid">
+    {% for morpion in REQUEST_VARS['stats']['deadly_morpions'] %}
+    <div class="morpion-mini-card" style="border-color: var(--primary-red);">
+      {{ morpion_image(
+        morpion,
+        size='selector',
+        title=morpion.name,
+        style="width: 70px; height: 70px; object-fit: contain; border-radius: 50%; border: 2px solid var(--primary-red); filter: drop-shadow(0 2px 4px rgba(165, 1, 28, 0.5));"
+      ) }}
+      <div class="morpion-mini-info">
+        <div class="morpion-mini-name">{{ morpion.name }}</div>
+        <div style="font-weight: 700; font-size: 1.1rem; color: var(--accent-gold); margin: var(--spacing-xs) 0;">
+          ⚡ Score: {{ morpion.power_score }}
+        </div>
+        <div class="morpion-mini-stats">
+          <span>❤️ {{ morpion.hp }}</span>
+          <span>⚔️ {{ morpion.attack }}</span>
+          <span>✨ {{ morpion.mana }}</span>
+          <span>🎯 {{ morpion.accuracy }}</span>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+{# Top Killers from Logs #}
+<section class="stats-section">
+  <h2>☠️ Top Killers (Logs)</h2>
+  <p class="section-description">Basé sur les entrées de logs qui mentionnent une élimination directe.</p>
+  {% set killers = REQUEST_VARS['stats']['top_killers'] %}
+  {% if killers and killers|length > 0 %}
+  <div style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
+    {% for killer in killers %}
+      {% set label = killer.killer_name %}
+      {% if killer.team_name %}
+        {% set label = killer.killer_name ~ " — " ~ killer.team_name %}
+      {% endif %}
+      {{ bar_chart_row(label, killer.kill_count, killer.percentage, 'spell') }}
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state" style="text-align: center; padding: var(--spacing-xl);">
+    {{ empty_state("☠️ Aucun log ne mentionne une élimination pour l'instant.") }}
+  </div>
+  {% endif %}
+</section>
+
+{# Game Duration Distribution - Uses bar_chart_row macro #}
+<section class="stats-section">
+  <h2>⏱️ Distribution des Durées de Parties</h2>
+  {% if REQUEST_VARS['stats']['duration_distribution'] and REQUEST_VARS['stats']['duration_distribution']|length > 0 %}
+  <div style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
+    {% for duration in REQUEST_VARS['stats']['duration_distribution'] %}
+      {{ bar_chart_row(duration.duration_range, duration.game_count, duration.percentage, 'duration') }}
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state" style="text-align: center; padding: var(--spacing-xl);">
+    {{ empty_state("⏱️ Aucune partie terminée. Terminez des parties pour voir leur distribution de durées.") }}
+  </div>
+  {% endif %}
+</section>
+
+{# Win Methods Distribution #}
+<section class="stats-section">
+  <h2>🎯 Méthodes de Victoire</h2>
+  {% if REQUEST_VARS['stats']['win_methods'] and REQUEST_VARS['stats']['win_methods']|length > 0 %}
+  <div style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
+    {% for method in REQUEST_VARS['stats']['win_methods'] %}
+      {{ bar_chart_row(method.win_method, method.count, method.percentage, 'method') }}
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state" style="text-align: center; padding: var(--spacing-xl);">
+    {{ empty_state("🎯 Aucune partie avec vainqueur. Terminez des parties pour voir les méthodes de victoire utilisées.") }}
+  </div>
+  {% endif %}
+</section>
+
+{# Spell Usage Stats #}
+{% if REQUEST_VARS['stats']['spell_usage'] %}
+<section class="stats-section">
+  <h2>🔮 Utilisation des Sorts</h2>
+  <div class="stats-grid">
+    {% for spell in REQUEST_VARS['stats']['spell_usage'] %}
+    {% if spell.spell_type != 'Autre' %}
+      {{ stat_card_simple(spell.spell_type, spell.usage_count ~ " utilisations",
+         "🔥" if spell.spell_type == "Boule de feu" else ("💚" if spell.spell_type == "Soin" else "💥")) }}
+    {% endif %}
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{# Grid Size Preferences #}
+<section class="stats-section">
+  <h2>📐 Préférences de Taille de Grille</h2>
+  <div class="stats-grid">
+    {% for grid in REQUEST_VARS['stats']['grid_preferences'] %}
+      {{ stat_card_simple(grid.grid_size ~ "×" ~ grid.grid_size, grid.games_count ~ " parties", "🎯") }}
+    {% endfor %}
+  </div>
+</section>
+
+{# Monthly Activity #}
+<section class="stats-section">
+  <h2>📅 Activité Mensuelle</h2>
+  <div style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
+    {% for month_data in REQUEST_VARS['stats']['monthly_activity'] %}
+      {% set month_names = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'] %}
+      {{ bar_chart_row(month_names[month_data.month - 1] ~ " " ~ month_data.year, month_data.games_count, month_data.activity_percentage, 'activity') }}
+    {% endfor %}
+  </div>
+</section>
+
+{# Summary Stats #}
+<section class="stats-section summary-section">
+  <h2>📈 Résumé Global</h2>
+  <div class="summary-cards">
+    <div class="summary-card">
+      <div class="summary-icon">🎮</div>
+      <div class="summary-value">{{ REQUEST_VARS['stats']['team_performance']|length }}</div>
+      <div class="summary-label">Équipes actives</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-icon">⚔️</div>
+      <div class="summary-value">{{ REQUEST_VARS['stats']['morpion_usage']|length }}</div>
+      <div class="summary-label">Morpions utilisés</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-icon">🏆</div>
+      {% set total_games = REQUEST_VARS['stats']['team_performance']|map(attribute='total_games')|sum %}
+      <div class="summary-value">{{ total_games }}</div>
+      <div class="summary-label">Parties jouées</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-icon">🔮</div>
+      {% set total_spells = REQUEST_VARS['stats']['spell_usage']|map(attribute='usage_count')|sum %}
+      <div class="summary-value">{{ total_spells }}</div>
+      <div class="summary-label">Sorts lancés</div>
+    </div>
+  </div>
+</section>
+
+{% include 'components/message.html' %}
+
+{% endblock %}

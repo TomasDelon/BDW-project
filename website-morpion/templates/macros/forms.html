@@ -1,0 +1,82 @@
+{#
+  Macros: forms.html
+  Purpose: Reusable macros for form elements
+  
+  Available Macros:
+    - input_text(name, label, value, placeholder, required, maxlength, help_text)
+    - select_dropdown(name, label, options, selected_value, required, help_text)
+    - input_number(name, label, value, min, max, required, help_text)
+    - form_actions(submit_text, cancel_url, submit_disabled, reset_text)
+#}
+
+{# Macro: Text Input #}
+{% macro input_text(name, label, value='', placeholder='', required=false, maxlength=None, help_text=None) %}
+<div class="form-group">
+  <label for="{{ name }}">{{ label }}{% if required %} *{% endif %}</label>
+  <input type="text" 
+         id="{{ name }}" 
+         name="{{ name }}" 
+         {% if required %}required{% endif %}
+         {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}
+         {% if maxlength %}maxlength="{{ maxlength }}"{% endif %}
+         value="{{ value }}">
+  {% if help_text %}
+  <small>{{ help_text }}</small>
+  {% endif %}
+</div>
+{% endmacro %}
+
+{# Macro: Select Dropdown #}
+{% macro select_dropdown(name, label, options, selected_value='', required=false, help_text=None, empty_option_text='-- Choisir --') %}
+<div class="form-group">
+  <label for="{{ name }}">{{ label }}{% if required %} *{% endif %}</label>
+  <select name="{{ name }}" id="{{ name }}" {% if required %}required{% endif %}>
+    {% if empty_option_text %}
+    <option value="">{{ empty_option_text }}</option>
+    {% endif %}
+    {% for option in options %}
+      <option value="{{ option.value }}" {% if option.value == selected_value %}selected{% endif %}>
+        {{ option.text }}
+      </option>
+    {% endfor %}
+  </select>
+  {% if help_text %}
+  <small>{{ help_text }}</small>
+  {% endif %}
+</div>
+{% endmacro %}
+
+{# Macro: Number Input #}
+{% macro input_number(name, label, value='', min=None, max=None, required=false, help_text=None) %}
+<div class="form-group">
+  <label for="{{ name }}">{{ label }}{% if required %} *{% endif %}</label>
+  <input type="number" 
+         id="{{ name }}" 
+         name="{{ name }}" 
+         {% if required %}required{% endif %}
+         {% if min is not none %}min="{{ min }}"{% endif %}
+         {% if max is not none %}max="{{ max }}"{% endif %}
+         value="{{ value }}">
+  {% if help_text %}
+  <small>{{ help_text }}</small>
+  {% endif %}
+</div>
+{% endmacro %}
+
+{# Macro: Form Actions (submit, cancel, reset) #}
+{% macro form_actions(submit_text='Enregistrer', cancel_url=None, submit_disabled=false, reset_text=None, reset_url=None) %}
+<div class="form-actions">
+  <button type="submit" 
+          class="btn btn-primary btn-submit" 
+          {% if submit_disabled %}disabled{% endif %}>
+    {{ submit_text }}
+  </button>
+  {% if reset_url %}
+  <a href="{{ reset_url }}" class="btn btn-reset">{{ reset_text or 'Réinitialiser' }}</a>
+  {% endif %}
+  {% if cancel_url %}
+  <a href="{{ cancel_url }}" class="btn btn-secondary">Annuler</a>
+  {% endif %}
+</div>
+{% endmacro %}
+

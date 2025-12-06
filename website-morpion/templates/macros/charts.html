@@ -1,0 +1,51 @@
+{#
+  Macros: charts.html
+  Purpose: Reusable chart components (CSS-only)
+  
+  Available Macros:
+    - progress_bar(value, max_value, label, type): Progress bar with percentage
+    - bar_chart_row(label, value, percentage, type): Horizontal bar chart row
+#}
+
+{# Macro: Progress Bar #}
+{% macro progress_bar(value, max_value=100, label=None, bar_type='default') %}
+<div class="progress-bar-wrapper">
+  {% if label %}
+  <div class="progress-bar-label">{{ label }}: {{ value }}%</div>
+  {% endif %}
+  <div class="bar-container">
+    <div class="bar-fill bar-{{ bar_type }}" style="width: {{ value }}%">
+      {% if value > 15 %}
+      <span class="bar-value">{{ value }}</span>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endmacro %}
+
+{# Macro: Bar Chart Row (for distributions) #}
+{% macro bar_chart_row(label, value, percentage, bar_type='default', show_count=true) %}
+<div class="bar-chart-row">
+  <div class="bar-chart-label">{{ label }}</div>
+  <div class="bar-container large">
+    <div class="bar-fill bar-{{ bar_type }}" style="width: {{ percentage }}%">
+      {% if percentage > 10 %}
+      <span class="bar-value">{{ value }}</span>
+      {% endif %}
+    </div>
+  </div>
+  {% if show_count %}
+  <div class="bar-chart-count">{{ value }}{% if bar_type == 'percentage' %}%{% endif %}</div>
+  {% endif %}
+</div>
+{% endmacro %}
+
+{# Macro: Simple Stat Card #}
+{% macro stat_card_simple(label, value, icon=None) %}
+<div class="stat-card-simple">
+  {% if icon %}<div class="stat-icon">{{ icon }}</div>{% endif %}
+  <div class="stat-label">{{ label }}</div>
+  <div class="stat-value">{{ value }}</div>
+</div>
+{% endmacro %}
+

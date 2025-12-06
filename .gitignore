@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Configuration locale
+config-bd.toml
+
+# Sauvegardes BD
+scripts/backups/
+
+# Database (si hay archivos locales)
+*.db
+*.sqlite
+
+# Test files temporales
+test_*.py
+!**/test_*.py

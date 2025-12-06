@@ -1,0 +1,22 @@
+{#
+  Component: footer.html
+  Purpose: Main footer with license and credits
+  Props: Uses SESSION variables (CURRENT_YEAR, APP)
+#}
+<footer class="site-footer">
+  <div class="site-footer__group">
+    <a class="footer-link" href="https://github.com/tomasdelon" target="_blank" rel="noopener noreferrer">
+      GitHub du projet
+    </a>
+    <a class="footer-link" href="/documentation">
+      Documentation technique
+    </a>
+    <a class="footer-link footer-link--ghost" href="/affiche-projet">
+      Affiche projet
+    </a>
+    <span class="site-footer__authors">Tomas Delon · Moustapha Abakar</span>
+    <a class="footer-link" href="{{ SESSION['DIRECTORY'] }}/static/docs/affiche_projet.pdf" target="_blank" rel="noopener noreferrer">
+      PDF du projet
+    </a>
+  </div>
+</footer>

@@ -1,0 +1,220 @@
+{# Affiche projet - Document PDF exportable #}
+{% extends "base/base_affiche.html" %}
+
+{% block head_extra %}
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+mermaid.initialize({
+  startOnLoad: true,
+  theme: "neutral",
+  themeVariables: {
+    primaryColor: "#101b2f",
+    primaryTextColor: "#e5f3ff",
+    primaryBorderColor: "#37c5ff",
+    lineColor: "#35b1ff",
+    secondaryColor: "#0b223d",
+    tertiaryColor: "#0c2f54",
+    fontSize: "14px"
+  }
+});
+</script>
+{% endblock %}
+
+{% block main_content %}
+<article class="affiche-document">
+
+  <!-- En-tête -->
+  <header class="affiche-header">
+    <h1>Morpion Masters</h1>
+    <p class="subtitle">Jeu de morpion avancé avec système de combats et sorts</p>
+    <div class="meta">
+      <p><strong>Binôme :</strong> Tomas Delon & Moustapha Abakar</p>
+      <p><strong>Formation :</strong> UCBL — Licence 2 Informatique — BDW 2025</p>
+    </div>
+  </header>
+
+  <!-- Section 2: Diagramme E/A -->
+  <section class="affiche-section">
+    <h2>Diagramme Entité-Association</h2>
+    <div class="diagram-box">
+<pre class="mermaid">
+flowchart LR
+  classDef entity fill:#0f1b33,stroke:#37c5ff,stroke-width:2px,color:#e5f3ff,rx:8,ry:8;
+  classDef rel fill:#0c253f,stroke:#37c5ff,stroke-width:1.5px,color:#9ad7ff,rx:32,ry:32;
+
+  MORPION["<b>MORPION</b><br/><u>id_morpion</u><br/>name, hp, attack<br/>mana, accuracy<br/>image_url, created_at"]:::entity
+  TEAM["<b>TEAM</b><br/><u>id_team</u><br/>name UNIQUE<br/>color UNIQUE<br/>created_at"]:::entity
+  GAME_CONFIG["<b>GAME_CONFIG</b><br/><u>id_config</u><br/>grid_size<br/>max_turns<br/>game_mode<br/>created_at"]:::entity
+  GAME["<b>GAME</b><br/><u>id_game</u><br/>id_config<br/>id_team1, id_team2<br/>id_winner<br/>started_at, ended_at"]:::entity
+  GAME_LOG["<b>GAME_LOG</b><br/><u>id_log</u><br/><u style='text-decoration-style:dotted'>id_game</u><br/>log_num<br/>message<br/>created_at"]:::entity
+
+  BELONGS((belongs_to)):::rel
+  PLAYS((plays)):::rel
+  WINS((wins)):::rel
+  CONFIGURES((configures)):::rel
+  LOGS((logs)):::rel
+
+  MORPION -- "0,n" --- BELONGS
+  BELONGS -- "6,8" --- TEAM
+  TEAM -- "0,n" --- PLAYS
+  PLAYS -- "2,2" --- GAME
+  TEAM -- "0,1" --- WINS
+  WINS -- "0,1" --- GAME
+  GAME_CONFIG -- "0,n" --- CONFIGURES
+  CONFIGURES -- "1,1" --- GAME
+  GAME -- "1,n" --- LOGS
+  LOGS -- "(1,1)" --- GAME_LOG
+</pre>
+    </div>
+  </section>
+
+  <!-- Section 3: Schéma relationnel -->
+  <section class="affiche-section">
+    <h2>Schéma relationnel</h2>
+    <div class="schema-box">
+      <pre class="schema-text">
+        MORPION( <u>id_morpion</u>, name, hp, attack, mana, accuracy, image_url, created_at )
+        TEAM( <u>id_team</u>, name, color, created_at )
+        BELONGS( <u>#team_id</u>, <u>#morpion_id</u> )
+        GAME_CONFIG( <u>id_config</u>, grid_size, max_turns, game_mode, created_at )
+        GAME( <u>id_game</u>, #id_config, id_team1, id_team2, id_winner, started_at, ended_at )
+        GAME_LOG( <u>id_log</u>, <u style="text-decoration-style:dotted">#id_game</u>, log_num, message, created_at )
+      </pre>
+    </div>
+  </section>
+
+  <!-- Section 1 bis: Fonctionnalités (page dédiée) -->
+  <section class="affiche-section page-break-before page-break-after page-break-avoid">
+    <h2>Fonctionnalités implémentées</h2>
+    <table class="features-table">
+      <thead>
+        <tr>
+          <th>Fonctionnalité</th>
+          <th>Description</th>
+          <th>État</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1. Système d'équipes</strong></td>
+          <td>Création avec nom + couleur unique, sélection de 6–8 morpions parmi 16 personnages, liste avec historique, suppression avec confirmation</td>
+          <td>✓</td>
+        </tr>
+        <tr>
+          <td><strong>2. Personnages (Morpions)</strong></td>
+          <td>16 personnages uniques avec 4 stats équilibrées (HP, Attack, Mana, Accuracy), somme=15, contrainte CHECK en BD, images personnalisées</td>
+          <td>✓</td>
+        </tr>
+        <tr>
+          <td><strong>3. Partie normale (Mode classique)</strong></td>
+          <td>Grille 3×3 ou 4×4, règles tic-tac-toe, victoire par ligne/colonne/diagonale ou grille pleine, limite de tours configurables (5-50)</td>
+          <td>✓</td>
+        </tr>
+        <tr>
+          <td><strong>4. Intelligence Artificielle</strong></td>
+          <td>Algorithme Minimax avec poda Alpha-Beta, 3 niveaux de difficulté (Easy/Medium/Hard), profondeurs adaptatives, optimisation 90% branches coupées</td>
+          <td>✓</td>
+        </tr>
+        <tr>
+          <td><strong>5. Partie avancée (Mode combat)</strong></td>
+          <td>Système de combat au tour par tour, attaques adjacentes avec précision, HP/mana dynamiques, mort des morpions (HP≤0), cases détruites</td>
+          <td>✓</td>
+        </tr>
+        <tr>
+          <td><strong>6. Système de sorts (3 sorts)</strong></td>
+          <td>Boule de Feu (3 dégâts, 2 mana), Soin (2 HP, 2 mana), Armageddon (détruit cellule, 3 mana), calcul probabilité avec accuracy</td>
+          <td>✓</td>
+        </tr>
+        <tr>
+          <td><strong>7. Statistiques page d'accueil</strong></td>
+          <td>4 statistiques SQL : compteurs (équipes, morpions, parties), top 3 équipes victorieuses, durées parties (min/max/moyenne), logs moyens par mois</td>
+          <td>✓</td>
+        </tr>
+        <tr>
+          <td><strong>8. Statistiques avancées</strong></td>
+          <td>Dashboard dédié : performance équipes (winrate, victoires/défaites), usage morpions (popularité, winrate), sorts utilisés, méthodes de victoire, classements</td>
+          <td>✓</td>
+        </tr>
+        <tr>
+          <td><strong>9. Système de logs</strong></td>
+          <td>Historique chronologique de toutes les actions (placement, attaque, sort, victoire), stockage en BD avec séquence unique, affichage temps réel</td>
+          <td>✓</td>
+        </tr>
+        <tr>
+          <td><strong>10. Session caching</strong></td>
+          <td>État des parties en mémoire serveur (évite SELECT à chaque tour), synchronisation automatique SESSION ↔ BD, invalidation à la fin de partie</td>
+          <td>✓</td>
+        </tr>
+        <tr>
+          <td><strong>11. AJAX partial rendering</strong></td>
+          <td>Mise à jour partielle grille mode avancé sans rechargement complet (5KB vs 50KB), route fragment dédiée, fluidité interface</td>
+          <td>✓</td>
+        </tr>
+        <tr>
+          <td><strong>12. Build CSS automatique</strong></td>
+          <td>Script Python (build_css.py) : 30+ fichiers CSS → 1 fichier main.css, 30 requêtes → 1 requête, minification optionnelle</td>
+          <td>✓</td>
+        </tr>
+        <tr>
+          <td><strong>13. Architecture MVC stricte</strong></td>
+          <td>Séparation Model/View/Controller, Repository Pattern, logique pure testable, composants réutilisables (templates, macros, CSS BEM)</td>
+          <td>✓</td>
+        </tr>
+        <tr>
+          <td><strong>14. Contraintes BD avancées</strong></td>
+          <td>CHECK (somme stats=15), UNIQUE (couleur équipe), CASCADE (intégrité référentielle), validation double frontend/backend</td>
+          <td>✓</td>
+        </tr>
+        <tr>
+          <td><strong>15. Index BD optimisés</strong></td>
+          <td>6 index sur foreign keys (team_id, morpion_id, game_id, winner_id), JOINs 10x plus rapides (850ms → 85ms mesurés)</td>
+          <td>✓</td>
+        </tr>
+        <tr>
+          <td><strong>16. Équipe IA automatique</strong></td>
+          <td>Création automatique au démarrage (init.py), 6 morpions équilibrés, équipe "🤖 IA Opponent" toujours disponible pour jouer seul</td>
+          <td>✓</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Section 4+: Captures d'écran (une page chacune) -->
+  <section class="affiche-section capture-section page-break-before">
+    <h2>Capture 1 — Page d'accueil</h2>
+    <img class="capture-img" src="{{ SESSION['DIRECTORY'] }}/static/img/screenshots/Accueil.png" alt="Page d'accueil statistiques">
+  </section>
+
+  <section class="affiche-section capture-section page-break-before">
+    <h2>Capture 2 — Liste des équipes</h2>
+    <img class="capture-img" src="{{ SESSION['DIRECTORY'] }}/static/img/screenshots/liste_equipes.png" alt="Liste des équipes">
+  </section>
+
+  <section class="affiche-section capture-section page-break-before">
+    <h2>Capture 3 — Création d'équipe</h2>
+    <img class="capture-img" src="{{ SESSION['DIRECTORY'] }}/static/img/screenshots/cree_equipe.png" alt="Création d'équipe">
+  </section>
+
+  <section class="affiche-section capture-section page-break-before">
+    <h2>Capture 4 — Création d'un morpion</h2>
+    <img class="capture-img" src="{{ SESSION['DIRECTORY'] }}/static/img/screenshots/cree_morpion.png" alt="Création d'un morpion">
+  </section>
+
+  <section class="affiche-section capture-section page-break-before">
+    <h2>Capture 5 — Partie normale</h2>
+    <img class="capture-img" src="{{ SESSION['DIRECTORY'] }}/static/img/screenshots/partie_classique.png" alt="Partie normale classique">
+  </section>
+
+  <section class="affiche-section capture-section page-break-before">
+    <h2>Capture 6 — Partie avancée</h2>
+    <img class="capture-img" src="{{ SESSION['DIRECTORY'] }}/static/img/screenshots/partie_avancee.png" alt="Partie avancée combat">
+  </section>
+
+  <!-- Footer -->
+  <footer class="affiche-footer">
+    <p>Document crée pour la soutenance BDW project 2025/2026 — Université Claude Bernard Lyon 1</p>
+    <p>Code source disponible avec documentation complète, tests unitaires et scripts</p>
+  </footer>
+
+</article>
+{% endblock %}

@@ -1,0 +1,152 @@
+{#
+  Page: game_setup.html
+  Purpose: Setup form for creating a new game
+  Replaces: partie.html (setup mode)
+  Route: /partie (when no game_id)
+#}
+{% extends "base/base.html" %}
+
+{# Import macros #}
+{% from 'macros/design_system.html' import section_card, alert_box %}
+{% from 'macros/forms.html' import select_dropdown, input_number, form_actions %}
+
+{% block head_extra %}
+{% endblock %}
+
+{% block main_content %}
+
+{% if REQUEST_VARS.get('page_mode') == 'play' %}
+  {# On délègue le rendu du mode jeu au template dédié #}
+  {% include 'pages/game_play.html' %}
+{% else %}
+<div class="game-setup-section">
+  {% call section_card(
+    "🎮 Nouvelle partie de Morpion Masters",
+    "Choisissez deux équipes, la taille de la grille et le nombre maximum de tours pour commencer une partie.",
+    icon="🎮"
+  ) %}
+
+  {% include 'components/message.html' %}
+
+  {% if REQUEST_VARS.get('game_created_id') %}
+  <div class="game-created-box">
+    <p>🎉 <strong>La partie a été créée avec succès !</strong></p>
+    <p>ID de la partie : <strong>#{{ REQUEST_VARS['game_created_id'] }}</strong></p>
+    <p>La partie a été enregistrée dans la base de données.</p>
+    <div class="created-actions">
+      <a href="partie/{{ REQUEST_VARS['game_created_id'] }}" class="btn btn-primary">▶️ Commencer la partie</a>
+      <a href="partie" class="btn btn-secondary">➕ Nouvelle partie</a>
+    </div>
+  </div>
+  {% elif REQUEST_VARS['teams']|length >= 2 %}
+  <form method="POST" class="game-setup-form">
+    {% set team_options = [] %}
+    {% for team in REQUEST_VARS['teams'] %}
+      {% set _ = team_options.append({
+        'value': team.id_team,
+        'text': team.name ~ ' (' ~ team.color ~ ') - ' ~ team.morpion_count ~ ' morpions'
+      }) %}
+    {% endfor %}
+
+    {{ select_dropdown(
+      'team1_id',
+      '⚔️ Équipe 1',
+      team_options,
+      required=true,
+      empty_option_text='-- Choisir une équipe --'
+    ) }}
+
+    {{ select_dropdown(
+      'opponent_type',
+      '🤖 Type d\'adversaire',
+      [
+        {'value': 'human', 'text': '👤 Humain (sélectionner équipe 2)'},
+        {'value': 'ai_easy', 'text': '🤖 IA - Facile'},
+        {'value': 'ai_medium', 'text': '🤖 IA - Moyen'},
+        {'value': 'ai_hard', 'text': '🤖 IA - Difficile'}
+      ],
+      selected_value='human',
+      required=true,
+      help_text='Jouez contre un autre joueur ou contre l\'IA'
+    ) }}
+
+    <div id="team2-selector">
+    {{ select_dropdown(
+      'team2_id',
+      '🛡️ Équipe 2',
+      team_options,
+      required=false,
+      empty_option_text='-- Choisir une équipe --'
+    ) }}
+    </div>
+
+    {% set grid_options = [] %}
+    {% for size in REQUEST_VARS['allowed_grid_sizes'] %}
+      {% set _ = grid_options.append({
+        'value': size,
+        'text': size ~ 'x' ~ size
+      }) %}
+    {% endfor %}
+
+    {{ select_dropdown(
+      'grid_size',
+      '📐 Taille de la grille',
+      grid_options,
+      selected_value=3,
+      required=true,
+      help_text='Choisissez 3x3 pour une partie rapide ou 4x4 pour plus de stratégie'
+    ) }}
+
+    {{ input_number(
+      'max_turns',
+      '🔢 Nombre maximum de tours',
+      value=20,
+      min=5,
+      max=50,
+      required=true,
+      help_text='Un tour = chaque équipe joue une fois. Recommandé : 20 tours pour 3x3, 30 pour 4x4'
+    ) }}
+
+    {{ form_actions(
+      submit_text='🚀 Créer la partie',
+      cancel_url='/'
+    ) }}
+  </form>
+  {% else %}
+  {% call alert_box('warning', "⚠️ Pas assez d'équipes disponibles !") %}
+    <p>Pour jouer, vous devez avoir au moins 2 équipes avec 6 morpions ou plus.</p>
+    <a href="equipe" class="btn btn-primary">Créer une équipe</a>
+  {% endcall %}
+  {% endif %}
+  {% endcall %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const opponentSelect = document.querySelector('select[name="opponent_type"]');
+  const team2Div = document.getElementById('team2-selector');
+  const team2Select = team2Div ? team2Div.querySelector('select[name="team2_id"]') : null;
+  
+  if (opponentSelect && team2Div) {
+    function updateTeam2Visibility() {
+      if (opponentSelect.value === 'human') {
+        team2Div.style.display = 'block';
+        if (team2Select) {
+          team2Select.required = true;
+        }
+      } else {
+        team2Div.style.display = 'none';
+        if (team2Select) {
+          team2Select.required = false;
+        }
+      }
+    }
+    
+    opponentSelect.addEventListener('change', updateTeam2Visibility);
+    updateTeam2Visibility();
+  }
+});
+</script>
+{% endif %}
+
+{% endblock %}

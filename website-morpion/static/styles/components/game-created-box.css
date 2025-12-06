@@ -1,0 +1,78 @@
+/* ============================================
+   Game Created Box Component (used in game_setup.html)
+   ============================================ */
+.game-created-box {
+  background: var(--gradient-blue);
+  color: var(--text-primary);
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  box-shadow: var(--shadow-xl);
+  border: 2px solid var(--accent-cyan);
+  margin: var(--spacing-lg) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.game-created-box::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(0, 255, 255, 0.1) 0%, transparent 70%);
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.game-created-box p {
+  margin: 1rem 0;
+  font-size: 1.15rem;
+  position: relative;
+  z-index: 1;
+}
+
+.game-created-box p:first-child {
+  font-size: 1.5rem;
+  color: var(--accent-gold);
+  text-shadow: var(--shadow-cyan);
+}
+
+.game-created-box strong {
+  font-size: 1.4rem;
+  color: var(--accent-gold);
+  text-shadow: var(--shadow-gold);
+}
+
+.created-actions {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: center;
+  margin-top: var(--spacing-lg);
+  position: relative;
+  z-index: 1;
+}
+
+.created-actions .btn-primary,
+.created-actions .btn-secondary {
+  flex: 0 1 auto;
+  min-width: 220px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .game-created-box {
+    padding: 2rem 1.5rem;
+  }
+
+  .created-actions {
+    flex-direction: column;
+  }
+
+  .created-actions .btn-primary,
+  .created-actions .btn-secondary {
+    width: 100%;
+    min-width: auto;
+  }
+}
+

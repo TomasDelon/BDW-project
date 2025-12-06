@@ -1,0 +1,200 @@
+/* ============================================
+   Stats Component - Consolidated Statistics Display
+   Consolidates: morpion-stats, card-stats, morpion-stats-mini, morpion-mini-stats
+   ============================================ */
+
+/* ============================================
+   Base Stats Container
+   ============================================ */
+.stats {
+    display: flex;
+    gap: 0.3rem;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* ============================================
+   Stats Layout Variants
+   ============================================ */
+.stats--inline {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+}
+
+.stats--grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.4rem;
+    margin-bottom: 0.5rem;
+}
+
+.stats--mini {
+    display: flex;
+    gap: 0.3rem;
+    justify-content: center;
+    font-size: 0.6rem;
+    flex-wrap: wrap;
+    letter-spacing: 0.4px;
+}
+
+.stats--cell {
+    display: flex;
+    flex-direction: row;
+    gap: 0.2rem;
+    font-size: 0.65rem;
+    width: 100%;
+    margin-top: 0.2rem;
+}
+
+/* ============================================
+   Individual Stat Item
+   ============================================ */
+.stat {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    white-space: nowrap;
+}
+
+/* Grid stat item (with background) */
+.stat--boxed {
+    background: rgba(15, 15, 26, 0.5);
+    padding: 0.4rem;
+    border-radius: 5px;
+    border: 1px solid rgba(62, 65, 164, 0.3);
+}
+
+/* ============================================
+   Stat Components
+   ============================================ */
+.stat__icon {
+    font-size: 1rem;
+}
+
+.stat__label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat__value {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* ============================================
+   Stat Type Colors - All stats use gold color
+   ============================================ */
+.stat--hp, .stat--attack, .stat--mana, .stat--accuracy,
+.stat--hp .stat__value, .stat--attack .stat__value,
+.stat--mana .stat__value, .stat--accuracy .stat__value,
+.morpion-stats .stat-hp, .morpion-stats .stat-attack,
+.morpion-stats .stat-mana, .morpion-stats .stat-accuracy {
+    color: var(--accent-gold);
+}
+
+/* ============================================
+   Stats Total Display
+   ============================================ */
+.stats-total {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    padding-top: 0.4rem;
+    border-top: 1px solid rgba(62, 65, 164, 0.3);
+}
+
+.stats-total strong {
+    color: var(--accent-gold);
+    font-size: 0.95rem;
+}
+
+/* ============================================
+   Legacy Class Aliases (backward compatibility)
+   ============================================ */
+.morpion-stats {
+    display: flex;
+    flex-direction: row;
+    gap: 0.2rem;
+    font-size: 0.65rem;
+    font-weight: 600;
+    width: 100%;
+    margin-top: 0.2rem;
+}
+
+.morpion-stats .stat-hp,
+.morpion-stats .stat-attack,
+.morpion-stats .stat-mana,
+.morpion-stats .stat-accuracy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    white-space: nowrap;
+}
+
+.morpion-stats-mini {
+    display: flex;
+    gap: 0.3rem;
+    justify-content: center;
+    font-size: 0.6rem;
+    color: var(--accent-gold);
+    font-weight: 600;
+    flex-wrap: wrap;
+    letter-spacing: 0.4px;
+}
+
+.card-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.4rem;
+    margin-bottom: 0.5rem;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(15, 15, 26, 0.5);
+    padding: 0.4rem;
+    border-radius: 5px;
+    border: 1px solid rgba(62, 65, 164, 0.3);
+}
+
+.stat-icon {
+    font-size: 1rem;
+}
+
+.stat-value {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.card-total {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    padding-top: 0.4rem;
+    border-top: 1px solid rgba(62, 65, 164, 0.3);
+}
+
+.card-total strong {
+    color: var(--accent-gold);
+    font-size: 0.95rem;
+}
+
+.morpion-mini-stats {
+    display: flex;
+    justify-content: space-around;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    flex-wrap: wrap;
+    gap: 0.25rem;
+}
+

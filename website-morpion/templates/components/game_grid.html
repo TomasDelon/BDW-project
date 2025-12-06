@@ -1,0 +1,24 @@
+{#
+  Component: game_grid.html
+  Purpose: Complete game grid with all cells
+  Props:
+    - grid_size: Size of the grid (3 or 4)
+    - grid: Dictionary with (row, col) -> cell data
+    - game: Game object
+    - team1_morpions: List of team 1 morpions
+    - team2_morpions: List of team 2 morpions
+  Usage:
+    {% include 'components/game_grid.html' %}
+#}
+<div class="game-grid">
+  <table class="game-grid__board game-grid__board--size-{{ grid_size }}">
+    {% for row in range(grid_size) %}
+    <tr>
+      {% for col in range(grid_size) %}
+        {% set cell = grid.get((row, col)) %}
+        {% include 'components/game_cell.html' %}
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
+</div>

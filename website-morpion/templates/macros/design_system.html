@@ -1,0 +1,43 @@
+{# 
+  Macros transversales pour les composants réutilisables (sections, alertes, badges)
+#}
+
+{% macro section_card(title=None, subtitle=None, icon=None, classes='') %}
+<section class="section-card {{ classes }}">
+  {% if title or subtitle %}
+  <header class="section-card__header">
+    {% if icon %}
+    <span class="section-card__icon">{{ icon }}</span>
+    {% endif %}
+    <div class="section-card__titles">
+      {% if title %}<h2>{{ title }}</h2>{% endif %}
+      {% if subtitle %}<p>{{ subtitle }}</p>{% endif %}
+    </div>
+  </header>
+  {% endif %}
+  <div class="section-card__body">
+    {{ caller() }}
+  </div>
+</section>
+{% endmacro %}
+
+
+{% macro alert_box(kind='info', title=None) %}
+<div class="alert-box alert-box--{{ kind }}">
+  {% if title %}
+  <h3 class="alert-box__title">{{ title }}</h3>
+  {% endif %}
+  <div class="alert-box__body">
+    {{ caller() }}
+  </div>
+</div>
+{% endmacro %}
+
+
+{% macro stat_badge(label, value, icon=None, tone='default') -%}
+<span class="stat-badge stat-badge--{{ tone }}">
+  {% if icon %}<span class="stat-badge__icon">{{ icon }}</span>{% endif %}
+  <span class="stat-badge__label">{{ label }}</span>
+  <strong class="stat-badge__value">{{ value }}</strong>
+</span>
+{%- endmacro %}

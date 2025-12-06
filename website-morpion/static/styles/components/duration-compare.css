@@ -1,0 +1,100 @@
+.duration-compare {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-lg);
+  background: rgba(15, 15, 26, 0.4);
+  border: 1px solid rgba(62, 65, 164, 0.3);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.duration-compare .duration-bars {
+  flex: 2;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.duration-compare .duration-meta {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.duration-compare .duration-meta span {
+  font-weight: 600;
+}
+
+.meta-separator {
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.team-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-weight: 600;
+  color: var(--text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.2);
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+}
+
+.team-chip::after {
+  content: "";
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--team-color, var(--accent-cyan));
+  box-shadow: 0 0 6px var(--team-color, var(--accent-cyan));
+}
+
+.team-chip--winner {
+  background: rgba(255, 215, 0, 0.2);
+  color: var(--accent-gold);
+  border-color: rgba(255, 215, 0, 0.4);
+}
+
+.team-chip--draw {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+}
+
+.duration-info-card {
+  flex: 1;
+  min-width: 240px;
+  background: rgba(62, 65, 164, 0.15);
+  border: 1px solid rgba(62, 65, 164, 0.4);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  color: var(--text-secondary);
+}
+
+.duration-info-card h4 {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.duration-info-card .note {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .duration-compare {
+    flex-direction: column;
+  }
+}

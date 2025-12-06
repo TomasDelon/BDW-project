@@ -1,0 +1,561 @@
+/* ============================================================
+   AFFICHE PROJET - Style Neumorphism pour export PDF
+   Document type: A4 portrait, impression-ready
+   ============================================================ */
+
+/* Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Palette Neumorphism - Gris doux et lisibles */
+  --color-bg: #e8eaef;
+  --color-surface: #f0f2f7;
+  --color-text-primary: #1f2a38;
+  --color-text-secondary: #5e6673;
+  --color-accent: #24364b;
+  --color-accent-light: #4c6078;
+
+  /* Ombres Neumorphism - Principales */
+  --shadow-light: #ffffff;
+  --shadow-dark: #caced8;
+
+  /* Neumorphic shadows - relief convexe (usando tus valores) */
+  --neu-shadow-1: 14px 14px 28px var(--shadow-dark),
+                   -14px -14px 28px var(--shadow-light);
+  --neu-shadow-2: 8px 8px 16px var(--shadow-dark),
+                   -8px -8px 16px var(--shadow-light);
+  --neu-shadow-inset: inset 8px 8px 16px var(--shadow-dark),
+                       inset -8px -8px 16px var(--shadow-light);
+  --neu-shadow-flat: 4px 4px 8px var(--shadow-dark),
+                      -4px -4px 8px var(--shadow-light);
+
+  /* Sombras suaves pour éléments pequeños */
+  --neu-shadow-soft: 3px 3px 7px rgba(202, 206, 216, 0.35),
+                      -3px -3px 7px rgba(255, 255, 255, 0.9);
+
+  /* Espacements */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 1.2rem;
+  --spacing-2xl: 1.7rem;
+
+  /* Typographie */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'Courier New', Courier, monospace;
+}
+
+/* Page container - Format A4 élargi avec effet ambiant */
+body {
+  font-family: var(--font-sans);
+  font-size: 10pt;
+  line-height: 1.6;
+  color: var(--color-text-primary);
+  background: var(--color-bg);
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+/* Effet de vignette subtil sur les bords */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center,
+    transparent 40%,
+    rgba(205, 205, 205, 0.15) 100%);
+  z-index: 0;
+}
+
+.affiche-container {
+  max-width: 190mm; /* A4 width - marges */
+  margin: 0 auto;
+  padding: 15mm 10mm;
+  background: transparent;
+  min-height: 297mm; /* A4 height */
+  position: relative;
+  z-index: 1;
+}
+
+/* Article principal */
+.affiche-document {
+  width: 100%;
+}
+
+/* ============================================================
+   EN-TÊTE - Neumorphic avec détails élégants
+   ============================================================ */
+.affiche-header {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+  padding: var(--spacing-2xl) var(--spacing-xl);
+  background: var(--color-surface);
+  border-radius: 48px;
+  box-shadow: var(--neu-shadow-1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Effet de brillance subtile en haut */
+.affiche-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    transparent 100%);
+  opacity: 0.6;
+}
+
+.affiche-header h1 {
+  font-size: 28pt;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-md);
+  letter-spacing: -0.5px;
+  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8),
+               -1px -1px 2px rgba(205, 205, 205, 0.4);
+}
+
+.affiche-header .subtitle {
+  font-size: 11pt;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-lg);
+  font-weight: 400;
+  font-style: italic;
+}
+
+.affiche-header .meta {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-2xl);
+  flex-wrap: wrap;
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+  position: relative;
+}
+
+/* Séparateur décoratif */
+.affiche-header .meta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 30%;
+  right: 30%;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--color-text-secondary) 50%,
+    transparent 100%);
+  opacity: 0.2;
+}
+
+.affiche-header .meta p {
+  font-size: 9.5pt;
+  color: var(--color-text-secondary);
+  margin: 0;
+  padding: var(--spacing-xs) var(--spacing-md);
+  background: var(--color-surface);
+  border-radius: 24px;
+  box-shadow: var(--neu-shadow-soft);
+}
+
+/* ============================================================
+   SECTIONS - Neumorphic cards avec border-radius élégant
+   ============================================================ */
+.affiche-section {
+  margin-bottom: var(--spacing-2xl);
+  padding: var(--spacing-2xl) var(--spacing-xl);
+  background: var(--color-surface);
+  border-radius: 48px;
+  box-shadow: var(--neu-shadow-1);
+  page-break-inside: avoid;
+  position: relative;
+}
+
+.page-break-before {
+  page-break-before: always;
+  break-before: page;
+}
+
+.page-break-after {
+  page-break-after: always;
+  break-after: page;
+}
+
+.page-break-avoid {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.affiche-section h2 {
+  font-size: 14pt;
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 12pt;
+}
+
+/* Ligne décorative sous le titre */
+.affiche-section h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg,
+    var(--color-accent) 0%,
+    var(--color-accent-light) 50%,
+    transparent 100%);
+  border-radius: 2px;
+  box-shadow: var(--neu-shadow-soft);
+}
+
+/* Icône décorative optionnelle */
+.affiche-section h2::before {
+  content: '◆';
+  color: var(--color-accent);
+  margin-right: var(--spacing-sm);
+  font-size: 10pt;
+  opacity: 0.5;
+}
+
+/* ============================================================
+   TABLEAU DES FONCTIONNALITÉS - Neumorphic incrustado
+   ============================================================ */
+.features-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 8.5pt;
+  margin-top: var(--spacing-md);
+  background: var(--color-surface);
+  border-radius: 26px;
+  overflow: hidden;
+  box-shadow: var(--neu-shadow-inset);
+}
+
+.features-table th {
+  padding: calc(var(--spacing-md) + 2px) var(--spacing-lg);
+  text-align: left;
+  font-weight: 700;
+  color: var(--color-accent);
+  font-size: 8pt;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: rgba(255, 255, 255, 0.45);
+  border-right: 1px solid rgba(31, 42, 56, 0.06);
+}
+
+.features-table td {
+  padding: calc(var(--spacing-md) + 2px) var(--spacing-lg);
+  vertical-align: middle;
+  background: rgba(255, 255, 255, 0.35);
+  border-top: 1px solid rgba(31, 42, 56, 0.05);
+  border-right: 1px solid rgba(31, 42, 56, 0.05);
+}
+
+.features-table th:last-child,
+.features-table td:last-child {
+  border-right: none;
+}
+
+.features-table td:nth-child(1) {
+  width: 28%;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.features-table td:nth-child(2) {
+  width: 60%;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  font-size: 8.5pt;
+}
+
+.features-table td:nth-child(3) {
+  width: 12%;
+  text-align: center;
+  font-weight: 500;
+  color: #27ae60;
+  letter-spacing: 0.4px;
+}
+
+/* ============================================================
+   DIAGRAMME E/A (Mermaid) - Neumorphic container élégant
+   ============================================================ */
+.diagram-box {
+  background: linear-gradient(125deg, var(--color-surface) 0%, #dfe5f5 55%, #cfd7ec 100%);
+  border-radius: 32px;
+  padding: var(--spacing-2xl);
+  margin-top: var(--spacing-md);
+  box-shadow: var(--neu-shadow-inset);
+  overflow-x: auto;
+  position: relative;
+  border: 1px solid rgba(36, 54, 75, 0.08);
+}
+
+.diagram-box .mermaid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: fit-content;
+  font-size: 12pt;
+  padding: calc(0.5 * var(--spacing-lg));
+  background: rgba(255, 255, 255, 0.65);
+  border-radius: 24px;
+  border: 1px dashed rgba(36, 54, 75, 0.2);
+}
+
+/* ============================================================
+   SCHÉMA RELATIONNEL - Neumorphic avec style code
+   ============================================================ */
+.schema-box {
+  background: var(--color-surface);
+  border-radius: 24px;
+  padding: var(--spacing-xl);
+  margin-top: var(--spacing-md);
+  box-shadow: var(--neu-shadow-inset);
+  position: relative;
+}
+
+.schema-text {
+  font-family: var(--font-mono);
+  font-size: 8pt;
+  line-height: 2;
+  color: var(--color-text-primary);
+  margin: 0;
+  white-space: pre;
+  padding: calc(O.8*var(--spacing-md));
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 100%);
+  border-radius: 16px;
+}
+
+.schema-note {
+  margin-top: var(--spacing-lg);
+  font-size: 8pt;
+  color: var(--color-text-secondary);
+  font-style: italic;
+  text-align: center;
+  padding: var(--spacing-sm);
+  background: var(--color-surface);
+  border-radius: 16px;
+  box-shadow: var(--neu-shadow-soft);
+}
+
+/* ============================================================
+   CAPTURES D'ÉCRAN - une section par page, image seule
+   ============================================================ */
+.capture-section {
+  page-break-before: always;
+  break-before: page;
+}
+
+.capture-section h2 {
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+}
+
+.capture-img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  border-radius: 20px;
+  clip-path: inset(0 round 20px);
+  box-shadow: var(--neu-shadow-flat);
+  border: 1px solid rgba(31, 42, 56, 0.06);
+  background: #fff;
+}
+
+/* ============================================================
+   FOOTER - Neumorphic élégant avec séparateur
+   ============================================================ */
+.affiche-footer {
+  margin-top: var(--spacing-2xl);
+  padding: var(--spacing-2xl) var(--spacing-xl);
+  text-align: center;
+  background: var(--color-surface);
+  border-radius: 48px;
+  box-shadow: var(--neu-shadow-1);
+  position: relative;
+}
+
+/* Ligne décorative en haut du footer */
+.affiche-footer::before {
+  content: '';
+  position: absolute;
+  top: var(--spacing-lg);
+  left: 25%;
+  right: 25%;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--color-accent) 50%,
+    transparent 100%);
+  opacity: 0.3;
+}
+
+.affiche-footer p {
+  font-size: 8.5pt;
+  color: var(--color-text-secondary);
+  margin: var(--spacing-sm) 0;
+  line-height: 1.8;
+  font-weight: 500;
+}
+
+.affiche-footer p:first-of-type {
+  font-weight: 600;
+  color: var(--color-accent);
+  margin-bottom: var(--spacing-md);
+}
+
+/* ============================================================
+   STYLES D'IMPRESSION - Optimisé pour PDF
+   ============================================================ */
+@media print {
+  body {
+    background: #e6e6e6;
+    margin: 0;
+    padding: 0;
+  }
+
+  .affiche-container {
+    max-width: 100%;
+    margin: 0;
+    padding: 8mm;
+  }
+
+  .affiche-section {
+    page-break-inside: avoid;
+    /* Garder ombres subtiles pour le relief */
+    box-shadow: 12px 12px 24px rgba(205, 205, 205, 0.6),
+                -12px -12px 24px rgba(255, 255, 255, 0.8) !important;
+  }
+
+  .affiche-header,
+  .affiche-footer {
+    box-shadow: 12px 12px 24px rgba(205, 205, 205, 0.6),
+                -12px -12px 24px rgba(255, 255, 255, 0.8) !important;
+  }
+
+  .diagram-box,
+  .schema-box {
+    box-shadow: inset 4px 4px 8px rgba(205, 205, 205, 0.4),
+                inset -4px -4px 8px rgba(255, 255, 255, 0.6) !important;
+  }
+
+  .capture-item {
+    box-shadow: 6px 6px 12px rgba(205, 205, 205, 0.5),
+                -6px -6px 12px rgba(255, 255, 255, 0.7) !important;
+  }
+
+  .capture-placeholder {
+    box-shadow: inset 4px 4px 8px rgba(205, 205, 205, 0.4),
+                inset -4px -4px 8px rgba(255, 255, 255, 0.6) !important;
+  }
+
+  /* Garder effets décoratifs */
+  .affiche-header::before,
+  .affiche-section h2::after,
+  .affiche-section h2::before,
+  .capture-item[data-number]::after {
+    display: block !important;
+  }
+
+  /* Optimiser espacement pour impression */
+  .affiche-section {
+    margin-bottom: 6mm;
+  }
+
+  .captures-grid {
+    gap: 4mm;
+  }
+
+  /* Assurer lisibilité des textes */
+  .features-table th,
+  .features-table td {
+    font-size: 7.5pt;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE (pour visualisation web)
+   ============================================================ */
+@media screen and (max-width: 768px) {
+  .affiche-container {
+    padding: var(--spacing-md);
+    max-width: 100%;
+  }
+
+  .affiche-header h1 {
+    font-size: 18pt;
+  }
+
+  .captures-grid {
+    gap: var(--spacing-lg);
+  }
+
+  .features-table {
+    font-size: 8pt;
+  }
+
+  .features-table th,
+  .features-table td {
+    padding: var(--spacing-xs);
+  }
+
+  .affiche-header .meta {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+}
+
+/* ============================================================
+   UTILITAIRES
+   ============================================================ */
+.text-center {
+  text-align: center;
+}
+
+.mb-sm { margin-bottom: var(--spacing-sm); }
+.mb-md { margin-bottom: var(--spacing-md); }
+.mb-lg { margin-bottom: var(--spacing-lg); }
+
+.mt-sm { margin-top: var(--spacing-sm); }
+.mt-md { margin-top: var(--spacing-md); }
+.mt-lg { margin-top: var(--spacing-lg); }
+
+/* Effet Neumorphism pour éléments interactifs */
+.neu-button {
+  background: var(--color-surface);
+  border-radius: 8px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  box-shadow: var(--neu-shadow-2);
+  transition: all 0.2s;
+}
+
+.neu-button:active {
+  box-shadow: var(--neu-shadow-inset);
+}

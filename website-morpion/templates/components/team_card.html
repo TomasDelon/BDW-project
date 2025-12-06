@@ -1,0 +1,71 @@
+{#
+  Component: team_card.html
+  Purpose: Complete team card with header, morpions, games, and actions
+  Props:
+    - team: Complete team object with morpions and games
+  Usage:
+    {% for team in REQUEST_VARS['teams'] %}
+      {% include 'components/team_card.html' %}
+    {% endfor %}
+#}
+<div class="team-card">
+  {% include 'components/team_header.html' %}
+
+  <div class="team-morpions">
+    <div class="morpions-header">
+      <h4>Morpions ({{ team.morpion_count }})</h4>
+    </div>
+    {% if team.morpions and team.morpions|length > 0 %}
+    <div class="morpions-mini-grid">
+      {% for morpion in team.morpions %}
+        {% include 'components/morpion_mini_card.html' %}
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="no-morpions">Aucun morpion dans cette équipe.</p>
+    {% endif %}
+  </div>
+
+  {% if team.games_count and team.games_count > 0 %}
+  <details class="team-games">
+    <summary>
+      <div class="games-summary">
+        <div>
+          <span class="games-summary__title">🎮 Parties associées ({{ team.games_count }})</span>
+          {% if team.games_displayed is defined and team.games_displayed < team.games_count %}
+            <span class="games-summary__meta">Dernières {{ team.games_displayed }} affichées</span>
+          {% else %}
+            <span class="games-summary__meta">Affichage complet</span>
+          {% endif %}
+        </div>
+        <span class="games-summary__chevron" aria-hidden="true"></span>
+      </div>
+    </summary>
+    <div class="team-games__body">
+      <div class="games-list">
+        {% for game in team.games %}
+          {% include 'components/game_item.html' %}
+        {% endfor %}
+      </div>
+    </div>
+  </details>
+  {% endif %}
+
+  <div class="team-actions">
+    {% if team.games_count and team.games_count > 0 %}
+    <form method="POST" class="delete-form">
+      <input type="hidden" name="team_id" value="{{ team.id_team }}">
+      <button type="submit" name="bouton_supprimer" class="btn btn-delete-team">
+        🗑️ Supprimer ({{ team.games_count }} partie(s) associée(s))
+      </button>
+    </form>
+    {% else %}
+    <form method="POST" class="delete-form">
+      <input type="hidden" name="team_id" value="{{ team.id_team }}">
+      <button type="submit" name="bouton_supprimer" class="btn btn-delete-team">
+        🗑️ Supprimer
+      </button>
+    </form>
+    {% endif %}
+  </div>
+</div>

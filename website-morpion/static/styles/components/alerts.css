@@ -1,0 +1,55 @@
+/* ============================================
+   Alerts Component (used throughout app)
+   ============================================ */
+.alert {
+  padding: 1.2rem 1.5rem;
+  border-radius: var(--radius-md);
+  margin: var(--spacing-md) 0;
+  border: 2px solid;
+  font-weight: 500;
+  animation: slideIn 0.3s ease;
+}
+
+.alert p {
+  margin: 0.7rem 0;
+}
+
+/* Warning Alert */
+.alert-warning {
+  background: linear-gradient(135deg, rgba(255, 200, 0, 0.2) 0%, rgba(200, 150, 0, 0.2) 100%);
+  border-color: #ffc800;
+  color: var(--text-primary);
+}
+
+.alert-warning p {
+  color: var(--text-primary);
+}
+
+.alert-warning .btn-primary {
+  margin-top: 1.2rem;
+  display: inline-block;
+  width: auto;
+  min-width: 200px;
+}
+
+/* Error Alert */
+.alert-error {
+  background: linear-gradient(135deg, rgba(165, 1, 28, 0.3) 0%, rgba(122, 1, 20, 0.3) 100%);
+  border-color: var(--primary-red);
+  color: var(--text-primary);
+}
+
+/* Info Alert */
+.alert-info {
+  background: linear-gradient(135deg, rgba(62, 65, 164, 0.3) 0%, rgba(45, 47, 122, 0.3) 100%);
+  border-color: var(--primary-blue);
+  color: var(--text-primary);
+}
+
+/* Success Alert */
+.alert-success {
+  background: linear-gradient(135deg, rgba(0, 200, 80, 0.2) 0%, rgba(0, 150, 60, 0.2) 100%);
+  border-color: #00c850;
+  color: var(--text-primary);
+}
+

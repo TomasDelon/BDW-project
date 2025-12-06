@@ -1,0 +1,15 @@
+{#
+  Component: message.html
+  Purpose: Display flash messages (success, error, warning, info)
+  Props:
+    - REQUEST_VARS['message']: The message text
+    - REQUEST_VARS['message_class']: CSS class for styling (alert-info, alert-warning, alert-error, alert-success)
+  Usage:
+    {% include 'components/message.html' %}
+#}
+{% if REQUEST_VARS['message'] and REQUEST_VARS['message_class'] %}
+<div class="alert {{ REQUEST_VARS['message_class'] }}">
+  {{ REQUEST_VARS['message'] | safe }}
+</div>
+{% endif %}
+

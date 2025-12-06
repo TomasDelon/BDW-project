@@ -1,0 +1,80 @@
+{#
+  Component: game_duration_compare.html
+  Purpose: Visual comparison between fastest and longest games
+  Props:
+    - fastest_game: dict with team names, winner, duration
+    - longest_game: dict with team names, winner, duration
+  Usage:
+    {% include 'components/game_duration_compare.html' with context %}
+#}
+{% from 'macros/charts.html' import bar_chart_row %}
+
+{% set fastest = fastest_game %}
+{% set longest = longest_game %}
+
+{% if fastest or longest %}
+  {% set fastest_value = fastest.duration_seconds if fastest and fastest.duration_seconds is defined else 0 %}
+  {% set longest_value = longest.duration_seconds if longest and longest.duration_seconds is defined else fastest_value %}
+  {% set denominator = longest_value if longest_value > 0 else 1 %}
+  <div class="duration-compare">
+    <div class="duration-bars">
+      {% if fastest %}
+        {{ bar_chart_row(
+          "⏩ Partie la plus rapide",
+          fastest.duration_display,
+          (fastest_value / denominator * 100)|round(2),
+          'duration',
+          show_count=false
+        ) }}
+        <p class="duration-meta">
+          <span class="team-chip" style="--team-color: {{ fastest.team1_color or '#5a5dd4' }};">{{ fastest.team1_name }}</span>
+          <span class="meta-separator">vs</span>
+          <span class="team-chip" style="--team-color: {{ fastest.team2_color or '#a5011c' }};">{{ fastest.team2_name }}</span>
+          {% if fastest.winner_name %}
+            <span class="meta-separator">—</span>
+            <span class="team-chip team-chip--winner">{{ fastest.winner_name }} 🏆</span>
+          {% else %}
+            <span class="meta-separator">—</span>
+            <span class="team-chip team-chip--draw">Égalité 🤝</span>
+          {% endif %}
+        </p>
+      {% else %}
+        <p class="empty-message">Aucune partie rapide enregistrée.</p>
+      {% endif %}
+
+      {% if longest %}
+        {{ bar_chart_row(
+          "🐢 Partie la plus longue",
+          longest.duration_display,
+          100,
+          'duration',
+          show_count=false
+        ) }}
+        <p class="duration-meta">
+          <span class="team-chip" style="--team-color: {{ longest.team1_color or '#5a5dd4' }};">{{ longest.team1_name }}</span>
+          <span class="meta-separator">vs</span>
+          <span class="team-chip" style="--team-color: {{ longest.team2_color or '#a5011c' }};">{{ longest.team2_name }}</span>
+          {% if longest.winner_name %}
+            <span class="meta-separator">—</span>
+            <span class="team-chip team-chip--winner">{{ longest.winner_name }} 🏆</span>
+          {% else %}
+            <span class="meta-separator">—</span>
+            <span class="team-chip team-chip--draw">Égalité 🤝</span>
+          {% endif %}
+        </p>
+      {% endif %}
+    </div>
+    <div class="duration-info-card">
+      <h4>Comparaison</h4>
+      {% if fastest and longest %}
+        {% set ratio = (longest_value / (fastest_value if fastest_value > 0 else 1))|round(1) %}
+        <p>La partie la plus longue a duré <strong>{{ ratio }}×</strong> plus longtemps que la plus rapide.</p>
+      {% else %}
+        <p>Données insuffisantes pour comparer.</p>
+      {% endif %}
+      <p class="note">Les durées sont calculées à partir des horodatages de début et fin des parties terminées.</p>
+    </div>
+  </div>
+{% else %}
+  <p class="empty-message">Aucune partie terminée à comparer.</p>
+{% endif %}

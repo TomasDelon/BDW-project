@@ -1,0 +1,56 @@
+/* ============================================
+   Position Selector Component (components/position_selector.html)
+   ============================================ */
+.position-selection {
+  margin: var(--spacing-lg) 0;
+  padding: var(--spacing-md);
+  background: rgba(15, 15, 26, 0.5);
+  border-radius: var(--radius-md);
+}
+
+.position-selection h4 {
+  color: var(--accent-cyan);
+  margin-bottom: var(--spacing-sm);
+  text-align: center;
+}
+
+.position-inputs {
+  display: flex;
+  gap: var(--spacing-lg);
+  justify-content: center;
+  align-items: center;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.input-group label {
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+.input-group select {
+  padding: 0.7rem 1.5rem;
+  border: 2px solid rgba(62, 65, 164, 0.4);
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-base);
+}
+
+.input-group select:focus {
+  outline: none;
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+/* Responsive styles moved to layout/responsive.css */

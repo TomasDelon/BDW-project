@@ -1,0 +1,376 @@
+{#
+  Page: game_advanced_play.html
+  Purpose: Active game interface for advanced gameplay
+  Route: /partie-avancee?game_id=X
+#}
+{% from 'macros/morpions.html' import morpion_image as render_morpion_image, morpion_stats as render_morpion_stats with context %}
+{% set game = REQUEST_VARS['game'] %}
+{% set grid_size = game['grid_size'] %}
+{% set current_player = REQUEST_VARS['current_player'] %}
+{% set game_over = REQUEST_VARS['game_over'] %}
+{% set current_turn = REQUEST_VARS['current_turn'] %}
+{% set grid = REQUEST_VARS['grid'] %}
+{% set morpions_state = REQUEST_VARS['morpions_state'] %}
+{% set destroyed_cells = REQUEST_VARS.get('destroyed_cells', []) %}
+{% set team1_morpions = REQUEST_VARS['team1_morpions'] %}
+{% set team2_morpions = REQUEST_VARS['team2_morpions'] %}
+{% set selected_action = REQUEST_VARS.get('selected_action', 'place') %}
+{% set selected_attacker_pos = REQUEST_VARS.get('selected_attacker_pos') %}
+{% set selected_spell_type = REQUEST_VARS.get('selected_spell_type') %}
+{% set selected_spell_caster_pos = REQUEST_VARS.get('selected_spell_caster_pos') %}
+{% set attack_valid_targets = REQUEST_VARS.get('attack_valid_targets', []) %}
+{% set current_team_id = game['team1_id'] if current_player == 1 else game['team2_id'] %}
+{% set current_team_color = game['team1_color'] if current_player == 1 else game['team2_color'] %}
+<section class="game-play-section" 
+         data-current-player-team="{{ game['team1_id'] if current_player == 1 else game['team2_id'] }}"
+         style="--current-team-color: {{ current_team_color }};">
+  <h2>⚔️ Partie avancée en cours</h2>
+  
+  {# Game Info Header #}
+  {% include 'components/game_info_header.html' %}
+
+  {# Flash Message #}
+  {% include 'components/message.html' %}
+
+  {% if not game_over %}
+    {# Formularios ocultos para manejar radios que envían GET #}
+    <form method="GET" action="partie-avancee/{{ game['id_game'] }}" id="action-switcher-form" class="hidden-form ajax-form">
+      <input type="hidden" name="game_id" value="{{ game['id_game'] }}">
+    </form>
+    <form method="GET" action="partie-avancee/{{ game['id_game'] }}" id="attack-selection-form" class="hidden-form ajax-form">
+      <input type="hidden" name="game_id" value="{{ game['id_game'] }}">
+      <input type="hidden" name="action" value="attack">
+    </form>
+    <form method="GET" action="partie-avancee/{{ game['id_game'] }}" id="spell-type-form" class="hidden-form ajax-form">
+      <input type="hidden" name="game_id" value="{{ game['id_game'] }}">
+      <input type="hidden" name="action" value="spell">
+    </form>
+    <form method="GET" action="partie-avancee/{{ game['id_game'] }}" id="spell-caster-form" class="hidden-form ajax-form">
+      <input type="hidden" name="game_id" value="{{ game['id_game'] }}">
+      <input type="hidden" name="action" value="spell">
+      {% if selected_spell_type %}
+      <input type="hidden" name="select_spell" value="{{ selected_spell_type }}">
+      {% endif %}
+    </form>
+
+    {# Selector de acción #}
+    {% include 'components/action_selector.html' %}
+    
+    {# Formulario principal #}
+    <form method="POST" action="partie-avancee/{{ game['id_game'] }}" class="play-form ajax-form" id="game-form">
+      <input type="hidden" name="game_id" value="{{ game['id_game'] }}">
+      <input type="hidden" name="action" id="hidden-action" value="{{ selected_action }}">
+      
+      {# Grid con casillas destruidas y HP/mana #}
+      <div class="game-play-layout game-play-layout--advanced">
+        <div class="game-play-layout__grid game-play-layout__grid--advanced">
+          <div class="game-grid">
+        <table class="game-grid__board game-grid__board--size-{{ grid_size }}">
+          {% for row in range(grid_size) %}
+          <tr>
+            {% for col in range(grid_size) %}
+              {% set position = (row, col) %}
+              {% set cell = grid.get(position) %}
+              {% set is_destroyed = position in destroyed_cells %}
+              
+              <td class="game-grid__cell{% if is_destroyed %} game-grid__cell--destroyed{% elif cell %} game-grid__cell--occupied{% else %} game-grid__cell--empty{% endif %}" 
+                  data-row="{{ row }}" 
+                  data-col="{{ col }}"
+                  data-position="{{ row }},{{ col }}">
+                {% set position_value = row ~ ',' ~ col %}
+                {% if is_destroyed %}
+                  <div class="game-grid__cell-content game-grid__cell-content--destroyed">
+                    <span class="game-grid__destroyed-icon">💥</span>
+                    <span class="game-grid__destroyed-text">Détruite</span>
+                  </div>
+                {% elif cell %}
+                  {% set team_id = cell['team_id'] %}
+                  {% set morpion_id = cell['morpion_id'] %}
+                  {% set team_color = game['team1_color'] if team_id == game['team1_id'] else game['team2_color'] %}
+                  {% set morpions_list = team1_morpions if team_id == game['team1_id'] else team2_morpions %}
+                  {% set morpion_id_int = morpion_id|int %}
+                  {% set morpion = morpions_list | selectattr('id_morpion', 'equalto', morpion_id_int) | first %}
+                  {% set morpion_state = morpions_state.get(morpion_id_int, {}) %}
+                  {% if morpion %}
+                    {% set morpion_name = morpion.name %}
+                    {% set morpion_image = morpion.image_url %}
+                    {% set default_hp = morpion.hp %}
+                    {% set default_attack = morpion.attack %}
+                    {% set default_mana = morpion.mana %}
+                    {% set default_accuracy = morpion.accuracy %}
+                  {% else %}
+                    {% set morpion_name = '?' %}
+                    {% set morpion_image = 'sheep.png' %}
+                    {% set default_hp = 0 %}
+                    {% set default_attack = 0 %}
+                    {% set default_mana = 0 %}
+                    {% set default_accuracy = 1 %}
+                  {% endif %}
+                  {% set hp = morpion_state.get('hp', default_hp) %}
+                  {% set attack = morpion_state.get('attack', default_attack) %}
+                  {% set mana = morpion_state.get('mana', default_mana) %}
+                  {% set accuracy = morpion_state.get('current_accuracy', morpion_state.get('accuracy', default_accuracy)) %}
+                  {% set morpion_payload = {
+                    'image_url': morpion_image,
+                    'name': morpion_name,
+                    'hp': hp,
+                    'attack': attack,
+                    'mana': mana,
+                    'accuracy': accuracy
+                  } %}
+                  {% set is_friendly = team_id == current_team_id %}
+                  {% set is_enemy = not is_friendly %}
+                  {% set caster_selected = selected_spell_caster_pos is not none %}
+                  {% set content %}
+                  <div class="game-grid__cell-content game-grid__cell-content--advanced" 
+                       style="border-color: {{ team_color }}; background: linear-gradient(135deg, {{ team_color }}44 0%, {{ team_color }}22 100%); color: {{ team_color }};"
+                       data-morpion-id="{{ morpion_id }}"
+                       data-team-id="{{ team_id }}"
+                       data-team-color="{{ team_color }}"
+                       data-position="{{ row }},{{ col }}">
+                    {% if morpion %}
+                    {{ render_morpion_image(morpion_payload, size='cell', title=morpion_name) }}
+                    <span class="game-grid__morpion-name">{{ morpion_name }}</span>
+                    {{ render_morpion_stats(morpion_payload, 'cell', accuracy_format='float') }}
+                    {% else %}
+                    <span>?</span>
+                    {% endif %}
+                  </div>
+                  {% endset %}
+                  
+                  {% if selected_action == 'attack' %}
+                    {% if is_friendly %}
+                      <label class="game-grid__radio-label" title="Sélectionnez un morpion pour attaquer">
+                        <input type="radio"
+                               class="game-grid__radio-input auto-submit-radio"
+                               name="select_attacker"
+                               value="{{ position_value }}"
+                               form="attack-selection-form"
+                               {% if selected_attacker_pos and selected_attacker_pos == position %}checked{% endif %}>
+                        {{ content }}
+                      </label>
+                    {% else %}
+                      {% set can_attack = position in attack_valid_targets %}
+                      <button type="submit"
+                              name="target_pos"
+                              value="{{ position_value }}"
+                              class="game-grid__action-button"
+                              {% if not selected_attacker_pos or not can_attack %}disabled{% endif %}
+                              title="{% if can_attack %}Attaquer ce morpion{% else %}Sélectionnez un attaquant adjacent{% endif %}">
+                        {{ content }}
+                      </button>
+                    {% endif %}
+                  {% elif selected_action == 'spell' %}
+                    {% if selected_spell_type == 'boule_de_feu' %}
+                      {% if is_friendly %}
+                        <label class="game-grid__radio-label" title="Sélectionnez le lanceur de Boule de feu">
+                          <input type="radio"
+                                 class="game-grid__radio-input auto-submit-radio"
+                                 name="select_spell_caster"
+                                 value="{{ position_value }}"
+                                 form="spell-caster-form"
+                                 {% if selected_spell_caster_pos and selected_spell_caster_pos == position %}checked{% endif %}>
+                          {{ content }}
+                        </label>
+                      {% else %}
+                        <button type="submit"
+                                name="target_pos"
+                                value="{{ position_value }}"
+                                class="game-grid__action-button"
+                                {% if not selected_spell_caster_pos %}disabled{% endif %}
+                                title="{% if selected_spell_caster_pos %}Cibler ce morpion adverse{% else %}Sélectionnez d'abord votre lanceur{% endif %}">
+                          {{ content }}
+                        </button>
+                      {% endif %}
+                    {% elif selected_spell_type == 'soin' %}
+                      <button type="submit"
+                              name="target_pos"
+                              value="{{ position_value }}"
+                              class="game-grid__action-button"
+                              {% if not is_friendly %}disabled{% endif %}
+                              title="{% if is_friendly %}Soigner ce morpion{% else %}Seuls vos morpions peuvent être soignés{% endif %}">
+                        {{ content }}
+                      </button>
+                    {% elif selected_spell_type == 'armageddon' %}
+                      {% if not selected_spell_caster_pos %}
+                        {% if is_friendly %}
+                        <label class="game-grid__radio-label" title="Sélectionnez un lanceur pour Armageddon">
+                          <input type="radio"
+                                 class="game-grid__radio-input auto-submit-radio"
+                                 name="select_spell_caster"
+                                 value="{{ position_value }}"
+                                 form="spell-caster-form">
+                          {{ content }}
+                        </label>
+                        {% else %}
+                        <button type="button" class="game-grid__action-button" disabled
+                                title="Choisissez un lanceur parmi vos morpions">
+                          {{ content }}
+                        </button>
+                        {% endif %}
+                      {% else %}
+                        {% set can_destroy = position != selected_spell_caster_pos %}
+                        <button type="submit"
+                                name="target_pos"
+                                value="{{ position_value }}"
+                                class="game-grid__action-button"
+                                {% if not can_destroy %}disabled{% endif %}
+                                title="{% if can_destroy %}Détruire cette case{% else %}Impossible de détruire le lanceur{% endif %}">
+                          {{ content }}
+                        </button>
+                      {% endif %}
+                    {% else %}
+                      <button type="button" class="game-grid__action-button" disabled
+                              title="Sélectionnez un sort pour interagir">
+                        {{ content }}
+                      </button>
+                    {% endif %}
+                  {% else %}
+                    <button type="button" class="game-grid__action-button" disabled>
+                      {{ content }}
+                    </button>
+                  {% endif %}
+                {% else %}
+                  {% set caster_selected = selected_spell_caster_pos is not none %}
+                  {% if selected_action == 'place' %}
+                    <button type="submit" 
+                            name="position" 
+                            value="{{ position_value }}"
+                            class="game-grid__empty-button"
+                            form="game-form"
+                            title="Cliquez pour placer votre morpion ici">
+                      <span class="game-grid__cell-coords">({{ row }},{{ col }})</span>
+                    </button>
+                  {% elif selected_action == 'attack' %}
+                    <button type="button" 
+                            class="game-grid__empty-button"
+                            disabled
+                            title="Vous ne pouvez attaquer que des morpions">
+                      <span class="game-grid__cell-coords">({{ row }},{{ col }})</span>
+                    </button>
+                  {% elif selected_action == 'spell' %}
+                    {% if selected_spell_type == 'armageddon' and caster_selected %}
+                      <button type="submit"
+                              name="target_pos"
+                              value="{{ position_value }}"
+                              class="game-grid__empty-button"
+                              title="Détruire cette case vide">
+                        <span class="game-grid__cell-coords">({{ row }},{{ col }})</span>
+                      </button>
+                    {% else %}
+                      <button type="button" 
+                              class="game-grid__empty-button"
+                              disabled
+                              title="Sélectionnez la cible appropriée">
+                        <span class="game-grid__cell-coords">({{ row }},{{ col }})</span>
+                      </button>
+                    {% endif %}
+                  {% endif %}
+                {% endif %}
+              </td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </table>
+          </div>
+        </div>
+        <aside class="game-play-layout__sidebar game-play-layout__sidebar--advanced">
+      {# Contenido según acción seleccionada #}
+      {% if selected_action == 'place' %}
+        {# Selector de morpions para colocar #}
+        {% if REQUEST_VARS['available_morpions']|length > 0 %}
+        {% set current_team_color = game['team1_color'] if current_player == 1 else game['team2_color'] %}
+        <div class="morpion-selector morpion-selector--panel" style="border-color: {{ current_team_color }}; box-shadow: 0 0 20px {{ current_team_color }}44;">
+          <h3 class="morpion-selector__title" style="color: {{ current_team_color }}; text-shadow: 0 0 10px {{ current_team_color }}88;">
+            {% if current_player == 1 %}
+            ⚔️ Morpions de {{ game['team1_name'] }}
+            {% else %}
+            🛡️ Morpions de {{ game['team2_name'] }}
+            {% endif %}
+          </h3>
+          <p class="morpion-selector__hint">💡 <strong>Cliquez sur un morpion puis sur une case vide de la grille</strong></p>
+          
+          {% set available_morpions = REQUEST_VARS['available_morpions'] %}
+          {% include 'components/morpion_selector.html' %}
+        </div>
+        {% else %}
+        <div class="alert alert-warning">
+          <p>⚠️ Aucun morpion disponible pour placer.</p>
+        </div>
+        {% endif %}
+      
+      {% elif selected_action == 'attack' %}
+        {# Instrucciones para atacar #}
+        <div class="action-instructions">
+          <h3>⚔️ Attaquer</h3>
+          <p>💡 <strong>Sélectionnez un de vos morpions, puis cliquez sur un morpion ennemi adjacent</strong></p>
+          <p>Les morpions peuvent attaquer uniquement les cases adjacentes (horizontal ou vertical).</p>
+          <input type="hidden" name="attacker_pos" value="{% if selected_attacker_pos %}{{ selected_attacker_pos[0] }},{{ selected_attacker_pos[1] }}{% endif %}">
+          {% if selected_attacker_pos %}
+          <p class="selection-info">Attaquant sélectionné : (<strong>{{ selected_attacker_pos[0]+1 }}</strong>, <strong>{{ selected_attacker_pos[1]+1 }}</strong>)</p>
+          <a href="partie-avancee/{{ game['id_game'] }}?action=attack&reset_attacker=1" class="btn-link ajax-link">♻️ Réinitialiser l'attaquant</a>
+          {% else %}
+          <p class="selection-info">Sélectionnez un morpion de votre équipe sur la grille.</p>
+          {% endif %}
+        </div>
+      
+      {% elif selected_action == 'spell' %}
+        {# Selector de sorts #}
+        {% include 'components/spell_selector.html' %}
+        <div class="action-instructions">
+          <h4>🎯 Cible du sort</h4>
+          <p>💡 <strong>Sélectionnez un sort, puis cliquez sur la case cible correspondante</strong></p>
+          <ul>
+            <li><strong>Boule de feu</strong> : choisissez un lanceur allié puis ciblez un morpion ennemi.</li>
+            <li><strong>Soin</strong> : cliquez directement sur l'un de vos morpions blessés.</li>
+            <li><strong>Armageddon</strong> : choisissez un lanceur, puis détruisez n'importe quelle autre case.</li>
+          </ul>
+          <input type="hidden" name="spell_type" value="{{ selected_spell_type or '' }}">
+          <input type="hidden" name="caster_pos" value="{% if selected_spell_caster_pos %}{{ selected_spell_caster_pos[0] }},{{ selected_spell_caster_pos[1] }}{% endif %}">
+          {% if selected_spell_type == 'boule_de_feu' and selected_spell_caster_pos %}
+          <p class="selection-info">Lanceur sélectionné : (<strong>{{ selected_spell_caster_pos[0]+1 }}</strong>, <strong>{{ selected_spell_caster_pos[1]+1 }}</strong>)</p>
+          <a href="partie-avancee/{{ game['id_game'] }}?action=spell&select_spell={{ selected_spell_type }}&reset_spell_caster=1" class="btn-link ajax-link">♻️ Changer de lanceur</a>
+          {% elif selected_spell_type == 'armageddon' %}
+            {% if selected_spell_caster_pos %}
+            <p class="selection-info">Lanceur Armageddon : (<strong>{{ selected_spell_caster_pos[0]+1 }}</strong>, <strong>{{ selected_spell_caster_pos[1]+1 }}</strong>)</p>
+            <a href="partie-avancee/{{ game['id_game'] }}?action=spell&select_spell={{ selected_spell_type }}&reset_spell_caster=1" class="btn-link ajax-link">♻️ Choisir un autre lanceur</a>
+            {% else %}
+            <p class="selection-info">Choisissez un morpion allié pour lancer Armageddon.</p>
+            {% endif %}
+          {% endif %}
+        </div>
+      {% endif %}
+        </aside>
+      </div>
+    </form>
+  {% else %}
+    {# Partie terminée #}
+    {% include 'components/game_grid.html' %}
+    <div class="game-over-actions">
+      <a href="partie-avancee" class="btn btn-primary">➕ Nouvelle partie avancée</a>
+      <a href="/" class="btn btn-secondary">🏠 Retour à l'accueil</a>
+    </div>
+  {% endif %}
+  
+  {# Logs de la partie #}
+  {% if REQUEST_VARS.get('logs') %}
+    {% set logs = REQUEST_VARS['logs'] %}
+    {% include 'components/game_logs.html' %}
+  {% endif %}
+</section>
+
+<script>
+(function() {
+  const wrapper = document.getElementById('div-central');
+  if (wrapper && !wrapper.classList.contains('game-mode-wrapper')) {
+    wrapper.classList.add('game-mode-wrapper');
+  }
+  const mainEl = wrapper ? wrapper.querySelector('main') : document.querySelector('main');
+  if (mainEl && !mainEl.classList.contains('game-mode-main')) {
+    mainEl.classList.add('game-mode-main');
+  }
+})();
+</script>
+
+{# JavaScript pour manejar interacciones avanzadas #}
+<script src="{{ SESSION['DIRECTORY'] }}/static/js/game_advanced.js"></script>

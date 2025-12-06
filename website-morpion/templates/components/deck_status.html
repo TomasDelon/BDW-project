@@ -1,0 +1,20 @@
+{#
+  Component: deck_status.html
+  Purpose: Display deck counter and status for team creation
+  Props: 
+    - selected_count: Number of morpions currently selected (serveur, juste pour l'état initial)
+  Usage:
+    {% set selected_count = REQUEST_VARS.get('form_selected_morpions', [])|length %}
+    {% include 'components/deck_status.html' %}
+#}
+<div class="deck-info">
+  <div class="deck-counter">
+    <span class="selected-count" aria-hidden="true">{{ selected_count }}</span>
+    <span class="sr-only">Morpions sélectionnés : {{ selected_count }}</span>
+    / <span class="max-count">8</span> morpions sélectionnés
+  </div>
+  <p class="deck-hint">
+    Sélectionnez entre 6 et 8 morpions. Le compteur se met à jour visuellement,
+    la validation exacte est réalisée lors de l’envoi du formulaire.
+  </p>
+</div>

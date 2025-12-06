@@ -1,0 +1,112 @@
+{#
+  Page: game_play.html
+  Purpose: Active game interface for playing
+  Replaces: partie.html (play mode)
+  Route: /partie?game_id=X
+#}
+{% set game = REQUEST_VARS['game'] %}
+{% set grid_size = game['grid_size'] %}
+{% set current_player = REQUEST_VARS['current_player'] %}
+{% set game_over = REQUEST_VARS['game_over'] %}
+{% set current_turn = REQUEST_VARS['current_turn'] %}
+{% set grid = REQUEST_VARS['grid'] %}
+{% set team1_morpions = REQUEST_VARS['team1_morpions'] %}
+{% set team2_morpions = REQUEST_VARS['team2_morpions'] %}
+{% set is_ai_game = REQUEST_VARS.get('is_ai_game', False) %}
+{% set is_ai_turn = is_ai_game and current_player == 2 %}
+
+<section class="game-play-section"
+         id="classic-game-play"
+         data-ai-just-played="{{ 'true' if REQUEST_VARS.get('ai_just_played') and not game_over else 'false' }}">
+  <h2>🎮 Partie en cours</h2>
+  
+  {# Game Info Header #}
+  {% include 'components/game_info_header.html' %}
+
+  {# Flash Message #}
+  {% include 'components/message.html' %}
+
+  {# Indicador de turno de IA #}
+  {% if is_ai_turn and not game_over %}
+  <div class="alert alert-info ai-thinking-alert">
+    <p style="font-size: 1.2em;">🤖 <strong>L'IA est en train de réfléchir...</strong></p>
+    <p>Veuillez patienter pendant que l'IA joue son tour.</p>
+  </div>
+  {% endif %}
+
+  {% if not game_over %}
+    {# Formulario único que envuelve todo #}
+    {% if REQUEST_VARS['available_morpions']|length > 0 %}
+    <form method="POST" action="partie/{{ game['id_game'] }}#classic-game-play" class="play-form ajax-form" id="game-form">
+      <input type="hidden" name="game_id" value="{{ game['id_game'] }}">
+      {% if REQUEST_VARS['available_morpions']|length > 0 %}
+      <input type="hidden" name="morpion_id" id="hidden-morpion-id" value="{{ REQUEST_VARS['available_morpions'][0]['id_morpion'] }}" required>
+      {% endif %}
+      <div class="game-play-layout">
+        <div class="game-play-layout__grid">
+          {% include 'components/game_grid.html' %}
+        </div>
+        <aside class="game-play-layout__sidebar">
+          <div class="game-play-layout__sidebar-panel">
+            <h3>
+              {% if current_player == 1 %}
+              ⚔️ Morpions de {{ game['team1_name'] }}
+              {% else %}
+              🛡️ Morpions de {{ game['team2_name'] }}
+              {% endif %}
+            </h3>
+            <p class="game-play-layout__sidebar-tip">💡 <strong>Sélectionnez un morpion puis cliquez sur une case vide de la grille.</strong></p>
+            {% set available_morpions = REQUEST_VARS['available_morpions'] %}
+            <div class="morpion-selector">
+              {% include 'components/morpion_selector.html' %}
+            </div>
+          </div>
+        </aside>
+      </div>
+    </form>
+    {% else %}
+      {# Game Grid sin formulario si no hay morpions #}
+      {% include 'components/game_grid.html' %}
+    <div class="alert alert-warning">
+      <p>😰 Plus de morpions disponibles pour cette équipe !</p>
+      <p>Tous les morpions ont déjà été placés sur la grille.</p>
+    </div>
+    {% endif %}
+  {% else %}
+    {# Game Grid sin formulario si partie terminada #}
+    {% include 'components/game_grid.html' %}
+    
+  {# Game Over Actions #}
+  <div class="game-over-actions">
+    <a href="partie" class="btn btn-primary">🔄 Nouvelle partie</a>
+    <a href="liste-equipes" class="btn btn-secondary">📋 Liste des équipes</a>
+    <a href="/" class="btn btn-secondary">🏠 Accueil</a>
+  </div>
+  {% endif %}
+
+  {# Game Logs #}
+{% if REQUEST_VARS.get('logs') %}
+{% set logs = REQUEST_VARS['logs'] %}
+{% include 'components/game_logs.html' %}
+{% endif %}
+</section>
+
+<script>
+(function() {
+  const wrapper = document.getElementById('div-central');
+  if (wrapper && !wrapper.classList.contains('game-mode-wrapper')) {
+    wrapper.classList.add('game-mode-wrapper');
+  }
+  const mainEl = wrapper ? wrapper.querySelector('main') : document.querySelector('main');
+  if (mainEl && !mainEl.classList.contains('game-mode-main')) {
+    mainEl.classList.add('game-mode-main');
+  }
+})();
+</script>
+
+{# JavaScript minimal pour synchroniser morpion_id #}
+{% if not game_over %}
+<script src="{{ SESSION['DIRECTORY'] }}/static/js/game_minimal.js"></script>
+{% endif %}
+{# AJAX handler pour partie classique #}
+<script src="{{ SESSION['DIRECTORY'] }}/static/js/game_classic.js"></script>

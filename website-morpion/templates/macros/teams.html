@@ -1,0 +1,52 @@
+{#
+  Macros: teams.html
+  Purpose: Reusable macros for team display
+  
+  Available Macros:
+    - team_badge(color, size, extra_class): Display a team color badge with size variants
+    - team_badge_winner(color): Display a winner badge with special styling
+    - team_badge_large(color): Display a large team badge
+    - team_vs_display(team1, team2, winner, show_colors): Display team vs team
+    - morpions_grid(morpions, mode): Display grid of morpions
+#}
+
+{# Macro: Team Badge (Unified with size variants) #}
+{% macro team_badge(color, size='sm', extra_class='') %}
+<span class="badge badge--{{ size }} {{ extra_class }}" 
+      style="background-color: {{ color }};" 
+      aria-label="Team color"></span>
+{% endmacro %}
+
+{# Macro: Team Badge Winner (Special styling) #}
+{% macro team_badge_winner(color) %}
+<span class="badge badge--md badge--winner" 
+      style="background-color: {{ color }};" 
+      aria-label="Winner team"></span>
+{% endmacro %}
+
+{# Macro: Team Badge Large (For team headers) #}
+{% macro team_badge_large(color) %}
+<span class="badge badge--lg" 
+      style="background-color: {{ color }};" 
+      aria-label="Team color"></span>
+{% endmacro %}
+
+{# Legacy Alias: team_color_badge for backward compatibility #}
+{% macro team_color_badge(color) %}
+{{ team_badge(color, 'sm') }}
+{% endmacro %}
+
+{# Macro: Team vs Display (for future use) #}
+{% macro team_vs_display(team1_name, team1_color, team2_name, team2_color, winner_name=None, winner_color=None) %}
+<span class="team-name">{{ team1_name }}</span>
+{{ team_badge(team1_color) }}
+<span class="vs-separator">vs</span>
+<span class="team-name">{{ team2_name }}</span>
+{{ team_badge(team2_color) }}
+{% if winner_name %}
+  <span class="arrow-separator">→</span>
+  <span class="winner-name">{{ winner_name }}</span>
+  {{ team_badge_winner(winner_color) }}
+{% endif %}
+{% endmacro %}
+

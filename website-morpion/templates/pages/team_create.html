@@ -1,0 +1,62 @@
+{#
+  Page: team_create.html
+  Purpose: Team creation form with morpion selection
+  Replaces: equipe.html
+  Route: /equipe
+#}
+{% extends "base/base.html" %}
+
+{# Import macros #}
+{% from 'macros/design_system.html' import section_card %}
+{% from 'macros/forms.html' import input_text, form_actions %}
+
+{% block main_content %}
+
+<div class="create-team-section">
+  {% call section_card(
+    "⚔️ Créer une nouvelle équipe ⚔️",
+    "Sélectionnez entre 6 et 8 morpions pour composer votre équipe. Chaque morpion a des caractéristiques uniques !",
+    icon="⚔️"
+  ) %}
+
+  {% include 'components/message.html' %}
+
+  <form method="POST" id="team-form" class="team-creation-form">
+    {{ input_text(
+      'team_name',
+      'Nom de l\'équipe',
+      REQUEST_VARS.get('form_team_name', ''),
+      'Ex: Verts furieux',
+      required=true,
+      maxlength=80
+    ) }}
+
+    {{ input_text(
+      'team_color',
+      'Couleur de l\'équipe',
+      REQUEST_VARS.get('form_team_color', ''),
+      'Ex: green, red, blue',
+      required=true,
+      maxlength=40,
+      help_text='La couleur doit être unique parmi toutes les équipes.'
+    ) }}
+
+    <div class="morpions-grid">
+      {% for morpion in REQUEST_VARS['morpions'] %}
+        {% set is_selected = morpion.id_morpion in REQUEST_VARS.get('form_selected_morpions', []) %}
+        {% include 'components/morpion_card.html' %}
+      {% endfor %}
+    </div>
+
+    {% set selected_count = REQUEST_VARS.get('form_selected_morpions', [])|length %}
+    {% include 'components/deck_status.html' %}
+
+    {{ form_actions(
+      submit_text='Créer l\'équipe',
+      reset_url='equipe',
+      reset_text='Réinitialiser'
+    ) }}
+  </form>
+  {% endcall %}
+</div>
+{% endblock %}

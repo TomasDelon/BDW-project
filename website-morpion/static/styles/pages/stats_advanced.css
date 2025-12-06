@@ -1,0 +1,266 @@
+/* ============================================
+   Advanced Statistics Page - Minimal Custom Styles
+   Most styles reused from components/charts.css and existing components
+   ============================================ */
+
+/* Stats Section - Reuses design-system section-card */
+.stats-section {
+  margin-bottom: var(--spacing-xl);
+  padding: var(--spacing-lg);
+  background: var(--gradient-card);
+  border-radius: var(--radius-lg);
+  border: 2px solid rgba(62, 65, 164, 0.3);
+  box-shadow: var(--shadow-md);
+  transition: var(--transition-base);
+}
+
+.stats-section:hover {
+  border-color: rgba(0, 255, 255, 0.4);
+  box-shadow: var(--shadow-xl);
+}
+
+.stats-section h2 {
+  margin-bottom: var(--spacing-md);
+  color: var(--accent-cyan);
+  font-size: 1.75rem;
+  font-weight: 700;
+  border-bottom: 2px solid rgba(62, 65, 164, 0.3);
+  padding-bottom: var(--spacing-sm);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.section-description {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: var(--spacing-md);
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* Stats Grid - Generic grid for stat cards */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-md);
+}
+
+/* Morpion Grid Override - Wider cards for this page only */
+.stats-section .morpions-mini-grid {
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.stats-section .morpion-mini-card {
+  padding: var(--spacing-md);
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.stats-section .morpion-mini-card img {
+  width: 90px;
+  height: 90px;
+  margin-bottom: var(--spacing-sm);
+}
+
+.stats-section .morpion-mini-info {
+  width: 100%;
+}
+
+.stats-section .morpion-mini-name {
+  font-size: 0.95rem;
+  margin-bottom: var(--spacing-xs);
+}
+
+.stats-section .morpion-mini-stats {
+  font-size: 0.8rem;
+  gap: 0.4rem;
+  justify-content: center;
+}
+
+/* Ranking Table - Reuses home page table styles */
+.ranking-table {
+  overflow-x: auto;
+}
+
+.ranking-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ranking-table thead {
+  background: var(--gradient-blue);
+  color: var(--text-primary);
+}
+
+.ranking-table th {
+  padding: var(--spacing-sm);
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ranking-table td {
+  padding: 0.85rem var(--spacing-sm);
+  border-bottom: 1px solid rgba(62, 65, 164, 0.3);
+}
+
+.ranking-table tbody tr {
+  background: rgba(15, 15, 26, 0.3);
+  transition: var(--transition-fast);
+}
+
+.ranking-table tbody tr:hover {
+  background: rgba(62, 65, 164, 0.3);
+}
+
+.rank {
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.team-cell {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.team-name {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.number {
+  text-align: center;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.winrate-cell {
+  min-width: 180px;
+}
+
+.winrate-value {
+  display: block;
+  font-weight: 700;
+  color: var(--accent-gold);
+  margin-bottom: var(--spacing-xs);
+}
+
+.mini-bar {
+  height: 16px;
+}
+
+/* Summary Section - Special styling */
+.summary-section {
+  background: var(--gradient-blue);
+  color: var(--text-primary);
+  border-color: var(--accent-cyan);
+}
+
+.summary-section h2 {
+  color: var(--accent-gold);
+  border-bottom-color: rgba(255, 215, 0, 0.3);
+}
+
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.summary-card {
+  background: rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(0, 255, 255, 0.3);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  text-align: center;
+  backdrop-filter: blur(10px);
+  transition: var(--transition-base);
+}
+
+.summary-card:hover {
+  transform: scale(1.05);
+  background: rgba(0, 0, 0, 0.3);
+  border-color: var(--accent-cyan);
+  box-shadow: var(--shadow-cyan);
+}
+
+.summary-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-xs);
+  filter: drop-shadow(0 0 10px currentColor);
+}
+
+.summary-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  color: var(--accent-gold);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.summary-label {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .stats-section {
+    padding: var(--spacing-sm);
+  }
+
+  .stats-section h2 {
+    font-size: 1.4rem;
+  }
+
+  .ranking-table {
+    font-size: 0.85rem;
+  }
+
+  .ranking-table th,
+  .ranking-table td {
+    padding: 0.6rem 0.5rem;
+  }
+
+  .team-cell {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .summary-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stats-section .morpions-mini-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .stats-section h2 {
+    font-size: 1.2rem;
+  }
+
+  .stats-section .morpions-mini-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+}

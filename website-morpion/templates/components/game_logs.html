@@ -1,0 +1,26 @@
+{#
+  Component: game_logs.html
+  Purpose: Display game logs panel
+  Props:
+    - logs: List of log entries with (num, message)
+  Usage:
+    {% include 'components/game_logs.html' %}
+#}
+<div class="game-logs">
+  <h3>📜 Journal de la partie</h3>
+  {% if logs and logs|length > 0 %}
+  <ul>
+    {% for log in logs %}
+    {% if not log.message.startswith('GRID_STATE:') %}
+    <li>
+      <span class="log-num">#{{ log.num }}</span>
+      <span class="log-message">{{ log.message }}</span>
+    </li>
+    {% endif %}
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="empty-logs">Aucune action enregistrée.</p>
+  {% endif %}
+</div>
+

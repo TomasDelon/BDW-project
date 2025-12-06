@@ -1,0 +1,79 @@
+{#
+  Component: confirmation_dialog.html
+  Purpose: Confirmation dialog for destructive actions
+  Props:
+    - team_to_delete: Team object to delete
+    - games_to_delete: List of games that will be deleted
+  Usage:
+    {% if REQUEST_VARS['team_to_delete'] and REQUEST_VARS['games_to_delete'] %}
+      {% set team_to_delete = REQUEST_VARS['team_to_delete'] %}
+      {% set games_to_delete = REQUEST_VARS['games_to_delete'] %}
+      {% include 'components/confirmation_dialog.html' %}
+    {% endif %}
+#}
+<div class="confirmation-dialog">
+  <div class="confirmation-content">
+    <h3>⚠️ Confirmation de suppression</h3>
+    {% if games_to_delete|length > 0 %}
+      <p class="confirmation-message">
+        L'équipe <strong>{{ team_to_delete.name }}</strong> est utilisée dans 
+        <strong>{{ games_to_delete|length }}</strong> partie(s). 
+        Les logs de ces parties seront également supprimés.
+      </p>
+      
+      <div class="games-to-delete">
+        <h4>Parties concernées :</h4>
+        <ul class="games-list-confirm">
+          {% for game in games_to_delete %}
+          <li>
+            <span style="color: {{ game.team1_color }};">{{ game.team1_name }}</span> 
+            vs 
+            <span style="color: {{ game.team2_color }};">{{ game.team2_name }}</span>
+            ({{ game.started_at.strftime('%d/%m/%Y %H:%M') if game.started_at else 'N/A' }})
+            {% if game.winner_name %} - 🏆 {{ game.winner_name }}{% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% else %}
+      <p class="confirmation-message">
+        L'équipe <strong>{{ team_to_delete.name }}</strong> n'est liée à aucune partie. 
+        Confirmez ci-dessous pour la supprimer définitivement.
+      </p>
+    {% endif %}
+
+    <div class="confirmation-actions">
+      {% if games_to_delete|length > 0 %}
+        <form method="POST" class="confirm-delete-form">
+          <input type="hidden" name="team_id" value="{{ team_to_delete.id_team }}">
+          <input type="hidden" name="confirm_delete_games" value="yes">
+          <button type="submit" name="bouton_supprimer" class="btn btn-confirm-delete">
+            ✅ Supprimer l'équipe et les parties
+          </button>
+        </form>
+        <form method="POST" class="cancel-delete-form">
+          <input type="hidden" name="team_id" value="{{ team_to_delete.id_team }}">
+          <input type="hidden" name="confirm_delete_games" value="no">
+          <button type="submit" name="bouton_supprimer" class="btn btn-cancel-delete">
+            ❌ Annuler - Conserver l'équipe
+          </button>
+        </form>
+      {% else %}
+        <form method="POST" class="confirm-delete-form">
+          <input type="hidden" name="team_id" value="{{ team_to_delete.id_team }}">
+          <input type="hidden" name="confirm_delete_team" value="yes">
+          <button type="submit" name="bouton_supprimer" class="btn btn-confirm-delete">
+            ✅ Supprimer définitivement
+          </button>
+        </form>
+        <form method="POST" class="cancel-delete-form">
+          <input type="hidden" name="team_id" value="{{ team_to_delete.id_team }}">
+          <input type="hidden" name="confirm_delete_team" value="no">
+          <button type="submit" name="bouton_supprimer" class="btn btn-cancel-delete">
+            ❌ Annuler
+          </button>
+        </form>
+      {% endif %}
+    </div>
+  </div>
+</div>

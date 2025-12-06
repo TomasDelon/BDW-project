@@ -1,0 +1,48 @@
+{#
+  Page: team_list.html
+  Purpose: List all teams with morpions and games, allow deletion
+  Replaces: liste_equipes.html
+  Route: /liste-equipes
+#}
+{% extends "base/base.html" %}
+
+{# Import macros #}
+{% from 'macros/design_system.html' import section_card %}
+{% from 'macros/ui.html' import empty_state %}
+
+{% block main_content %}
+
+<div class="teams-list-section">
+  {% call section_card(
+    "📋 Liste des équipes",
+    "Consultez toutes les équipes disponibles et gérez-les. Vous pouvez supprimer une équipe. Si elle est utilisée dans des parties, vous pourrez choisir de supprimer également ces parties (et leurs logs) ou de conserver l'équipe.",
+    icon="📋"
+  ) %}
+
+  {% include 'components/message.html' %}
+
+  {% if REQUEST_VARS['team_to_delete'] is not none and REQUEST_VARS['games_to_delete'] is not none %}
+    {% set team_to_delete = REQUEST_VARS['team_to_delete'] %}
+    {% set games_to_delete = REQUEST_VARS['games_to_delete'] %}
+    {% include 'components/confirmation_dialog.html' %}
+  {% endif %}
+
+  {% if REQUEST_VARS['teams'] and REQUEST_VARS['teams']|length > 0 %}
+  <div class="teams-grid">
+    {% for team in REQUEST_VARS['teams'] %}
+      {% include 'components/team_card.html' %}
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    {{ empty_state(
+      "Aucune équipe n'a été créée pour le moment.",
+      "Créer votre première équipe",
+      "equipe"
+    ) }}
+  </div>
+  {% endif %}
+  {% endcall %}
+</div>
+
+{% endblock %}

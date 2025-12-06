@@ -1,0 +1,36 @@
+{#
+  Component: morpion_card.html
+  Purpose: Selectable morpion card with checkbox for team creation
+  Props:
+    - morpion: Morpion object with (id_morpion, name, hp, attack, mana, accuracy, image_url)
+    - is_selected: Boolean indicating if this morpion is selected
+  Usage:
+    {% for morpion in REQUEST_VARS['morpions'] %}
+      {% set is_selected = morpion.id_morpion in REQUEST_VARS.get('form_selected_morpions', []) %}
+      {% include 'components/morpion_card.html' %}
+    {% endfor %}
+#}
+{% from 'macros/morpions.html' import morpion_image, morpion_stats with context %}
+<div class="morpion-card" data-morpion-id="{{ morpion.id_morpion }}">
+  <input type="checkbox" 
+         name="morpions" 
+         value="{{ morpion.id_morpion }}" 
+         id="morpion_{{ morpion.id_morpion }}"
+         class="morpion-checkbox"
+         {% if is_selected %}checked{% endif %}>
+  <label for="morpion_{{ morpion.id_morpion }}" class="card-label">
+    <div class="card-image-container">
+      {{ morpion_image(morpion, size='card', title=morpion.name) }}
+      <div class="card-overlay">
+        <span class="card-checkmark">✓</span>
+      </div>
+    </div>
+    <div class="card-content">
+      <h3 class="card-name">{{ morpion.name }}</h3>
+      {{ morpion_stats(morpion, 'card') }}
+      <div class="card-total">
+        Total: <strong>{{ morpion.hp + morpion.attack + morpion.mana + morpion.accuracy }}</strong>
+      </div>
+    </div>
+  </label>
+</div>

@@ -1,0 +1,6 @@
+# Exemple de configuration BDW : à copier dans config-bd.toml puis à remplir avec vos identifiants
+POSTGRESQL_SERVER = "bd-pedago.univ-lyon1.fr"
+POSTGRESQL_USER = "pXXXXXXX"           # Remplacer par votre numéro étudiant
+POSTGRESQL_PASSWORD = "votre_mdp_serveur"  # Mot de passe Tomuss (ne pas le publier)
+POSTGRESQL_DATABASE = "pXXXXXXX"       # En général identique à POSTGRESQL_USER
+POSTGRESQL_SCHEMA = "morpion"          # Conserver cette valeur sauf consigne contraire

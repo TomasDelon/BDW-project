@@ -1,0 +1,156 @@
+/* Grid pattern moved to utilities/grids.css - use .grid-morpions */
+/* Legacy alias for backward compatibility */
+.morpions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: var(--spacing-sm);
+    margin: var(--spacing-lg) 0;
+}
+
+.morpion-card {
+    position: relative;
+    background: var(--gradient-card);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 3px solid transparent;
+    transition: var(--transition-base);
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.morpion-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    border-color: var(--accent-cyan);
+    box-shadow: 0 8px 24px rgba(0, 255, 255, 0.4);
+}
+
+.morpion-card:has(.morpion-checkbox:checked) {
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8), 0 8px 24px rgba(255, 215, 0, 0.4);
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.25) 0%, rgba(255, 215, 0, 0.15) 100%);
+    transform: translateY(-5px) scale(1.05);
+}
+
+.morpion-card:has(.morpion-checkbox:checked) .card-overlay {
+    opacity: 1;
+}
+
+.morpion-card:has(.morpion-checkbox:checked) .card-checkmark {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.morpion-checkbox {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.morpion-checkbox:focus-visible + .card-label {
+    outline: 3px solid var(--accent-cyan);
+    outline-offset: 4px;
+}
+
+.card-label {
+    display: block;
+    cursor: pointer;
+}
+
+.card-image-container {
+    position: relative;
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    background: var(--gradient-blue);
+}
+
+.card-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.morpion-card:hover .card-image-container img {
+    transform: scale(1.1);
+}
+
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card-checkmark {
+    font-size: 3rem;
+    color: var(--accent-gold);
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+    font-weight: 700;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.3s ease;
+}
+
+.card-content {
+    padding: 0.75rem;
+}
+
+.card-name {
+    color: var(--accent-cyan);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.card-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.4rem;
+    margin-bottom: 0.5rem;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(15, 15, 26, 0.5);
+    padding: 0.4rem;
+    border-radius: 5px;
+    border: 1px solid rgba(62, 65, 164, 0.3);
+}
+
+.stat-icon {
+    font-size: 1rem;
+}
+
+.stat-value {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.card-total {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    padding-top: 0.4rem;
+    border-top: 1px solid rgba(62, 65, 164, 0.3);
+}
+
+.card-total strong {
+    color: var(--accent-gold);
+    font-size: 0.95rem;
+}
