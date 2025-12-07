@@ -1,8 +1,8 @@
 /* ============================================
-   Forms Component (macros/forms.html)
+   Composant Formulaires (macros/forms.html)
    ============================================ */
 
-/* Form Group */
+/* Groupe de Formulaire */
 .form-group {
   margin-bottom: 1.8rem;
 }
@@ -17,7 +17,7 @@
   letter-spacing: 1px;
 }
 
-/* Text Input */
+/* Entrée de Texte */
 .form-group input[type="text"],
 .form-group input[type="number"],
 .form-group select,
@@ -54,14 +54,14 @@
   background: linear-gradient(135deg, rgba(26, 31, 95, 0.9), rgba(14, 17, 38, 0.95));
 }
 
-/* Select Dropdown */
+/* Menu Déroulant Sélecteur */
 .form-group select option {
   background: rgba(5, 8, 25, 0.95);
   color: var(--text-primary);
   padding: 0.8rem;
 }
 
-/* Help Text */
+/* Texte d'Aide */
 .form-group small {
   display: block;
   margin-top: 0.6rem;
@@ -70,7 +70,7 @@
   font-style: italic;
 }
 
-/* Form Actions Container */
+/* Conteneur d'Actions de Formulaire */
 .form-actions {
   display: flex;
   flex-direction: column;
@@ -83,7 +83,7 @@
   width: 100%;
 }
 
-/* Responsive - cuando hay espacio, botones en línea */
+/* Responsive - lorsque l'espace est disponible, boutons en ligne */
 @media (min-width: 600px) {
   .form-actions {
     flex-direction: row;
@@ -96,7 +96,7 @@
   }
 }
 
-/* Color Input */
+/* Entrée de Couleur */
 .form-group input[type="color"] {
   width: 100%;
   height: 60px;
@@ -118,7 +118,7 @@
   box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
 }
 
-/* Checkbox styling (for morpion selection) */
+/* Style de Case à Cocher (pour la sélection de morpion) */
 input[type="checkbox"] {
   cursor: pointer;
 }

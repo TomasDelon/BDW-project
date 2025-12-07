@@ -24,6 +24,15 @@ __all__ = [
 
 
 def get_all_morpions(connexion):
+    """
+    Récupère tous les morpions disponibles dans la base de données.
+    
+    Args:
+        connexion: Connexion à la base de données
+    
+    Returns:
+        list: Liste de dictionnaires contenant les informations des morpions
+    """
     query = """
         SELECT
             id_morpion,
@@ -60,14 +69,46 @@ def count_teams(connexion, filters):
 
 
 def check_team_name_color_exists(connexion, name, color):
+    """
+    Vérifie si une équipe existe déjà avec le nom et la couleur spécifiés.
+    
+    Args:
+        connexion: Connexion à la base de données
+        name: Nom de l'équipe à vérifier
+        color: Couleur de l'équipe à vérifier
+    
+    Returns:
+        bool: True si une équipe existe déjà avec ces critères, False sinon
+    """
     return count_teams(connexion, {"name": name, "color": color}) > 0
 
 
 def check_team_color_exists(connexion, color):
+    """
+    Vérifie si une équipe existe déjà avec la couleur spécifiée.
+    
+    Args:
+        connexion: Connexion à la base de données
+        color: Couleur de l'équipe à vérifier
+    
+    Returns:
+        bool: True si une équipe existe déjà avec cette couleur, False sinon
+    """
     return count_teams(connexion, {"color": color}) > 0
 
 
 def create_team(connexion, name, color):
+    """
+    Crée une nouvelle équipe avec le nom et la couleur spécifiés.
+    
+    Args:
+        connexion: Connexion à la base de données
+        name: Nom de la nouvelle équipe
+        color: Couleur de la nouvelle équipe
+    
+    Returns:
+        int | None: ID de la nouvelle équipe créée, ou None en cas d'erreur
+    """
     query = """
         INSERT INTO team (name, color)
         VALUES (%s, %s)
@@ -86,6 +127,17 @@ def create_team(connexion, name, color):
 
 
 def add_morpions_to_team(connexion, team_id, morpion_ids):
+    """
+    Ajoute une liste de morpions à une équipe.
+    
+    Args:
+        connexion: Connexion à la base de données
+        team_id: ID de l'équipe
+        morpion_ids: Liste des IDs des morpions à ajouter
+    
+    Returns:
+        int | None: Nombre de morpions ajoutés, ou None en cas d'erreur
+    """
     if not morpion_ids:
         return 0
 
@@ -108,6 +160,15 @@ def add_morpions_to_team(connexion, team_id, morpion_ids):
 
 
 def get_all_teams_with_morpions(connexion):
+    """
+    Récupère toutes les équipes avec leurs morpions associés.
+    
+    Args:
+        connexion: Connexion à la base de données
+    
+    Returns:
+        list: Liste d'équipes avec leurs morpions détaillés
+    """
     query = """
         SELECT
             t.id_team,
@@ -178,6 +239,14 @@ def get_teams_for_game_selection(connexion):
 def get_games_for_team(connexion, team_id, limit_per_team=None):
     """
     Retourne les parties liées à une équipe spécifique.
+    
+    Args:
+        connexion: Connexion à la base de données
+        team_id: ID de l'équipe
+        limit_per_team: Limite du nombre de parties à retourner (optionnel)
+    
+    Returns:
+        list: Liste des parties auxquelles l'équipe a participé
     """
     games_map = get_games_for_teams(connexion, [team_id], limit_per_team=limit_per_team)
     return games_map.get(team_id, [])
@@ -187,6 +256,14 @@ def get_games_for_teams(connexion, team_ids, limit_per_team=None):
     """
     Retourne un dictionnaire {team_id: [games]} pour une liste d'équipes.
     Évite les requêtes répétées lors de l'affichage de plusieurs équipes.
+    
+    Args:
+        connexion: Connexion à la base de données
+        team_ids: Liste des IDs des équipes
+        limit_per_team: Limite du nombre de parties par équipe (optionnel)
+    
+    Returns:
+        dict: Dictionnaire avec les parties pour chaque équipe
     """
     if not team_ids:
         return {}
@@ -265,6 +342,14 @@ def get_games_for_teams(connexion, team_ids, limit_per_team=None):
 
 
 def delete_games_for_team(connexion, cursor, team_id):
+    """
+    Supprime toutes les parties associées à une équipe.
+    
+    Args:
+        connexion: Connexion à la base de données
+        cursor: Curseur de la base de données
+        team_id: ID de l'équipe
+    """
     query = """
         DELETE FROM game
         WHERE id_team1 = %s OR id_team2 = %s
@@ -273,6 +358,17 @@ def delete_games_for_team(connexion, cursor, team_id):
 
 
 def delete_team(connexion, team_id, delete_games=False):
+    """
+    Supprime une équipe et éventuellement ses parties associées.
+    
+    Args:
+        connexion: Connexion à la base de données
+        team_id: ID de l'équipe à supprimer
+        delete_games: Booléen indiquant si les parties doivent être supprimées (optionnel)
+    
+    Returns:
+        bool: True si l'équipe a été supprimée avec succès, False sinon
+    """
     try:
         with connexion.cursor() as cursor:
             if delete_games:

@@ -1,5 +1,5 @@
 /* ============================================
-   Position Selector Component (components/position_selector.html)
+   Composant Sélecteur de Position (components/position_selector.html)
    ============================================ */
 .position-selection {
   margin: var(--spacing-lg) 0;
@@ -53,4 +53,4 @@
   box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
 }
 
-/* Responsive styles moved to layout/responsive.css */
+/* Styles Responsive déplacées vers layout/responsive.css */

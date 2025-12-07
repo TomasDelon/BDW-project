@@ -1,6 +1,6 @@
 {#
   Page: home.html
-  Purpose: Main home page with statistics and overview
+  Purpose: Page d'accueil principale avec statistiques et aperçu
   Replaces: accueil.html
   Route: /
 #}
@@ -12,13 +12,13 @@
 
 {% block main_content %}
 
-{# Hero Section #}
+{# Section hero #}
 {{ hero_section(
   "⚔️ Bienvenue dans l'arène des Morpions ⚔️",
   "Composez vos équipes, expérimentez des configurations de partie et surveillez leur performance. Cette page rassemble les statistiques principales nécessaires pour préparer vos futures victoires."
 ) }}
 
-{# Stats Cards Section #}
+{# Section cartes de statistiques #}
 <section class="stats-cards">
   <h3>📊 Comptes instances (dev data)</h3>
   <div class="cards-grid">
@@ -28,13 +28,13 @@
   </div>
 </section>
 
-{# Top Teams Section #}
+{# Section meilleures équipes #}
 <section class="top-teams">
   <h3>🏆 Top {{ REQUEST_VARS['stats']['top_teams']|length }} équipes victorieuses</h3>
   {{ top_teams_table(REQUEST_VARS['stats']['top_teams']) }}
 </section>
 
-{# Game Durations Section #}
+{# Section durées de parties #}
 <section class="durations">
   <h3>⏱️ Durées des parties clôturées</h3>
   {% set fastest_game = REQUEST_VARS['stats']['fastest_game'] %}
@@ -42,13 +42,13 @@
   {% include 'components/game_duration_compare.html' %}
 </section>
 
-{# Logs Section #}
+{# Section logs #}
 <section class="logs">
   <h3>📝 Moyenne de lignes de journalisation par mois</h3>
   {{ logs_table(REQUEST_VARS['stats']['avg_logs']) }}
 </section>
 
-{# Message Component #}
+{# Composant message #}
 {% include 'components/message.html' %}
 
 {% endblock %}

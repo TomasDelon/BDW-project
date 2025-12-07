@@ -1,5 +1,5 @@
-/* Grid pattern moved to utilities/grids.css - use .grid-morpions */
-/* Legacy alias for backward compatibility */
+/* Grille de motif déplacée vers utilities/grids.css - utiliser .grid-morpions */
+/* Alias hérité pour compatibilité ascendante */
 .morpions-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));

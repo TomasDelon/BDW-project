@@ -1,24 +1,24 @@
 """
-Funciones de lógica de juego para partie avancée (Fonctionnalité 4).
-Implementa sistema de combate con probabilidades, hechizos y eliminación.
+Fonctions de logique de jeu pour partie avancée (Fonctionnalité 4).
+Implémente un système de combat avec probabilités, sorts et élimination.
 
-Todas las funciones son puras (sin efectos secundarios ni acceso a BD),
-lo que facilita testing y razonamiento sobre el comportamiento del juego.
+Toutes les fonctions sont pures (sans effets secondaires ni accès à la BD),
+ce qui facilite les tests et le raisonnement sur le comportement du jeu.
 """
 
 import random
 
-# Constantes de balanceo de probabilidades de éxito
-# Estos valores fueron ajustados para reducir la frustración del jugador
-# manteniendo un elemento de aleatoriedad interesante.
-DEFAULT_SUCCESS_RATE_SCALE = 1.6  # Multiplica accuracy para amplificar diferencias
-DEFAULT_SUCCESS_RATE_FLAT_BONUS = 10.0  # Bonus base para evitar demasiados fallos
+# Constantes de balance de probabilités de succès
+# Ces valeurs ont été ajustées pour réduire la frustration du joueur
+# tout en maintenant un élément de hasard intéressant.
+DEFAULT_SUCCESS_RATE_SCALE = 1.6  # Multiplie l'accuracy pour amplifier les différences
+DEFAULT_SUCCESS_RATE_FLAT_BONUS = 10.0  # Bonus de base pour éviter trop d'échecs
 
-# Contexto de balanceo:
-# - Sin bonificación: accuracy=5 → 50% éxito (demasiados fallos)
-# - Con estos valores: accuracy=5 → (5*1.6)+10 = 18% → min(18, 100) = 18% éxito
-# - Morpion fuerte (accuracy=8): (8*1.6)+10 = 22.8% éxito
-# El sistema favorece ligeramente a los morpions con alta accuracy
+# Contexte de balance :
+# - Sans bonus : accuracy=5 → 50% de succès (trop d'échecs)
+# - Avec ces valeurs : accuracy=5 → (5*1.6)+10 = 18% → min(18, 100) = 18% de succès
+# - Morpion fort (accuracy=8) : (8*1.6)+10 = 22.8% de succès
+# Le système favorise légèrement les morpions avec une haute accuracy
 
 try:
     from constants import SUCCESS_RATE_SCALE, SUCCESS_RATE_FLAT_BONUS
@@ -29,9 +29,9 @@ except ImportError:
 
 def calculate_success_probability(accuracy):
     """
-    Calcula la probabilidad de éxito de una acción.
-    Soporta valores en escala 0-10 (multiplicados por 10) o 0-100 directement.
-    Aplica luego un bonus global para reducir la cantidad de fallos (paramétrable via constantes).
+    Calcule la probabilité de succès d'une action.
+    Prend en charge les valeurs en échelle 0-10 (multipliées par 10) ou 0-100 directement.
+    Applique ensuite un bonus global pour réduire la quantité d'échecs (paramétrable via constantes).
     """
     if accuracy is None:
         return 0.0
@@ -45,7 +45,7 @@ def calculate_success_probability(accuracy):
     else:
         probability = accuracy_value
 
-    # Ajuste aprobado para reducir fallos: se aplica un multiplicador y un bonus fijo
+    # Ajuste approbado pour réduire les échecs : on applique un multiplicateur et un bonus fixe
     probability = (probability * SUCCESS_RATE_SCALE) + SUCCESS_RATE_FLAT_BONUS
 
     return max(0.0, min(probability, 100.0))
@@ -53,13 +53,13 @@ def calculate_success_probability(accuracy):
 
 def roll_action_success(accuracy):
     """
-    Genera un valor aleatorio y verifica si la acción es exitosa.
+    Génère une valeur aléatoire et vérifie si l'action est réussie.
     
     Args:
-        accuracy: puntos de réussite (current_accuracy)
+        accuracy: points de réussite (current_accuracy)
     
     Returns:
-        bool: True si la acción es exitosa, False en caso contrario
+        bool: True si l'action est réussie, False sinon
     """
     probability = calculate_success_probability(accuracy)
     roll = random.uniform(0, 100)
@@ -68,14 +68,14 @@ def roll_action_success(accuracy):
 
 def can_attack(attacker_pos, target_pos):
     """
-    Verifica si un morpion puede atacar a otro (deben ser adyacentes).
+    Vérifie si un morpion peut attaquer un autre (doivent être adjacents).
     
     Args:
-        attacker_pos: tupla (row, col) de la posición del atacante
-        target_pos: tupla (row, col) de la posición del objetivo
+        attacker_pos: tuple (row, col) de la position de l'attaquant
+        target_pos: tuple (row, col) de la position de la cible
     
     Returns:
-        bool: True si son adyacentes (horizontal o vertical), False en caso contrario
+        bool: True si ils sont adjacents (horizontal ou vertical), False sinon
     """
     if not isinstance(attacker_pos, tuple) or not isinstance(target_pos, tuple):
         return False
@@ -86,25 +86,25 @@ def can_attack(attacker_pos, target_pos):
     row_diff = abs(attacker_pos[0] - target_pos[0])
     col_diff = abs(attacker_pos[1] - target_pos[1])
     
-    # Adyacente significa diferencia de 1 en una dirección y 0 en la otra
+    # Adyacente signifie différence de 1 dans une direction et 0 dans l'autre
     return (row_diff == 1 and col_diff == 0) or (row_diff == 0 and col_diff == 1)
 
 
 def execute_attack(attacker_morpion_state, target_morpion_state):
     """
-    Ejecuta un ataque entre dos morpions.
+    Exécute une attaque entre deux morpions.
     
     Args:
-        attacker_morpion_state: dict con {'hp': ..., 'attack': ..., 'current_accuracy': ...}
-        target_morpion_state: dict con {'hp': ..., ...}
+        attacker_morpion_state: dict avec {'hp': ..., 'attack': ..., 'current_accuracy': ...}
+        target_morpion_state: dict avec {'hp': ..., ...}
     
     Returns:
-        dict con estructura:
+        dict avec structure :
         {
             'success': bool,
-            'attacker_accuracy_updated': float,  # accuracy incrementado si éxito
-            'target_hp_updated': int,  # HP del objetivo después del ataque
-            'damage_dealt': int  # daño infligido (0 si falló)
+            'attacker_accuracy_updated': float,  # accuracy incrémenté si succès
+            'target_hp_updated': int,  # HP de la cible après l'attaque
+            'damage_dealt': int  # dégâts infligés (0 si échec)
         }
     """
     attacker_accuracy = attacker_morpion_state.get('current_accuracy', attacker_morpion_state.get('accuracy', 1))
@@ -118,29 +118,29 @@ def execute_attack(attacker_morpion_state, target_morpion_state):
     }
     
     if success:
-        # Ataque exitoso: inflige daño igual a attack del atacante
+        # Ataque réussi : inflige des dégâts égaux à l'attaque de l'attaquant
         attack_power = attacker_morpion_state.get('attack', 1)
         current_hp = target_morpion_state.get('hp', 0)
-        new_hp = max(0, current_hp - attack_power)  # HP no puede ser negativo
+        new_hp = max(0, current_hp - attack_power)  # HP ne peut pas être négatif
         
         result['target_hp_updated'] = new_hp
         result['damage_dealt'] = attack_power
-        result['attacker_accuracy_updated'] = attacker_accuracy + 0.5  # Incremento por acción exitosa
+        result['attacker_accuracy_updated'] = attacker_accuracy + 0.5  # Incrémentation pour une action réussie
     
     return result
 
 
 def can_cast_spell(morpion_state, spell_type, cost):
     """
-    Verifica si un morpion tiene suficiente mana para lanzar un sort.
+    Vérifie si un morpion a assez de mana pour lancer un sort.
     
     Args:
-        morpion_state: dict con {'mana': ..., ...}
+        morpion_state: dict avec {'mana': ..., ...}
         spell_type: str ('boule_de_feu', 'soin', 'armageddon')
-        cost: int, costo de mana del sort
+        cost: int, coût de mana du sort
     
     Returns:
-        bool: True si tiene suficiente mana, False en caso contrario
+        bool: True s'il a assez de mana, False sinon
     """
     current_mana = morpion_state.get('mana', 0)
     return current_mana >= cost
@@ -148,26 +148,26 @@ def can_cast_spell(morpion_state, spell_type, cost):
 
 def execute_boule_de_feu(target_morpion_state):
     """
-    Ejecuta el sort Boule de feu: ataque mágico directo.
+    Exécute le sort Boule de feu : attaque magique directe.
 
-    Características:
-    - Daño: 3 HP (garantizado si el sort tiene éxito)
-    - Costo: 2 mana
-    - Rango: Ilimitado (cualquier celda con morpion enemigo)
-    - Ventaja: No falla si tienes el mana (el roll de éxito es antes de llamar)
+    Caractéristiques :
+    - Dégâts : 3 HP (garantis si le sort réussit)
+    - Coût : 2 mana
+    - Portée : Illimitée (n'importe quelle case avec un morpion ennemi)
+    - Avantage : Ne rate pas si vous avez le mana (le roll de succès est fait avant d'appeler)
 
     Args:
-        target_morpion_state: dict con {'hp': int, ...}
+        target_morpion_state: dict avec {'hp': int, ...}
 
     Returns:
-        dict: {
-            'target_hp_updated': int,  # HP después del daño (mínimo 0)
+        dict : {
+            'target_hp_updated': int,  # HP après les dégâts (minimum 0)
             'mana_cost': 2,
             'damage_dealt': 3
         }
     """
     current_hp = target_morpion_state.get('hp', 0)
-    new_hp = max(0, current_hp - 3)  # HP no puede ser negativo
+    new_hp = max(0, current_hp - 3)  # HP ne peut pas être négatif
 
     return {
         'target_hp_updated': new_hp,
@@ -178,26 +178,26 @@ def execute_boule_de_feu(target_morpion_state):
 
 def execute_soin(target_morpion_state):
     """
-    Ejecuta el sort de soin: curación a aliado o uno mismo.
+    Exécute le sort de soin : guérison d'un allié ou de soi-même.
 
-    Características:
-    - Curación: +2 HP (sin límite máximo, puede exceder HP inicial)
-    - Costo: 1 mana (el más barato)
-    - Objetivo: Solo morpions de tu equipo
-    - Estrategia: Útil para prolongar partidas y proteger morpions clave
+    Caractéristiques :
+    - Guérison : +2 HP (sans limite maximale, peut dépasser le HP initial)
+    - Coût : 1 mana (le plus économique)
+    - Cible : Seulement les morpions de votre équipe
+    - Stratégie : Utile pour prolonger les parties et protéger les morpions clés
 
     Args:
-        target_morpion_state: dict con {'hp': int, ...}
+        target_morpion_state: dict avec {'hp': int, ...}
 
     Returns:
-        dict: {
-            'target_hp_updated': int,  # HP después de curación (ilimitado)
+        dict : {
+            'target_hp_updated': int,  # HP après guérison (illimité)
             'mana_cost': 1,
             'healing_done': 2
         }
 
-    Nota: No hay cap de HP máximo. Un morpion que empieza con 10 HP
-    puede llegar a 15 HP si recibe múltiples curaciones.
+    Note : Pas de limite maximale de HP. Un morpion qui commence avec 10 HP
+    peut atteindre 15 HP s'il reçoit plusieurs soins.
     """
     current_hp = target_morpion_state.get('hp', 0)
     new_hp = current_hp + 2
@@ -211,37 +211,37 @@ def execute_soin(target_morpion_state):
 
 def execute_armageddon(grid, position, destroyed_cells):
     """
-    Ejecuta el sort Armageddon: destrucción permanente de una casilla.
+    Exécute le sort Armageddon : destruction permanente d'une case.
 
-    El hechizo más poderoso y costoso del juego. Destruye completamente
-    una casilla del tablero, eliminando cualquier morpion que esté ahí
-    y haciendo que la casilla sea inutilizable para el resto de la partida.
+    Le sort le plus puissant et coûteux du jeu. Détruit complètement
+    une case du plateau, éliminant tout morpion présent dessus
+    et rendant la case inutilisable pour le reste de la partie.
 
-    Características:
-    - Costo: 5 mana (el más caro, requiere planificación)
-    - Efecto: Destruye la casilla permanentemente
-    - Daño colateral: Elimina morpion enemigo si hay uno (muerte instantánea)
-    - Restricción: No puedes destruir tu propia casilla
-    - Estrategia: Bloquea líneas enemigas o elimina morpions poderosos
+    Caractéristiques :
+    - Coût : 5 mana (le plus cher, nécessite de la planification)
+    - Effet : Détruit la case de manière permanente
+    - Dégâts collatéraux : Élimine le morpion ennemi s'il y en a un (mort instantanée)
+    - Restriction : Vous ne pouvez pas détruire votre propre case
+    - Stratégie : Bloque les lignes ennemies ou élimine les morpions puissants
 
     Args:
         grid: dict {(row, col): {'team_id': X, 'morpion_id': Y}}
-        position: tupla (row, col) de la casilla a destruir
-        destroyed_cells: lista de tuplas [(row, col), ...] ya destruidas
+        position: tuple (row, col) de la case à détruire
+        destroyed_cells: liste de tuples [(row, col), ...] déjà détruites
 
     Returns:
-        dict: {
-            'grid_updated': dict,        # Grid sin el morpion eliminado
-            'destroyed_cells_updated': list,  # Lista con nueva casilla añadida
+        dict : {
+            'grid_updated': dict,        # Grille sans le morpion éliminé
+            'destroyed_cells_updated': list,  # Liste avec nouvelle case ajoutée
             'mana_cost': 5,
-            'morpion_killed': bool,      # True si había un morpion enemigo
-            'morpion_id_killed': int | None  # ID del morpion eliminado
+            'morpion_killed': bool,      # True s'il y avait un morpion ennemi
+            'morpion_id_killed': int | None  # ID du morpion éliminé
         }
 
-    Ejemplo de uso táctico:
-    - Bloquear la casilla central en 3x3 (posición más valiosa)
-    - Destruir último morpion enemigo para victoria por eliminación
-    - Romper una línea casi completa del oponente
+    Exemple d'utilisation tactique :
+    - Bloquer la case centrale en 3x3 (position la plus précieuse)
+    - Détruire le dernier morpion ennemi pour victoire par élimination
+    - Briser une ligne presque complète de l'adversaire
     """
     grid_copy = dict(grid)
     destroyed_cells_copy = list(destroyed_cells)
@@ -249,13 +249,13 @@ def execute_armageddon(grid, position, destroyed_cells):
     morpion_killed = False
     morpion_id_killed = None
 
-    # Eliminar morpion si existe en la posición objetivo
+    # Eliminer morpion si existe en position cible
     if position in grid_copy:
         morpion_killed = True
         morpion_id_killed = grid_copy[position].get('morpion_id')
         del grid_copy[position]
 
-    # Marcar casilla como destruida permanentemente
+    # Marquer la case comme détruite de manière permanente
     if position not in destroyed_cells_copy:
         destroyed_cells_copy.append(position)
 
@@ -270,35 +270,35 @@ def execute_armageddon(grid, position, destroyed_cells):
 
 def validate_attack_action(grid, attacker_pos, target_pos, current_player, team1_id, team2_id):
     """
-    Valida que un ataque sea válido (lealtad: no atacar propio equipo).
+    Valide qu'une attaque soit valide (loyauté : ne pas attaquer son propre équipe).
     
     Args:
-        grid: dict con estructura {(row, col): {'team_id': X, 'morpion_id': Y}}
-        attacker_pos: tupla (row, col) de la posición del atacante
-        target_pos: tupla (row, col) de la posición del objetivo
-        current_player: int (1 o 2)
-        team1_id: int, ID del equipo 1
-        team2_id: int, ID del equipo 2
+        grid: dict avec structure {(row, col): {'team_id': X, 'morpion_id': Y}}
+        attacker_pos: tuple (row, col) de la position de l'attaquant
+        target_pos: tuple (row, col) de la position de la cible
+        current_player: int (1 ou 2)
+        team1_id: int, ID de l'équipe 1
+        team2_id: int, ID de l'équipe 2
     
     Returns:
-        tuple: (bool, str) - (True, "") si válido, (False, mensaje_error) si inválido
+        tuple: (bool, str) - (True, "") si valide, (False, message_erreur) si invalide
     """
-    # Verificar que las posiciones existen en el grid
+    # Vérifier que les positions existent dans la grille
     if attacker_pos not in grid:
         return False, "Position de l'attaquant invalide"
     
     if target_pos not in grid:
         return False, "Position de la cible invalide"
     
-    # Obtener team_id del atacante y objetivo
+    # Obtenir team_id de l'attaquant et de la cible
     attacker_team_id = grid[attacker_pos].get('team_id')
     target_team_id = grid[target_pos].get('team_id')
     
-    # Verificar lealtad: no atacar propio equipo
+    # Vérifier la loyauté : ne pas attaquer son propre équipe
     if attacker_team_id == target_team_id:
         return False, "Vous ne pouvez pas attaquer votre propre équipe"
     
-    # Verificar que son adyacentes
+    # Vérifier qu'ils sont adjacents
     if not can_attack(attacker_pos, target_pos):
         return False, "Les positions doivent être adjacentes (horizontal ou vertical)"
     
@@ -307,20 +307,20 @@ def validate_attack_action(grid, attacker_pos, target_pos, current_player, team1
 
 def validate_spell_action(grid, caster_pos, target_pos, spell_type, current_player, team1_id, team2_id, destroyed_cells=None):
     """
-    Valida que un sort sea válido (lealtad y no kamikaze para armageddon).
+    Valide qu'un sort soit valide (loyauté et pas kamikaze pour armageddon).
     
     Args:
-        grid: dict con estructura {(row, col): {'team_id': X, 'morpion_id': Y}}
-        caster_pos: tupla (row, col) de la posición del lanzador (puede ser None para armageddon)
-        target_pos: tupla (row, col) de la posición objetivo
+        grid: dict avec structure {(row, col): {'team_id': X, 'morpion_id': Y}}
+        caster_pos: tuple (row, col) de la position du lanceur (peut être None pour armageddon)
+        target_pos: tuple (row, col) de la position cible
         spell_type: str ('boule_de_feu', 'soin', 'armageddon')
-        current_player: int (1 o 2)
-        team1_id: int, ID del equipo 1
-        team2_id: int, ID del equipo 2
-        destroyed_cells: lista de casillas destruidas (opcional)
+        current_player: int (1 ou 2)
+        team1_id: int, ID de l'équipe 1
+        team2_id: int, ID de l'équipe 2
+        destroyed_cells: liste de cases détruites (optionnel)
     
     Returns:
-        tuple: (bool, str) - (True, "") si válido, (False, mensaje_error) si inválido
+        tuple: (bool, str) - (True, "") si valide, (False, message_erreur) si invalide
     """
     current_team_id = team1_id if current_player == 1 else team2_id
     destroyed_cells = destroyed_cells or []
@@ -362,18 +362,18 @@ def validate_spell_action(grid, caster_pos, target_pos, spell_type, current_play
 
 def check_all_morpions_dead(grid, morpions_state, team_id, team_morpion_ids=None, used_morpions=None):
     """
-    Verifica si todos los morpions de un equipo están muertos (HP <= 0).
+    Vérifie si tous les morpions d'une équipe sont morts (HP <= 0).
     
     Args:
-        grid: dict con estructura {(row, col): {'team_id': X, 'morpion_id': Y}}
-        morpions_state: dict con {morpion_id: {'hp': ..., ...}}
-        team_id: int, ID del equipo a verificar
-        team_morpion_ids: set de IDs de morpions que pertenecen al equipo (opcional)
+        grid: dict avec structure {(row, col): {'team_id': X, 'morpion_id': Y}}
+        morpions_state: dict avec {morpion_id: {'hp': ..., ...}}
+        team_id: int, ID de l'équipe à vérifier
+        team_morpion_ids: set d'IDs de morpions appartenant à l'équipe (optionnel)
     
     Returns:
-        bool: True si todos los morpions del equipo están muertos, False en caso contrario
+        bool: True si tous les morpions de l'équipe sont morts, False sinon
     """
-    # Obtener todos los morpions del equipo en el grid
+    # Obtenir tous les morpions de l'équipe dans la grille
     team_morpion_ids_in_grid = set()
     for cell_data in grid.values():
         if cell_data.get('team_id') == team_id:
@@ -381,9 +381,9 @@ def check_all_morpions_dead(grid, morpions_state, team_id, team_morpion_ids=None
             if morpion_id:
                 team_morpion_ids_in_grid.add(morpion_id)
     
-    # Si no hay morpions del equipo en el grid:
-    # - Si no se han colocado morpions aún (grid vacío), la partida acaba de empezar -> False
-    # - Si hay morpions en morpions_state pero no en el grid, todos están muertos -> True
+    # Si aucun morpion de l'équipe dans la grille :
+    # - Si aucun morpion n'a encore été placé (grille vide), la partie vient de commencer -> False
+    # - Si des morpions sont dans morpions_state mais pas dans la grille, tous sont morts -> True
     if len(team_morpion_ids_in_grid) == 0:
         team_set = set(team_morpion_ids) if team_morpion_ids is not None else None
         if team_set is not None:
@@ -391,12 +391,12 @@ def check_all_morpions_dead(grid, morpions_state, team_id, team_morpion_ids=None
         else:
             used_set = set(used_morpions) if used_morpions is not None else None
 
-        # Si conocemos el roster completo del equipo y no todos se han usado, no está eliminado
+        # Si on connaît le roster complet de l'équipe et qu'aucun n'a été utilisé, il n'est pas éliminé
         if team_set is not None:
             if used_set is None or len(used_set) < len(team_set):
                 return False
 
-        # Construir la lista completa de morpions a verificar (idealmente todos los del roster)
+        # Construire la liste complète des morpions à vérifier (idéalement tous les du roster)
         candidates = team_set if team_set is not None else set(morpions_state.keys())
         if not candidates:
             return False
@@ -404,55 +404,55 @@ def check_all_morpions_dead(grid, morpions_state, team_id, team_morpion_ids=None
         for morpion_id in candidates:
             morpion_state = morpions_state.get(morpion_id)
             if morpion_state is None:
-                # Falta info => prudencia, considerarlo vivo
+                # Manque d'info => prudence, le considérer vivant
                 return False
             hp = morpion_state.get('hp', 0)
             if hp > 0:
-                return False  # Hay al menos uno vivo
-        return True  # Todos los morpions del roster conocidos están muertos
+                return False  # Au moins un vivant
+        return True  # Tous les morpions du roster connu sont morts
     
-    # Verificar que todos los morpions del equipo en el grid tienen HP <= 0
+    # Vérifier que tous les morpions de l'équipe dans la grille ont HP <= 0
     for morpion_id in team_morpion_ids_in_grid:
         morpion_state = morpions_state.get(morpion_id)
         if morpion_state:
             hp = morpion_state.get('hp', 0)
             if hp > 0:
-                return False  # Hay al menos uno vivo
+                return False  # Au moins un vivant
     
-    return True  # Todos los morpions en el grid están muertos
+    return True  # Tous les morpions dans la grille sont morts
 
 
 def check_game_end_conditions_avancee(grid, grid_size, current_turn, max_turns, team1_id, team2_id,
                                       morpions_state, destroyed_cells, team1_morpions=None, team2_morpions=None, used_morpions=None):
     """
-    Verifica todas las condiciones de fin de partie para partie avancée.
-    Extiende check_game_end_conditions de normale agregando verificación de eliminación completa.
+    Vérifie toutes les conditions de fin de partie pour partie avancée.
+    Étend check_game_end_conditions de normale en ajoutant la vérification d'élimination complète.
     
     Args:
-        grid: dict con estructura {(row, col): {'team_id': X, 'morpion_id': Y}}
-        grid_size: tamaño de la grille (3 o 4)
-        current_turn: turno actual
-        max_turns: número máximo de turnos configurado
-        team1_id: ID del equipo 1
-        team2_id: ID del equipo 2
-        morpions_state: dict con {morpion_id: {'hp': ..., ...}}
-        destroyed_cells: lista de tuplas [(row, col), ...]
-        team1_morpions: lista de morpions del equipo 1 (opcional)
-        team2_morpions: lista de morpions del equipo 2 (opcional)
-        used_morpions: lista de IDs de morpions usados (opcional)
+        grid: dict avec structure {(row, col): {'team_id': X, 'morpion_id': Y}}
+        grid_size: taille de la grille (3 ou 4)
+        current_turn: tour actuel
+        max_turns: nombre maximum de tours configuré
+        team1_id: ID de l'équipe 1
+        team2_id: ID de l'équipe 2
+        morpions_state: dict avec {morpion_id: {'hp': ..., ...}}
+        destroyed_cells: liste de tuples [(row, col), ...]
+        team1_morpions: liste de morpions de l'équipe 1 (optionnel)
+        team2_morpions: liste de morpions de l'équipe 2 (optionnel)
+        used_morpions: liste d'IDs de morpions utilisés (optionnel)
     
     Returns:
-        dict con estructura:
+        dict avec structure :
         {
             'game_over': bool,
-            'winner_team_id': int | None,  # None si empate o partida no terminada
+            'winner_team_id': int | None,  # None si égalité ou partie non terminée
             'reason': str  # 'victory', 'max_turns', 'all_morpions_dead', 'stalemate', None
         }
     """
-    # Importar funciones de normale para reutilizar
+    # Importer les fonctions de normale pour réutiliser
     from models.game_logic_normale import check_victory_normale
     
-    # Verificar victoria por línea completa (reutilizar de normale)
+    # Vérifier la victoire par ligne complète (réutiliser de normale)
     if check_victory_normale(grid, grid_size, team1_id):
         return {
             'game_over': True,
@@ -467,7 +467,7 @@ def check_game_end_conditions_avancee(grid, grid_size, current_turn, max_turns, 
             'reason': 'victory'
         }
     
-    # Verificar eliminación completa de morpions (incluso si la grille está vacía)
+    # Vérifier l'élimination complète des morpions (même si la grille est vide)
     team1_morpion_ids = {m['id_morpion'] for m in team1_morpions} if team1_morpions else None
     team2_morpion_ids = {m['id_morpion'] for m in team2_morpions} if team2_morpions else None
     
@@ -505,7 +505,7 @@ def check_game_end_conditions_avancee(grid, grid_size, current_turn, max_turns, 
             'reason': 'all_morpions_dead'
         }
     
-    # Verificar máximo de turnos
+    # Vérifier le maximum de tours
     if current_turn > max_turns:
         return {
             'game_over': True,
@@ -513,7 +513,7 @@ def check_game_end_conditions_avancee(grid, grid_size, current_turn, max_turns, 
             'reason': 'max_turns'
         }
     
-    # Verificar si ambos equipos están bloqués (sin morpions disponibles, sin mana, sin ataques posibles)
+    # Vérifier si les deux équipes sont bloquées (aucun morpion disponible, aucun mana, aucune attaque possible)
     if team1_morpions is not None and team2_morpions is not None and used_morpions is not None:
         team1_ids = {m['id_morpion'] for m in team1_morpions}
         team2_ids = {m['id_morpion'] for m in team2_morpions}
@@ -526,7 +526,7 @@ def check_game_end_conditions_avancee(grid, grid_size, current_turn, max_turns, 
         team2_available = team2_ids - team2_used
 
         def team_has_spell_option(team_id, team_ids):
-            # necesita un morpion en la grille
+            # a besoin d'un morpion sur la grille
             morpions_on_grid = [cell['morpion_id'] for cell in grid.values() if cell.get('team_id') == team_id]
             if not morpions_on_grid:
                 return False
@@ -537,7 +537,7 @@ def check_game_end_conditions_avancee(grid, grid_size, current_turn, max_turns, 
             return False
 
         def teams_adjacent():
-            # ¿Existe al menos una paire adyacente?
+            # Existe-t-il au moins une paire adjacente ?
             positions = list(grid.items())
             for (pos_a, cell_a) in positions:
                 team_a = cell_a.get('team_id')
@@ -561,7 +561,7 @@ def check_game_end_conditions_avancee(grid, grid_size, current_turn, max_turns, 
                 'reason': 'stalemate'
             }
     
-    # Partida continúa
+    # La partie continue
     return {
         'game_over': False,
         'winner_team_id': None,

@@ -1,6 +1,6 @@
 /**
- * JavaScript ultra-mínimo: Solo sincroniza morpion_id cuando cambia la selección
- * El campo oculto ya tiene un valor por defecto, solo necesita actualizarse si el usuario cambia la selección
+ * JavaScript ultra-minimal : synchronise uniquement morpion_id lorsque la sélection change
+ * Le champ caché a déjà une valeur par défaut, il n'a besoin d'être mis à jour que si l'utilisateur change la sélection
  */
 (function() {
     'use strict';

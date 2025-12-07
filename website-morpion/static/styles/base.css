@@ -1,6 +1,7 @@
 /* ============================================
-   Reset & Base Variables
+   Réinitialisation et Variables de Base
    ============================================ */
+   
 * {
     margin: 0;
     padding: 0;
@@ -8,7 +9,7 @@
 }
 
 :root {
-    /* Colors */
+    /* Couleurs */
     --primary-red: #a5011c;
     --primary-blue: #1a1f5f;
     --red-light: #d1022a;
@@ -24,14 +25,14 @@
     --accent-amber: #f6c343;
     --accent-cyan: #00ffff;
     
-    /* Gradients */
+    /* Dégradés */
     --gradient-blue: linear-gradient(135deg, var(--primary-blue) 0%, var(--blue-dark) 100%);
     --gradient-blue-hover: linear-gradient(135deg, var(--blue-light) 0%, var(--primary-blue) 100%);
     --gradient-red: linear-gradient(135deg, var(--primary-red) 0%, var(--red-dark) 100%);
     --gradient-red-hover: linear-gradient(135deg, var(--red-light) 0%, var(--primary-red) 100%);
     --gradient-card: linear-gradient(135deg, var(--bg-card) 0%, rgba(37, 37, 64, 0.8) 100%);
     
-    /* Shadows */
+    /* Ombres */
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
     --shadow-md: 0 4px 12px rgba(62, 65, 164, 0.4);
     --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -45,7 +46,7 @@
     --shadow-cyan: 0 0 15px rgba(0, 255, 255, 0.3);
     --shadow-gold: 0 0 10px rgba(255, 215, 0, 0.5);
     
-    /* Border Radius */
+    /* Rayons de Bordure */
     --radius-sm: 8px;
     --radius-md: 10px;
     --radius-lg: 15px;
@@ -54,21 +55,21 @@
     --transition-base: all 0.3s ease;
     --transition-fast: all 0.2s ease;
     
-    /* Spacing */
+    /* Espacement */
     --spacing-xs: 0.5rem;
     --spacing-sm: 1rem;
     --spacing-md: 1.5rem;
     --spacing-lg: 2rem;
     --spacing-xl: 3rem;
     
-    /* Image Sizes */
+    /* Tailles d'Images */
     --img-morpion-card: 60px;
     --img-morpion-selector: 44px;
     --img-morpion-cell: 40px;
     --img-morpion-mini: 60px;
     --img-morpion-cell-mobile: 40px;
     
-    /* Grid Cell Sizes */
+    /* Tailles de Cellules de Grille */
     --cell-size-desktop: 120px;
     --cell-size-tablet: 100px;
     --cell-size-mobile: 80px;
@@ -78,8 +79,12 @@
 }
 
 /* ============================================
-   Base HTML Elements (from base/base.html)
+   Éléments HTML de Base (de base/base.html)
    ============================================ */
+html {
+    background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-light) 100%); /* Pour les screenshots */
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-light) 100%);
@@ -87,6 +92,7 @@ body {
     min-height: 100vh;
     line-height: 1.6;
     background-attachment: fixed;
+    overflow-x: clip;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -131,7 +137,7 @@ a:hover {
 }
 
 /* ============================================
-   Animations - Global Keyframes
+   Animations - Keyframes Globales
    ============================================ */
 @keyframes pulse {
     0%, 100% {

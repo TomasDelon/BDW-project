@@ -2,8 +2,9 @@
 
 /* === base.css === */
 /* ============================================
-   Reset & Base Variables
+   Réinitialisation et Variables de Base
    ============================================ */
+   
 * {
     margin: 0;
     padding: 0;
@@ -11,7 +12,7 @@
 }
 
 :root {
-    /* Colors */
+    /* Couleurs */
     --primary-red: #a5011c;
     --primary-blue: #1a1f5f;
     --red-light: #d1022a;
@@ -27,14 +28,14 @@
     --accent-amber: #f6c343;
     --accent-cyan: #00ffff;
     
-    /* Gradients */
+    /* Dégradés */
     --gradient-blue: linear-gradient(135deg, var(--primary-blue) 0%, var(--blue-dark) 100%);
     --gradient-blue-hover: linear-gradient(135deg, var(--blue-light) 0%, var(--primary-blue) 100%);
     --gradient-red: linear-gradient(135deg, var(--primary-red) 0%, var(--red-dark) 100%);
     --gradient-red-hover: linear-gradient(135deg, var(--red-light) 0%, var(--primary-red) 100%);
     --gradient-card: linear-gradient(135deg, var(--bg-card) 0%, rgba(37, 37, 64, 0.8) 100%);
     
-    /* Shadows */
+    /* Ombres */
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
     --shadow-md: 0 4px 12px rgba(62, 65, 164, 0.4);
     --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -48,7 +49,7 @@
     --shadow-cyan: 0 0 15px rgba(0, 255, 255, 0.3);
     --shadow-gold: 0 0 10px rgba(255, 215, 0, 0.5);
     
-    /* Border Radius */
+    /* Rayons de Bordure */
     --radius-sm: 8px;
     --radius-md: 10px;
     --radius-lg: 15px;
@@ -57,21 +58,21 @@
     --transition-base: all 0.3s ease;
     --transition-fast: all 0.2s ease;
     
-    /* Spacing */
+    /* Espacement */
     --spacing-xs: 0.5rem;
     --spacing-sm: 1rem;
     --spacing-md: 1.5rem;
     --spacing-lg: 2rem;
     --spacing-xl: 3rem;
     
-    /* Image Sizes */
+    /* Tailles d'Images */
     --img-morpion-card: 60px;
     --img-morpion-selector: 44px;
     --img-morpion-cell: 40px;
     --img-morpion-mini: 60px;
     --img-morpion-cell-mobile: 40px;
     
-    /* Grid Cell Sizes */
+    /* Tailles de Cellules de Grille */
     --cell-size-desktop: 120px;
     --cell-size-tablet: 100px;
     --cell-size-mobile: 80px;
@@ -81,8 +82,12 @@
 }
 
 /* ============================================
-   Base HTML Elements (from base/base.html)
+   Éléments HTML de Base (de base/base.html)
    ============================================ */
+html {
+    background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-light) 100%); /* Pour les screenshots */
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-light) 100%);
@@ -90,6 +95,7 @@ body {
     min-height: 100vh;
     line-height: 1.6;
     background-attachment: fixed;
+    overflow-x: clip;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -134,7 +140,7 @@ a:hover {
 }
 
 /* ============================================
-   Animations - Global Keyframes
+   Animations - Keyframes Globales
    ============================================ */
 @keyframes pulse {
     0%, 100% {
@@ -196,8 +202,8 @@ a:hover {
 
 /* === utilities.css === */
 /* ============================================
-   Utility Classes
-   Clases reutilizables para efectos comunes
+   Classes Utilitaires
+   Classes réutilisables pour effets communs
    ============================================ */
 
 .sr-only {
@@ -212,7 +218,7 @@ a:hover {
   border: 0;
 }
 
-/* Hover Effects */
+/* Effets de Survol */
 .hover-lift:hover {
   transform: translateY(-2px);
   transition: var(--transition-base);
@@ -228,7 +234,7 @@ a:hover {
   transition: var(--transition-base);
 }
 
-/* Text Utilities */
+/* Utilitaires de Texte */
 .text-glow {
   text-shadow: var(--shadow-cyan);
 }
@@ -246,7 +252,7 @@ a:hover {
   letter-spacing: 1px;
 }
 
-/* Card Containers */
+/* Conteneurs de Cartes */
 .card {
   background: var(--bg-card);
   border-radius: var(--radius-lg);
@@ -263,7 +269,7 @@ a:hover {
   box-shadow: var(--shadow-lg);
 }
 
-/* Spacing Utilities */
+/* Utilitaires d'Espacement */
 .mt-sm { margin-top: var(--spacing-sm); }
 .mt-md { margin-top: var(--spacing-md); }
 .mt-lg { margin-top: var(--spacing-lg); }
@@ -279,12 +285,12 @@ a:hover {
 .p-lg { padding: var(--spacing-lg); }
 .p-xl { padding: var(--spacing-xl); }
 
-/* Gap Utilities */
+/* Utilitaires d'Écart */
 .gap-sm { gap: var(--spacing-sm); }
 .gap-md { gap: var(--spacing-md); }
 .gap-lg { gap: var(--spacing-lg); }
 
-/* Flexbox Utilities */
+/* Utilitaires Flexbox */
 .flex {
   display: flex;
 }
@@ -352,7 +358,7 @@ a:hover {
 }
 
 /* ============================================
-   Grid Patterns
+   Motifs de Grille
    ============================================ */
 .grid-auto-fit {
   display: grid;
@@ -401,7 +407,7 @@ a:hover {
 
 /* === layout.css === */
 /* ============================================
-   Header
+   En-tête
    ============================================ */
 header {
     background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-blue) 80%);
@@ -469,7 +475,7 @@ header strong {
 }
 
 /* ============================================
-   Layout principal
+   Mise en Page Principale
    ============================================ */
 #div-central {
     display: flex;
@@ -538,9 +544,11 @@ nav a:hover::before {
 
 nav a:hover {
     background: rgba(255, 255, 255, 0.2);
-    border-color: var(--accent-cyan);
+    border-color: var(--accent-gold);
     transform: translateX(5px);
-    box-shadow: 0 4px 12px rgba(0, 255, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+    text-decoration: none;
+    color: var(--accent-gold);
 }
 
 nav a:active {
@@ -548,7 +556,7 @@ nav a:active {
 }
 
 /* ============================================
-   Main content
+   Contenu Principal
    ============================================ */
 main {
     max-width: 1500px;
@@ -618,7 +626,7 @@ section h3 {
 }
 
 /* ============================================
-   Cards grid
+   Grille de Cartes
    ============================================ */
 .cards-grid {
     display: grid;
@@ -627,7 +635,7 @@ section h3 {
     margin-top: 1.5rem;
 }
 
-/* Stats card specific styles - used in cards-grid for home page */
+/* Styles spécifiques de carte de statistiques - utilisées dans cards-grid pour la page d'accueil */
 .cards-grid .card {
     background: linear-gradient(135deg, var(--primary-blue) 0%, var(--blue-dark) 100%);
     padding: 2rem;
@@ -679,7 +687,7 @@ section h3 {
 }
 
 /* ============================================
-   Tables
+   Tableaux
    ============================================ */
 table {
     width: 100%;
@@ -740,7 +748,7 @@ tbody tr:nth-child(3) td:first-child {
 }
 
 /* ============================================
-   Lists
+   Listes
    ============================================ */
 ul {
     list-style: none;
@@ -772,7 +780,7 @@ ul {
     color: var(--text-secondary);
 }
 
-/* Badge styles moved to components/badges.css */
+/* Styles de badge déplacées vers components/badges.css */
 
 .vs-separator,
 .arrow-separator {
@@ -798,11 +806,11 @@ ul {
     color: var(--text-secondary);
 }
 
-/* Messages styles moved to components/alerts.css */
-/* Footer styles moved to components/footer.css */
+/* Styles de messages déplacées vers components/alerts.css */
+/* Styles de pied de page déplacées vers components/footer.css */
 
 /* ============================================
-   Responsive Breakpoints
+   Points de Rupture Responsive
    ============================================ */
 @media (max-width: 968px) {
     #div-central {
@@ -1039,12 +1047,12 @@ ul {
 
 /* === components/stats.css === */
 /* ============================================
-   Stats Component - Consolidated Statistics Display
-   Consolidates: morpion-stats, card-stats, morpion-stats-mini, morpion-mini-stats
+   Composant Statistiques - Affichage de Statistiques Consolidé
+   Consolide : morpion-stats, card-stats, morpion-stats-mini, morpion-mini-stats
    ============================================ */
 
 /* ============================================
-   Base Stats Container
+   Conteneur de Statistiques de Base
    ============================================ */
 .stats {
     display: flex;
@@ -1055,7 +1063,7 @@ ul {
 }
 
 /* ============================================
-   Stats Layout Variants
+   Variantes de Mise en Page des Statistiques
    ============================================ */
 .stats--inline {
     display: flex;
@@ -1090,7 +1098,7 @@ ul {
 }
 
 /* ============================================
-   Individual Stat Item
+   Élément de Statistique Individuel
    ============================================ */
 .stat {
     display: flex;
@@ -1099,7 +1107,7 @@ ul {
     white-space: nowrap;
 }
 
-/* Grid stat item (with background) */
+/* Élément de statistique en boîte (avec arrière-plan) */
 .stat--boxed {
     background: rgba(15, 15, 26, 0.5);
     padding: 0.4rem;
@@ -1108,7 +1116,7 @@ ul {
 }
 
 /* ============================================
-   Stat Components
+   Composants de Statistiques
    ============================================ */
 .stat__icon {
     font-size: 1rem;
@@ -1128,7 +1136,7 @@ ul {
 }
 
 /* ============================================
-   Stat Type Colors - All stats use gold color
+   Couleurs de Type de Statistiques - Toutes les statistiques utilisent la couleur or
    ============================================ */
 .stat--hp, .stat--attack, .stat--mana, .stat--accuracy,
 .stat--hp .stat__value, .stat--attack .stat__value,
@@ -1139,7 +1147,7 @@ ul {
 }
 
 /* ============================================
-   Stats Total Display
+   Affichage Total de Statistiques
    ============================================ */
 .stats-total {
     text-align: center;
@@ -1155,7 +1163,7 @@ ul {
 }
 
 /* ============================================
-   Legacy Class Aliases (backward compatibility)
+   Alias de Classes Héritées (compatibilité ascendante)
    ============================================ */
 .morpion-stats {
     display: flex;
@@ -1241,11 +1249,11 @@ ul {
 
 /* === components/charts.css === */
 /* ============================================
-   REUSABLE CHART COMPONENTS
-   Used across multiple pages for consistency
+   Composants de Graphiques Réutilisables
+   Utilisés sur plusieurs pages pour la cohérence
    ============================================ */
 
-/* Progress Bar Wrapper */
+/* Conteneur de Barre de Progression */
 .progress-bar-wrapper {
   margin-top: var(--spacing-sm);
 }
@@ -1257,7 +1265,7 @@ ul {
   margin-bottom: var(--spacing-xs);
 }
 
-/* Bar Containers */
+/* Conteneurs de Barres */
 .bar-container {
   position: relative;
   width: 100%;
@@ -1272,7 +1280,7 @@ ul {
   height: 32px;
 }
 
-/* Bar Fill - Base */
+/* Remplissage de Barre - Base */
 .bar-fill {
   height: 100%;
   border-radius: 12px;
@@ -1292,7 +1300,7 @@ ul {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-/* Bar Types - Reusable across pages */
+/* Types de Barres - Réutilisables sur plusieurs pages */
 .bar-fill.bar-default,
 .bar-fill.bar-win-rate,
 .bar-fill.bar-winrate {
@@ -1330,7 +1338,7 @@ ul {
   box-shadow: 0 0 10px rgba(26, 31, 95, 0.3);
 }
 
-/* Bar Chart Row Layout */
+/* Mise en Page de Ligne de Graphique à Barres */
 .bar-chart-row {
   display: grid;
   grid-template-columns: 120px 1fr 120px;
@@ -1352,7 +1360,7 @@ ul {
   font-size: 0.9rem;
 }
 
-/* Simple Stat Card */
+/* Carte Statistique Simple */
 .stat-card-simple {
   display: flex;
   flex-direction: column;
@@ -1401,8 +1409,8 @@ ul {
 
 /* === components/team-card.css === */
 /* ============================================
-   TEAM CARD - Reusable Component
-   Used in team list and statistics pages
+   Carte d'Équipe - Composant Réutilisable
+   Utilisé dans la liste d'équipes et les pages de statistiques
    ============================================ */
 
 .team-card {
@@ -1490,7 +1498,7 @@ ul {
     color: var(--text-secondary);
 }
 
-/* Morpion Mini Grid - Reusable */
+/* Grille Mini de Morpions - Réutilisable */
 .morpions-mini-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
@@ -1545,10 +1553,10 @@ ul {
 
 /* === components/buttons.css === */
 /* ============================================
-   Buttons Component (used in macros/forms.html and throughout)
+   Composant Boutons (utilisé dans macros/forms.html et partout)
    ============================================ */
 
-/* Base Button Class - Propiedades comunes a todos los botones */
+/* Classe de Bouton de Base - Propiedades comunes a todos los botones */
 .btn {
   padding: 1rem 1.5rem;
   border-radius: var(--radius-md);
@@ -1578,7 +1586,7 @@ ul {
   transform: none;
 }
 
-/* Primary Button */
+/* Bouton Principal */
 .btn-primary {
   background: var(--gradient-blue);
   color: var(--text-primary);
@@ -1593,7 +1601,7 @@ ul {
   border-color: var(--accent-gold);
 }
 
-/* Secondary Button */
+/* Bouton Secondaire */
 .btn-secondary {
   background: rgba(62, 65, 164, 0.3);
   color: var(--text-secondary);
@@ -1607,19 +1615,19 @@ ul {
   border-color: var(--accent-cyan);
 }
 
-/* Large Button Variant */
+/* Variante de Bouton Large */
 .btn-large {
   font-size: 1.3rem !important;
   padding: 1.2rem 3rem !important;
   letter-spacing: 2px;
 }
 
-/* Submit Button Variant (full width in forms) */
+/* Variante de Bouton de Soumission (pleine largeur dans les formulaires) */
 .btn-submit {
   width: 100%;
 }
 
-/* Reset Button */
+/* Bouton de Réinitialisation */
 .btn-reset {
   width: 100%;
   padding: 0.9rem;
@@ -1635,7 +1643,7 @@ ul {
   border-color: var(--primary-red);
 }
 
-/* Create Link Button (used in empty states) */
+/* Bouton de Lien de Création (utilisé dans les états vides) */
 .btn-create-link {
   display: inline-block;
   margin-top: var(--spacing-md);
@@ -1652,7 +1660,7 @@ ul {
   border-color: var(--accent-gold);
 }
 
-/* Delete Button (for team deletion) */
+/* Bouton de Suppression (pour la suppression d'équipe) */
 .btn-delete-team {
   padding: 0.6rem 1.2rem;
   background: var(--gradient-red);
@@ -1671,10 +1679,10 @@ ul {
 
 /* === components/forms.css === */
 /* ============================================
-   Forms Component (macros/forms.html)
+   Composant Formulaires (macros/forms.html)
    ============================================ */
 
-/* Form Group */
+/* Groupe de Formulaire */
 .form-group {
   margin-bottom: 1.8rem;
 }
@@ -1689,7 +1697,7 @@ ul {
   letter-spacing: 1px;
 }
 
-/* Text Input */
+/* Entrée de Texte */
 .form-group input[type="text"],
 .form-group input[type="number"],
 .form-group select,
@@ -1726,14 +1734,14 @@ ul {
   background: linear-gradient(135deg, rgba(26, 31, 95, 0.9), rgba(14, 17, 38, 0.95));
 }
 
-/* Select Dropdown */
+/* Menu Déroulant Sélecteur */
 .form-group select option {
   background: rgba(5, 8, 25, 0.95);
   color: var(--text-primary);
   padding: 0.8rem;
 }
 
-/* Help Text */
+/* Texte d'Aide */
 .form-group small {
   display: block;
   margin-top: 0.6rem;
@@ -1742,7 +1750,7 @@ ul {
   font-style: italic;
 }
 
-/* Form Actions Container */
+/* Conteneur d'Actions de Formulaire */
 .form-actions {
   display: flex;
   flex-direction: column;
@@ -1755,7 +1763,7 @@ ul {
   width: 100%;
 }
 
-/* Responsive - cuando hay espacio, botones en línea */
+/* Responsive - lorsque l'espace est disponible, boutons en ligne */
 @media (min-width: 600px) {
   .form-actions {
     flex-direction: row;
@@ -1768,7 +1776,7 @@ ul {
   }
 }
 
-/* Color Input */
+/* Entrée de Couleur */
 .form-group input[type="color"] {
   width: 100%;
   height: 60px;
@@ -1790,14 +1798,14 @@ ul {
   box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
 }
 
-/* Checkbox styling (for morpion selection) */
+/* Style de Case à Cocher (pour la sélection de morpion) */
 input[type="checkbox"] {
   cursor: pointer;
 }
 
 /* === components/alerts.css === */
 /* ============================================
-   Alerts Component (used throughout app)
+   Composant Alertes (utilisé dans toute l'application)
    ============================================ */
 .alert {
   padding: 1.2rem 1.5rem;
@@ -1812,7 +1820,7 @@ input[type="checkbox"] {
   margin: 0.7rem 0;
 }
 
-/* Warning Alert */
+/* Alerte d'Avertissement */
 .alert-warning {
   background: linear-gradient(135deg, rgba(255, 200, 0, 0.2) 0%, rgba(200, 150, 0, 0.2) 100%);
   border-color: #ffc800;
@@ -1830,21 +1838,21 @@ input[type="checkbox"] {
   min-width: 200px;
 }
 
-/* Error Alert */
+/* Alerte d'Erreur */
 .alert-error {
   background: linear-gradient(135deg, rgba(165, 1, 28, 0.3) 0%, rgba(122, 1, 20, 0.3) 100%);
   border-color: var(--primary-red);
   color: var(--text-primary);
 }
 
-/* Info Alert */
+/* Alerte d'Info */
 .alert-info {
   background: linear-gradient(135deg, rgba(62, 65, 164, 0.3) 0%, rgba(45, 47, 122, 0.3) 100%);
   border-color: var(--primary-blue);
   color: var(--text-primary);
 }
 
-/* Success Alert */
+/* Alerte de Succès */
 .alert-success {
   background: linear-gradient(135deg, rgba(0, 200, 80, 0.2) 0%, rgba(0, 150, 60, 0.2) 100%);
   border-color: #00c850;
@@ -1854,7 +1862,7 @@ input[type="checkbox"] {
 
 /* === components/hero.css === */
 /* ============================================
-   Hero Component (macros/ui.html)
+   Composant Héros (macros/ui.html)
    ============================================ */
 .hero {
   text-align: center;
@@ -1877,7 +1885,7 @@ input[type="checkbox"] {
   margin: 0 auto;
 }
 
-/* Section Description (similar to hero) */
+/* Description de Section (similaire au héros) */
 .section-description {
   text-align: center;
   color: var(--text-secondary);
@@ -1888,10 +1896,10 @@ input[type="checkbox"] {
 
 /* === components/empty-state.css === */
 /* ============================================
-   Empty State Component - Consolidated
+   Composant État Vide - Consolidé
    ============================================ */
    
-/* Base empty state */
+/* État vide de base */
 .empty,
 .empty-message,
 .empty-logs,
@@ -1902,7 +1910,7 @@ input[type="checkbox"] {
   padding: 2rem;
 }
 
-/* Empty state with border and background */
+/* État vide avec bordure et arrière-plan */
 .empty-state {
   text-align: center;
   padding: 3rem 1.5rem;
@@ -1920,7 +1928,7 @@ input[type="checkbox"] {
 
 /* === components/confirmation-dialog.css === */
 /* ============================================
-   Confirmation Dialog Component (components/confirmation_dialog.html)
+   Composant Boîte de Confirmation (components/confirmation_dialog.html)
    ============================================ */
 .confirmation-dialog {
   background: linear-gradient(135deg, rgba(255, 200, 0, 0.15) 0%, rgba(200, 150, 0, 0.15) 100%);
@@ -2006,7 +2014,7 @@ input[type="checkbox"] {
   min-width: 200px;
 }
 
-/* Botones de confirmación - usando estilos estándar con variante danger */
+/* Boutons de confirmation - utilisant des styles standards avec variante danger */
 .btn-confirm-delete {
   width: 100%;
   background: var(--gradient-red);
@@ -2037,7 +2045,7 @@ input[type="checkbox"] {
   border-color: var(--accent-gold);
 }
 
-/* Responsive styles moved to layout/responsive.css */
+/* Styles Responsive déplacées vers layout/responsive.css */
 
 /* === components/design-system.css === */
 .section-card {
@@ -2165,7 +2173,7 @@ input[type="checkbox"] {
 
 /* === components/game-info-header.css === */
 /* ============================================
-   Game Info Header Component (components/game_info_header.html)
+   Composant En-tête d'Info de Jeu (components/game_info_header.html)
    ============================================ */
 .game-info {
   display: flex;
@@ -2211,7 +2219,7 @@ input[type="checkbox"] {
   animation: shine 3s infinite;
 }
 
-/* Animations moved to core/animations.css */
+/* Animations déplacées vers core/animations.css */
 
 .team-info.active .team-badge {
   transform: scale(1.05);
@@ -2234,7 +2242,7 @@ input[type="checkbox"] {
   color: var(--text-secondary);
 }
 
-/* Game Status */
+/* Statut de Jeu */
 .game-status {
   display: flex;
   justify-content: center;
@@ -2261,7 +2269,7 @@ input[type="checkbox"] {
   box-shadow: 0 0 15px rgba(165, 1, 28, 0.5);
 }
 
-/* Game Over Actions */
+/* Actions de Fin de Jeu */
 .game-over-actions {
   display: flex;
   gap: 1.5rem;
@@ -2275,11 +2283,11 @@ input[type="checkbox"] {
   min-width: 200px;
 }
 
-/* Responsive styles moved to layout/responsive.css */
+/* Styles Responsive déplacées vers layout/responsive.css */
 
 /* === components/game-grid.css === */
 /* ============================================
-   Game Grid Component (components/game_grid.html + game_cell.html)
+   Composant Grille de Jeu (components/game_grid.html + game_cell.html)
    ============================================ */
 .game-grid {
   margin: var(--spacing-lg) auto;
@@ -2333,7 +2341,7 @@ input[type="checkbox"] {
   box-shadow: 0 4px 16px rgba(0, 255, 255, 0.3);
 }
 
-/* Celdas vacías cuando hay un morpion seleccionado */
+/* Cellules vides lorsqu'un morpion est sélectionné */
 .game-grid__cell--empty.game-grid__cell--selectable {
   cursor: pointer;
   opacity: 1;
@@ -2385,7 +2393,7 @@ input[type="checkbox"] {
   pointer-events: none;
 }
 
-/* Animations moved to core/animations.css */
+/* Animations déplacées vers core/animations.css */
 
 .game-grid__cell-content--advanced:hover {
   transform: scale(1.05);
@@ -2443,7 +2451,7 @@ input[type="checkbox"] {
   margin-bottom: 0.3rem;
 }
 
-/* Estadísticas de morpions en celdas avanzadas */
+/* Statistiques de morpions dans les cellules avancées */
 .morpion-stats {
   display: flex;
   flex-direction: row;
@@ -2482,7 +2490,7 @@ input[type="checkbox"] {
   color: #ffd700;
 }
 
-/* Celdas destruidas */
+/* Cellules détruites */
 .game-grid__cell--destroyed {
   background: rgba(100, 0, 0, 0.3);
   border-color: rgba(200, 0, 0, 0.6);
@@ -2701,13 +2709,13 @@ input[type="checkbox"] {
   pointer-events: none;
   transition: opacity 0.2s ease;
 }
-/* Spell roulette animations removed */
+/* Animations de roulette de sorts supprimées */
 
-/* Responsive styles moved to layout/responsive.css */
+/* Styles Responsive déplacées vers layout/responsive.css */
 
 /* === components/game-logs.css === */
 /* ============================================
-   Game Logs Component (components/game_logs.html)
+   Composant Journaux de Jeu (components/game_logs.html)
    ============================================ */
 .game-logs {
   margin-top: var(--spacing-xl);
@@ -2827,7 +2835,7 @@ input[type="checkbox"] {
 
 /* === components/footer.css === */
 /* ============================================
-   Footer (liens discrets)
+   Pied de Page (liens discrets)
    ============================================ */
 .site-footer {
     display: flex;
@@ -2880,8 +2888,8 @@ input[type="checkbox"] {
 }
 
 /* === components/morpion-card.css === */
-/* Grid pattern moved to utilities/grids.css - use .grid-morpions */
-/* Legacy alias for backward compatibility */
+/* Grille de motif déplacée vers utilities/grids.css - utiliser .grid-morpions */
+/* Alias hérité pour compatibilité ascendante */
 .morpions-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -3039,7 +3047,7 @@ input[type="checkbox"] {
 
 /* === components/morpion-selector.css === */
 /* ============================================
-   Morpion Selector Component (components/morpion_selector.html)
+   Composant Sélecteur de Morpion (components/morpion_selector.html)
    ============================================ */
 .morpion-selector {
   margin: var(--spacing-xl) 0;
@@ -3183,17 +3191,17 @@ input[type="checkbox"] {
   letter-spacing: 0.4px;
 }
 
-/* Play Actions */
+/* Actions de Jeu */
 .play-actions {
   text-align: center;
   margin-top: var(--spacing-lg);
 }
 
-/* Responsive styles moved to layout/responsive.css */
+/* Styles Responsive déplacées vers layout/responsive.css */
 
 /* === components/position-selector.css === */
 /* ============================================
-   Position Selector Component (components/position_selector.html)
+   Composant Sélecteur de Position (components/position_selector.html)
    ============================================ */
 .position-selection {
   margin: var(--spacing-lg) 0;
@@ -3247,11 +3255,11 @@ input[type="checkbox"] {
   box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
 }
 
-/* Responsive styles moved to layout/responsive.css */
+/* Styles Responsive déplacées vers layout/responsive.css */
 
 /* === components/game-created-box.css === */
 /* ============================================
-   Game Created Box Component (used in game_setup.html)
+   Composant Boîte de Jeu Créé (utilisé dans game_setup.html)
    ============================================ */
 .game-created-box {
   background: var(--gradient-blue);
@@ -3433,7 +3441,7 @@ input[type="checkbox"] {
 
 /* === pages/team_create.css === */
 /* ============================================
-   Création d'équipe - Layout Only
+   Création d'Équipe - Mise en Page Seulement
    ============================================ */
 .create-team-section {
     max-width: 1400px;
@@ -3456,8 +3464,8 @@ input[type="checkbox"] {
 
 /* === pages/team_list.css === */
 /* ============================================
-   Liste des équipes - Page Specific Styles
-   Team card styles moved to components/team-card.css
+   Liste des Équipes - Styles de Page Spécifique
+   Les styles de carte d'équipe sont déplacés vers components/team-card.css
    ============================================ */
 .teams-list-section {
     max-width: 1400px;
@@ -3523,9 +3531,9 @@ input[type="checkbox"] {
     width: 100%;
 }
 
-/* Botones movidos a buttons.css */
+/* Boutons déplacés vers buttons.css */
 
-/* Game Items inside Team Card */
+/* Éléments de Jeu à l'intérieur de la Carte d'Équipe */
 .team-games {
     margin-bottom: var(--spacing-md);
     padding: 0.2rem;
@@ -3734,7 +3742,7 @@ input[type="checkbox"] {
     list-style: disc;
 }
 
-/* Layout */
+/* Mise en Page */
 .morpion-create-grid {
     display: grid;
     grid-template-columns: 1.2fr 0.9fr;
@@ -3906,8 +3914,8 @@ input[type="checkbox"] {
 
 /* === pages/game_setup.css === */
 /* ============================================
-   Game Setup Page - Layout Only
-   Page-specific layout for game setup
+   Page de Configuration de Jeu - Mise en Page Seulement
+   Mise en page spécifique de page pour la configuration de jeu
    ============================================ */
 .game-setup-section {
   max-width: 700px;
@@ -3935,8 +3943,8 @@ input[type="checkbox"] {
 
 /* === pages/game_play.css === */
 /* ============================================
-   Game Play Page - Layout Only
-   Page-specific layout for game play
+   Page de Jeu - Mise en Page Seulement
+   Mise en page spécifique de page pour le jeu
    ============================================ */
 .game-play-section {
   padding: 2rem;
@@ -4093,7 +4101,7 @@ input[type="checkbox"] {
 
 /* === pages/data_diagram.css === */
 /**
- * Styles for the ERD diagram page
+ * Styles pour la page du diagramme ERD
  */
 
 .erd-section {
@@ -4171,7 +4179,7 @@ input[type="checkbox"] {
   filter: drop-shadow(0 0 30px var(--accent-cyan));
 }
 
-/* Dark theme adjustments for Mermaid */
+/* Ajustements de thème sombre pour Mermaid */
 .mermaid svg {
   background: transparent !important;
   max-width: 1200px !important;
@@ -4179,7 +4187,7 @@ input[type="checkbox"] {
   height: auto !important;
 }
 
-/* Colores para las entidades del diagrama ER */
+/* Couleurs pour les entités du diagramme ER */
 .mermaid svg .entityBox {
   fill: var(--bg-card) !important;
   stroke: var(--accent-cyan) !important;
@@ -4224,7 +4232,7 @@ input[type="checkbox"] {
   font-style: italic !important;
 }
 
-/* Colores para las relaciones */
+/* Couleurs pour les relations */
 .mermaid svg .relationshipLine {
   stroke: var(--accent-cyan) !important;
   stroke-width: 2px !important;
@@ -4248,7 +4256,7 @@ input[type="checkbox"] {
   letter-spacing: 0.5px !important;
 }
 
-/* Colores para las líneas de conexión */
+/* Couleurs pour les lignes de connexion */
 .mermaid svg line {
   stroke: var(--accent-cyan) !important;
 }
@@ -4259,37 +4267,37 @@ input[type="checkbox"] {
   fill: none;
 }
 
-/* Estilos para hacer los elementos más finos y elegantes */
-/* Hace los círculos de cardinalidad más pequeños */
+/* Styles pour rendre les éléments plus fins et élégants */
+/* Rendre les cercles de cardinalité plus petits */
 .mermaid svg .erMarker circle {
   r: 5 !important;
   stroke-width: 1px !important;
   stroke: var(--accent-cyan) !important;
 }
 
-/* Hace las patas de cuervo más finas */
+/* Rendre les pattes de corbeau plus fines */
 .mermaid svg .erConnector {
   stroke-width: 1.2px !important;
   stroke: var(--accent-cyan) !important;
 }
 
-/* Hace los textos de las relaciones más pequeños y limpios */
+/* Rendre les textes des relations plus petits et plus propres */
 .mermaid svg .relationLabel {
   font-size: 9px !important;
   fill: var(--text-secondary) !important;
 }
 
-/* Reduce la distancia entre entidades (reduce padding interno) */
+/* Réduire la distance entre les entités (réduire le padding interne) */
 .mermaid svg .er .box {
   padding: 4px 8px !important;
 }
 
-/* Hace los bordes de las tablas más finos */
+/* Rendre les bords des tables plus fins */
 .mermaid svg rect.er {
   stroke-width: 1.2px !important;
 }
 
-/* Ajusta el grosor de todas las líneas del diagrama ER */
+/* Ajuster l'épaisseur de toutes les lignes du diagramme ER */
 .mermaid svg .er line {
   stroke-width: 1.2px !important;
 }
@@ -4298,7 +4306,7 @@ input[type="checkbox"] {
   stroke-width: 1.2px !important;
 }
 
-/* Estilos para el esquema relacional */
+/* Styles pour le schéma relationnel */
 .relational-schema-container {
   margin-top: 3rem;
 }
@@ -4391,7 +4399,7 @@ input[type="checkbox"] {
   overflow-x: auto;
 }
 
-/* Estilos para claves primarias (PK) - subrayadas */
+/* Styles pour les clés primaires (PK) - soulignées */
 .schema-code .pk {
   text-decoration: underline;
   text-decoration-color: var(--accent-cyan);
@@ -4401,7 +4409,7 @@ input[type="checkbox"] {
   font-weight: 600;
 }
 
-/* Estilos para claves foráneas (FK) - con símbolo # */
+/* Styles pour les clés étrangères (FK) - avec symbole # */
 .schema-code .fk {
   color: var(--accent-gold);
   font-weight: 500;
@@ -4415,7 +4423,7 @@ input[type="checkbox"] {
   text-underline-offset: 3px;
 }
 
-/* Estilos para el esquema SQL */
+/* Styles pour le schéma SQL */
 .sql-schema-container {
   margin-top: 3rem;
 }
@@ -4443,7 +4451,6 @@ input[type="checkbox"] {
   position: relative;
 }
 
-
 .sql-code {
   font-family: 'Courier New', Courier, monospace;
   font-size: 0.85rem;
@@ -4459,7 +4466,7 @@ input[type="checkbox"] {
   min-height: 0;
 }
 
-/* Estilos para sintaxis SQL */
+/* Styles pour la syntaxe SQL */
 .sql-code .sql-keyword {
   color: var(--accent-cyan);
   font-weight: 600;
@@ -4507,7 +4514,7 @@ input[type="checkbox"] {
   color: var(--accent-amber);
 }
 
-/* Responsive adjustments */
+/* Ajustements Responsive */
 @media (max-width: 768px) {
   .erd-section {
     padding: 1rem;
@@ -4550,11 +4557,11 @@ input[type="checkbox"] {
 
 /* === pages/stats_advanced.css === */
 /* ============================================
-   Advanced Statistics Page - Minimal Custom Styles
-   Most styles reused from components/charts.css and existing components
+   Page de Statistiques Avancées - Styles Minimaux Personnalisés
+   La plupart des styles réutilisés des composants/charts.css et des composants existants
    ============================================ */
 
-/* Stats Section - Reuses design-system section-card */
+/* Section de Statistiques - Réutilise section-card du design-system */
 .stats-section {
   margin-bottom: var(--spacing-xl);
   padding: var(--spacing-lg);
@@ -4581,7 +4588,7 @@ input[type="checkbox"] {
   letter-spacing: 1px;
 }
 
-.section-description {
+.stats-section .section-description {
   color: var(--text-secondary);
   font-size: 0.95rem;
   margin-bottom: var(--spacing-md);
@@ -4589,14 +4596,14 @@ input[type="checkbox"] {
   line-height: 1.6;
 }
 
-/* Stats Grid - Generic grid for stat cards */
+/* Grille de Statistiques - Grille générique pour les cartes de statistiques */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: var(--spacing-md);
 }
 
-/* Morpion Grid Override - Wider cards for this page only */
+/* Grille de Morpions - Cartes plus larges pour cette page seulement */
 .stats-section .morpions-mini-grid {
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: var(--spacing-md);
@@ -4632,7 +4639,7 @@ input[type="checkbox"] {
   justify-content: center;
 }
 
-/* Ranking Table - Reuses home page table styles */
+/* Tableau de Classement - Réutilise les styles de tableau de la page d'accueil */
 .ranking-table {
   overflow-x: auto;
 }
@@ -4708,7 +4715,7 @@ input[type="checkbox"] {
   height: 16px;
 }
 
-/* Summary Section - Special styling */
+/* Section de Résumé - Style Spécial */
 .summary-section {
   background: var(--gradient-blue);
   color: var(--text-primary);
@@ -4813,5 +4820,804 @@ input[type="checkbox"] {
 
   .stats-section .morpions-mini-grid {
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+}
+
+/* === pages/documentation.css === */
+:root {
+  --doc-bg: #0d1117;
+  --doc-surface: #0f1624;
+  --doc-border: #30363d;
+  --doc-text: #c9d1d9;
+  --doc-muted: #8b949e;
+  --doc-accent: #58a6ff;
+  --doc-accent-strong: #1f6feb;
+  --doc-code-bg: #161b22;
+  --doc-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+}
+
+html{
+  background-color: #0d1117;
+}
+
+@media print {
+  .section,
+  .page,
+  .code-explained {
+    height: auto !important;
+    min-height: auto !important;
+  }
+}
+
+@media print {
+  .code-explained,
+  pre,
+  code {
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+  }
+}
+
+
+
+@media print {
+  body {
+    margin: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .section,
+  .page,
+  .code-explained {
+    height: auto !important;
+    min-height: auto !important;
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+  }
+}
+
+
+
+#mermaid-1765035593606{
+  height: 300px;
+}
+
+body.doc-page {
+  margin: 0;
+  background: var(--doc-bg);
+  color: var(--doc-text);
+  font-family: "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--doc-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--doc-accent-strong);
+  text-decoration: underline;
+}
+
+.doc-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 22px;
+  background: #010409;
+  border-bottom: 1px solid var(--doc-border);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.35);
+}
+
+.doc-topbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.doc-topbar__octo {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid var(--doc-border);
+  background: linear-gradient(145deg, #161b22, #0d1117);
+  display: grid;
+  place-items: center;
+  color: var(--doc-accent);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.doc-topbar__repo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.doc-topbar__repo strong {
+  color: #e6edf3;
+  font-size: 1.05rem;
+}
+
+.doc-topbar__repo span {
+  color: var(--doc-muted);
+  font-size: 0.9rem;
+}
+
+.doc-topbar__badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.doc-pill {
+  background: var(--doc-code-bg);
+  border: 1px solid var(--doc-border);
+  color: var(--doc-muted);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.doc-pill--accent {
+  color: var(--doc-accent);
+  border-color: rgba(88, 166, 255, 0.6);
+}
+
+.doc-main {
+  max-width: 1100px;
+  margin: 28px auto 56px;
+  padding: 0 22px;
+}
+
+.doc-intro {
+  background: var(--doc-surface);
+  border: 1px solid var(--doc-border);
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: var(--doc-shadow);
+  margin-bottom: 18px;
+}
+
+.doc-intro h1 {
+  margin: 0 0 6px;
+  color: #e6edf3;
+  font-size: 1.6rem;
+}
+
+.doc-intro p {
+  margin: 0;
+  color: var(--doc-muted);
+  line-height: 1.6;
+}
+
+.doc-intro__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.doc-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--doc-code-bg);
+  border: 1px solid var(--doc-border);
+  color: var(--doc-text);
+  font-weight: 600;
+}
+
+.doc-chip__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--doc-accent);
+  box-shadow: 0 0 0 4px rgba(88, 166, 255, 0.16);
+}
+
+.doc-body {
+  background: var(--doc-surface);
+  border: 1px solid var(--doc-border);
+  border-radius: 14px;
+  box-shadow: var(--doc-shadow);
+  overflow: hidden;
+}
+
+.doc-file-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 16px 18px;
+  background: #0f172a;
+  border-bottom: 1px solid var(--doc-border);
+}
+
+.doc-file-path {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.doc-file-name {
+  color: #e6edf3;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.doc-file-note {
+  color: var(--doc-muted);
+  font-size: 0.95rem;
+}
+
+.doc-file-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.doc-file-actions .doc-pill {
+  background: #111827;
+}
+
+.markdown-body.doc-markdown {
+  background: var(--doc-code-bg);
+  border-top: 1px solid var(--doc-border);
+  border-radius: 0 0 14px 14px;
+  padding: 26px;
+  color: var(--doc-text);
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.markdown-body.doc-markdown * {
+  box-sizing: border-box;
+}
+
+.markdown-body.doc-markdown h1,
+.markdown-body.doc-markdown h2,
+.markdown-body.doc-markdown h3,
+.markdown-body.doc-markdown h4,
+.markdown-body.doc-markdown h5,
+.markdown-body.doc-markdown h6 {
+  color: #e6edf3;
+}
+
+.markdown-body.doc-markdown pre,
+.markdown-body.doc-markdown code {
+  background-color: rgba(240, 246, 252, 0.04);
+  border: 1px solid var(--doc-border);
+}
+
+.markdown-body.doc-markdown pre {
+  color: #e6edf3;
+  border-radius: 10px;
+}
+
+.doc-link-disabled {
+  color: var(--doc-muted);
+  border-bottom: 1px dashed var(--doc-border);
+  cursor: default;
+}
+
+.markdown-body.doc-markdown {
+  --logo-html: url("https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg");
+  --logo-css: url("https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg");
+  --logo-js: url("https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg");
+  --logo-python: url("https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg");
+  --logo-sql: url("https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg");
+  --logo-markdown: url("https://cdn.jsdelivr.net/gh/devicons/devicon/icons/markdown/markdown-original.svg");
+  --logo-text: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='1' y='0.5' width='14' height='15' rx='2' ry='2' fill='%23f4f4f4' stroke='%23000' stroke-width='0.8'/%3E%3Ctext x='8' y='11.5' font-family='Arial' font-size='7' text-anchor='middle' fill='%23000'%3ETXT%3C/text%3E%3C/svg%3E");
+  --logo-box: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M1 5.2L8 1l7 4.2v6.6L8 15 1 11.8z' fill='%23f0c419' stroke='%238a5a0a' stroke-width='0.8'/%3E%3Cpath d='M1 5.2l7 3.8 7-3.8' fill='none' stroke='%238a5a0a' stroke-width='0.8'/%3E%3Cpath d='M8 1v14' fill='none' stroke='%238a5a0a' stroke-width='0.8'/%3E%3C/svg%3E");
+  --logo-folder: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 4h4l1 1.5h8v7.5a1 1 0 01-1 1h-11a1 1 0 01-1-1z' fill='%23fbd490' stroke='%23c38a2e' stroke-width='0.7'/%3E%3Cpath d='M1.5 4.5h13' stroke='%23c38a2e' stroke-width='0.7'/%3E%3C/svg%3E");
+  --logo-terminal: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='1' y='2' width='14' height='12' rx='2' ry='2' fill='%23000' stroke='%2300c853' stroke-width='0.8'/%3E%3Cpath d='M4 6l2 2-2 2' stroke='%23fff' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M8 10h4' stroke='%23fff' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E");
+  --logo-db: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cellipse cx='8' cy='3.5' rx='6.5' ry='2.5' fill='%232196f3'/%3E%3Cpath d='M1.5 3.5v8c0 1.4 2.9 2.5 6.5 2.5s6.5-1.1 6.5-2.5v-8' fill='%232196f3' stroke='%230c47a1' stroke-width='0.8'/%3E%3Cline x1='1.5' y1='7' x2='14.5' y2='7' stroke='%230c47a1' stroke-width='0.6'/%3E%3Cline x1='1.5' y1='10.5' x2='14.5' y2='10.5' stroke='%230c47a1' stroke-width='0.6'/%3E%3C/svg%3E");
+  --logo-linux: url("https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg");
+  --logo-windows: url("https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows8/windows8-original.svg");
+  --logo-mac: url("https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apple/apple-original.svg");
+  --logo-model: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cg fill='none' stroke='%23666' stroke-width='1.2'%3E%3Crect x='3' y='3' width='5' height='5'/%3E%3Crect x='12' y='3' width='5' height='5'/%3E%3Crect x='3' y='12' width='5' height='5'/%3E%3Crect x='12' y='12' width='5' height='5'/%3E%3C/g%3E%3C/svg%3E");
+  --logo-view: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Crect x='2' y='3' width='16' height='14' rx='1.5' fill='none' stroke='%23444' stroke-width='1.2'/%3E%3Cpath d='M2 6.5h16' stroke='%23444' stroke-width='1.2'/%3E%3Crect x='5' y='9' width='4' height='5' rx='0.5' fill='%23666'/%3E%3Crect x='11' y='9' width='4' height='5' rx='0.5' fill='%23666'/%3E%3C/svg%3E");
+  --logo-controller: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='7' fill='none' stroke='%23555' stroke-width='1.2'/%3E%3Cpath d='M10 3v14M3 10h14' stroke='%23555' stroke-width='1.2'/%3E%3Ccircle cx='10' cy='10' r='2.5' fill='%23555'/%3E%3Ccircle cx='10' cy='6' r='1' fill='%23777'/%3E%3Ccircle cx='10' cy='14' r='1' fill='%23777'/%3E%3Ccircle cx='6' cy='10' r='1' fill='%23777'/%3E%3Ccircle cx='14' cy='10' r='1' fill='%23777'/%3E%3C/svg%3E");
+  --badge-surface: #111827;
+  --badge-border: rgba(255, 255, 255, 0.08);
+  --badge-text: #e5e7eb;
+  --badge-os-bg: rgba(30, 136, 229, 0.16);
+  --badge-os-fg: #90caf9;
+  --badge-level-bg: rgba(255, 193, 7, 0.18);
+  --badge-level-fg: #ffe082;
+  --badge-role-bg: rgba(76, 175, 80, 0.18);
+  --badge-role-fg: #b2fab4;
+  --badge-mvc-bg: rgba(236, 64, 122, 0.18);
+  --badge-mvc-fg: #f8bbd0;
+}
+
+.markdown-body.doc-markdown i {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  vertical-align: -3px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.markdown-body.doc-markdown i[html] { background-image: var(--logo-html); }
+.markdown-body.doc-markdown i[css] { background-image: var(--logo-css); }
+.markdown-body.doc-markdown i[js] { background-image: var(--logo-js); }
+.markdown-body.doc-markdown i[py] { background-image: var(--logo-python); }
+.markdown-body.doc-markdown i[sql] { background-image: var(--logo-sql); }
+.markdown-body.doc-markdown i[md] { background-image: var(--logo-markdown); }
+.markdown-body.doc-markdown i[file] { background-image: var(--logo-text); }
+.markdown-body.doc-markdown i[toml] { background-image: var(--logo-text); }
+.markdown-body.doc-markdown i[project] { background-image: var(--logo-box); }
+.markdown-body.doc-markdown i[folder] { background-image: var(--logo-folder); }
+.markdown-body.doc-markdown i[cmd] { background-image: var(--logo-terminal); }
+.markdown-body.doc-markdown i[db] { background-image: var(--logo-db); }
+.markdown-body.doc-markdown i[linux] { background-image: var(--logo-linux); }
+.markdown-body.doc-markdown i[windows] { background-image: var(--logo-windows); }
+.markdown-body.doc-markdown i[mac] { background-image: var(--logo-mac); }
+.markdown-body.doc-markdown i[model] { background-image: var(--logo-model); }
+.markdown-body.doc-markdown i[view] { background-image: var(--logo-view); }
+.markdown-body.doc-markdown i[controller] { background-image: var(--logo-controller); }
+
+.markdown-body.doc-markdown pre.tree {
+  background: #0a1628;
+  padding: 12px;
+  border-radius: 6px;
+  overflow: auto;
+  margin-bottom: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.markdown-body.doc-markdown .deleted-file {
+  color: #d32f2f;
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
+.markdown-body.doc-markdown pre.cmd-tree {
+  background: #050505;
+  color: #f2f2f2;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 32px;
+}
+
+.markdown-body.doc-markdown pre.cmd-block {
+  background: #1f1f1f;
+  color: #f2f2f2;
+  padding: 10px 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.markdown-body.doc-markdown pre.cmd-tree c {
+  color: #050505;
+}
+
+.markdown-body.doc-markdown pre.cmd-output {
+  background: #141414;
+  color: #8de2ff;
+  padding: 10px 12px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 0.95em;
+  position: relative;
+  padding-left: 28px;
+}
+
+.markdown-body.doc-markdown pre.cmd-output::before {
+  content: "▶";
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  color: #4a9eff;
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.markdown-body.doc-markdown .warning-block {
+  background: #2b0410;
+  color: #ff8a80;
+  border-left: 4px solid #ff1744;
+  padding: 12px 14px;
+  border-radius: 6px;
+  margin: 16px 0 8px;
+}
+
+.markdown-body.doc-markdown .placeholder-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8px 0 16px;
+  font-size: 0.95em;
+}
+
+.markdown-body.doc-markdown .placeholder-table th,
+.markdown-body.doc-markdown .placeholder-table td {
+  border: 1px solid #30363d;
+  padding: 6px 8px;
+  text-align: left;
+}
+
+.markdown-body.doc-markdown .error-block {
+  background: #2b040a;
+  color: #ffcdd2;
+  border-left: 4px solid #f44336;
+  padding: 12px 14px;
+  border-radius: 6px;
+  margin: 16px 0 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.markdown-body.doc-markdown .error-block strong {
+  color: #ffe5e9;
+}
+
+.markdown-body.doc-markdown .error-block strong::before {
+  content: "⛔ ";
+}
+
+.markdown-body.doc-markdown .error-block ul {
+  margin: 8px 0 0 20px;
+  padding: 0;
+}
+
+.markdown-body.doc-markdown .error-block li {
+  margin-bottom: 8px;
+  line-height: 1.45;
+}
+
+.markdown-body.doc-markdown .badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 18px;
+}
+
+.markdown-body.doc-markdown .badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.85em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--badge-surface);
+  border: 1px solid var(--badge-border);
+  color: var(--badge-text);
+  box-shadow: 0 2px 6px rgba(15, 15, 15, 0.08);
+}
+
+.markdown-body.doc-markdown .badge i {
+  margin-right: 2px;
+}
+
+.markdown-body.doc-markdown .badge-os {
+  background: var(--badge-os-bg);
+  border-color: var(--badge-os-fg);
+  color: var(--badge-os-fg);
+}
+
+.markdown-body.doc-markdown .badge-level {
+  background: var(--badge-level-bg);
+  border-color: var(--badge-level-fg);
+  color: var(--badge-level-fg);
+}
+
+.markdown-body.doc-markdown .badge-role {
+  background: var(--badge-role-bg);
+  border-color: var(--badge-role-fg);
+  color: var(--badge-role-fg);
+}
+
+.markdown-body.doc-markdown .badge-mvc {
+  background: var(--badge-mvc-bg);
+  border-color: var(--badge-mvc-fg);
+  color: var(--badge-mvc-fg);
+}
+
+.markdown-body.doc-markdown .info-block {
+  background: #0a1628;
+  color: #b3d9ff;
+  border-left: 4px solid #2196f3;
+  padding: 12px 14px;
+  border-radius: 6px;
+  margin: 16px 0 8px;
+}
+
+.markdown-body.doc-markdown .success-block {
+  background: #0d2818;
+  color: #a5d6a7;
+  border-left: 4px solid #4caf50;
+  padding: 12px 14px;
+  border-radius: 6px;
+  margin: 16px 0 8px;
+}
+
+.markdown-body.doc-markdown .mermaid text,
+.markdown-body.doc-markdown .mermaid .messageText,
+.markdown-body.doc-markdown .mermaid .noteText,
+.markdown-body.doc-markdown .mermaid .labelText,
+.markdown-body.doc-markdown .mermaid tspan {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+  font-weight: 500 !important;
+}
+
+.markdown-body.doc-markdown .mermaid .actor {
+  fill: #1e3a5f !important;
+  stroke: #64b5f6 !important;
+}
+
+.markdown-body.doc-markdown .mermaid .note,
+.markdown-body.doc-markdown .mermaid rect.note {
+  fill: #2d4a6e !important;
+  stroke: #64b5f6 !important;
+}
+
+.markdown-body.doc-markdown .mermaid .note text,
+.markdown-body.doc-markdown .mermaid .noteText tspan {
+  fill: #ffffff !important;
+}
+
+.markdown-body.doc-markdown .mermaid .messageLine0,
+.markdown-body.doc-markdown .mermaid .messageLine1 {
+  stroke: #64b5f6 !important;
+}
+
+.markdown-body.doc-markdown .mermaid .loopText,
+.markdown-body.doc-markdown .mermaid .loopLine {
+  fill: #ffffff !important;
+  stroke: #81c784 !important;
+}
+
+.markdown-body.doc-markdown .mermaid .loopText tspan {
+  fill: #ffffff !important;
+}
+
+.markdown-body.doc-markdown .mermaid .edgePath .path,
+.markdown-body.doc-markdown .mermaid .edgePath path {
+  stroke: #ffffff !important;
+  stroke-width: 2px !important;
+}
+
+.markdown-body.doc-markdown .mermaid .edgeLabel {
+  background-color: #1e3a5f !important;
+  color: #ffffff !important;
+}
+
+.markdown-body.doc-markdown .mermaid marker {
+  fill: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+.markdown-body.doc-markdown .mermaid .sequenceNumber {
+  fill: #1e3a5f !important;
+  stroke: #64b5f6 !important;
+}
+
+.markdown-body.doc-markdown .mermaid .sequenceNumber text {
+  fill: #ffffff !important;
+}
+
+.markdown-body.doc-markdown .code-explained {
+  border: none;
+  border-radius: 8px;
+  margin: 16px 0;
+  overflow: hidden;
+  background: #0b1320;
+  border: 1px solid var(--doc-border);
+}
+
+.markdown-body.doc-markdown .code-explained.code-explained-md {
+  position: relative;
+}
+
+.markdown-body.doc-markdown .code-explained-header {
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #111827;
+  border-bottom: 1px solid var(--doc-border);
+}
+
+.markdown-body.doc-markdown .code-explained-md .code-explained-header {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  z-index: 2;
+  border: none;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+.markdown-body.doc-markdown .code-explained-header i {
+  width: 20px;
+  height: 20px;
+}
+
+.markdown-body.doc-markdown .code-file-link {
+  color: #58a6ff;
+  text-decoration: none;
+  font-weight: 500;
+  font-family: monospace;
+  font-size: 0.95em;
+}
+
+.markdown-body.doc-markdown .code-file-link:hover {
+  text-decoration: underline;
+}
+
+.markdown-body.doc-markdown .code-line-link {
+  color: #8b949e;
+  font-size: 0.85em;
+  margin-left: 8px;
+  text-decoration: none;
+}
+
+.markdown-body.doc-markdown .code-line-link:hover {
+  color: #58a6ff;
+}
+
+.markdown-body.doc-markdown .code-explained-body {
+  padding-top: 4rem;
+  font-family: "Courier New", monospace;
+  font-size: 0.95em;
+  line-height: 1.7;
+  color: inherit;
+}
+
+.markdown-body.doc-markdown .code-explained-body pre {
+  margin: 0;
+  padding: 16px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  overflow-x: hidden;
+  background: transparent;
+  border: none;
+}
+
+.markdown-body.doc-markdown .code-explained-md .code-explained-body pre[data-role="codeBlock"] {
+  padding: 72px 18px 18px;
+}
+
+.markdown-body.doc-markdown .code-comment {
+  color: #a8b5c4;
+  font-style: italic;
+}
+
+.markdown-body.doc-markdown .code-keyword {
+  color: #ff9a8b;
+  font-weight: 600;
+}
+
+.markdown-body.doc-markdown .code-function {
+  color: #ddb8ff;
+  font-weight: 500;
+}
+
+.markdown-body.doc-markdown .code-string {
+  color: #b8e0ff;
+}
+
+.markdown-body.doc-markdown .code-number {
+  color: #9dd6ff;
+}
+
+.markdown-body.doc-markdown .glossary-term {
+  border-bottom: 2px dotted #58a6ff;
+  cursor: help;
+  position: relative;
+  display: inline-block;
+}
+
+.markdown-body.doc-markdown .glossary-term:hover {
+  border-bottom-color: #1f6feb;
+}
+
+.markdown-body.doc-markdown .glossary-definition {
+  background: #1c2128;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin: 12px 0;
+  border-left: 3px solid #58a6ff;
+  color: #e6edf3;
+  line-height: 3;
+}
+
+.markdown-body.doc-markdown .glossary-definition strong {
+  color: #58a6ff;
+  font-size: 0.95em;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.markdown-body.doc-markdown .media-placeholder {
+  background: #1a1a1a;
+  border: 2px dashed #ffa657;
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+  margin: 20px 0;
+  color: #ffa657;
+  font-family: monospace;
+}
+
+.markdown-body.doc-markdown .media-placeholder-icon {
+  font-size: 3em;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.markdown-body.doc-markdown .media-placeholder-type {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.markdown-body.doc-markdown .media-placeholder-description {
+  color: #8b949e;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 8px;
+}
+
+.markdown-body.doc-markdown .media-gif .media-placeholder-icon::before {
+  content: "🎬";
+}
+
+.markdown-body.doc-markdown .media-img .media-placeholder-icon::before {
+  content: "🖼️";
+}
+
+.markdown-body.doc-markdown .media-video .media-placeholder-icon::before {
+  content: "🎥";
+}
+
+@media (max-width: 768px) {
+  .doc-main {
+    padding: 0 14px 46px;
+  }
+
+  .doc-file-header {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .doc-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .doc-intro h1 {
+    font-size: 1.35rem;
+  }
+
+  .markdown-body.doc-markdown {
+    padding: 20px 14px;
   }
 }

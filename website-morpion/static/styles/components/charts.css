@@ -1,9 +1,9 @@
 /* ============================================
-   REUSABLE CHART COMPONENTS
-   Used across multiple pages for consistency
+   Composants de Graphiques Réutilisables
+   Utilisés sur plusieurs pages pour la cohérence
    ============================================ */
 
-/* Progress Bar Wrapper */
+/* Conteneur de Barre de Progression */
 .progress-bar-wrapper {
   margin-top: var(--spacing-sm);
 }
@@ -15,7 +15,7 @@
   margin-bottom: var(--spacing-xs);
 }
 
-/* Bar Containers */
+/* Conteneurs de Barres */
 .bar-container {
   position: relative;
   width: 100%;
@@ -30,7 +30,7 @@
   height: 32px;
 }
 
-/* Bar Fill - Base */
+/* Remplissage de Barre - Base */
 .bar-fill {
   height: 100%;
   border-radius: 12px;
@@ -50,7 +50,7 @@
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-/* Bar Types - Reusable across pages */
+/* Types de Barres - Réutilisables sur plusieurs pages */
 .bar-fill.bar-default,
 .bar-fill.bar-win-rate,
 .bar-fill.bar-winrate {
@@ -88,7 +88,7 @@
   box-shadow: 0 0 10px rgba(26, 31, 95, 0.3);
 }
 
-/* Bar Chart Row Layout */
+/* Mise en Page de Ligne de Graphique à Barres */
 .bar-chart-row {
   display: grid;
   grid-template-columns: 120px 1fr 120px;
@@ -110,7 +110,7 @@
   font-size: 0.9rem;
 }
 
-/* Simple Stat Card */
+/* Carte Statistique Simple */
 .stat-card-simple {
   display: flex;
   flex-direction: column;

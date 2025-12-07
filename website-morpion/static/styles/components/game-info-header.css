@@ -1,5 +1,5 @@
 /* ============================================
-   Game Info Header Component (components/game_info_header.html)
+   Composant En-tête d'Info de Jeu (components/game_info_header.html)
    ============================================ */
 .game-info {
   display: flex;
@@ -45,7 +45,7 @@
   animation: shine 3s infinite;
 }
 
-/* Animations moved to core/animations.css */
+/* Animations déplacées vers core/animations.css */
 
 .team-info.active .team-badge {
   transform: scale(1.05);
@@ -68,7 +68,7 @@
   color: var(--text-secondary);
 }
 
-/* Game Status */
+/* Statut de Jeu */
 .game-status {
   display: flex;
   justify-content: center;
@@ -95,7 +95,7 @@
   box-shadow: 0 0 15px rgba(165, 1, 28, 0.5);
 }
 
-/* Game Over Actions */
+/* Actions de Fin de Jeu */
 .game-over-actions {
   display: flex;
   gap: 1.5rem;
@@ -109,4 +109,4 @@
   min-width: 200px;
 }
 
-/* Responsive styles moved to layout/responsive.css */
+/* Styles Responsive déplacées vers layout/responsive.css */

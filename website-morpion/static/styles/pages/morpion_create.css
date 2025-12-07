@@ -20,7 +20,7 @@
     list-style: disc;
 }
 
-/* Layout */
+/* Mise en Page */
 .morpion-create-grid {
     display: grid;
     grid-template-columns: 1.2fr 0.9fr;

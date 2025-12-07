@@ -1,10 +1,10 @@
 /* ============================================
-   Stats Component - Consolidated Statistics Display
-   Consolidates: morpion-stats, card-stats, morpion-stats-mini, morpion-mini-stats
+   Composant Statistiques - Affichage de Statistiques Consolidé
+   Consolide : morpion-stats, card-stats, morpion-stats-mini, morpion-mini-stats
    ============================================ */
 
 /* ============================================
-   Base Stats Container
+   Conteneur de Statistiques de Base
    ============================================ */
 .stats {
     display: flex;
@@ -15,7 +15,7 @@
 }
 
 /* ============================================
-   Stats Layout Variants
+   Variantes de Mise en Page des Statistiques
    ============================================ */
 .stats--inline {
     display: flex;
@@ -50,7 +50,7 @@
 }
 
 /* ============================================
-   Individual Stat Item
+   Élément de Statistique Individuel
    ============================================ */
 .stat {
     display: flex;
@@ -59,7 +59,7 @@
     white-space: nowrap;
 }
 
-/* Grid stat item (with background) */
+/* Élément de statistique en boîte (avec arrière-plan) */
 .stat--boxed {
     background: rgba(15, 15, 26, 0.5);
     padding: 0.4rem;
@@ -68,7 +68,7 @@
 }
 
 /* ============================================
-   Stat Components
+   Composants de Statistiques
    ============================================ */
 .stat__icon {
     font-size: 1rem;
@@ -88,7 +88,7 @@
 }
 
 /* ============================================
-   Stat Type Colors - All stats use gold color
+   Couleurs de Type de Statistiques - Toutes les statistiques utilisent la couleur or
    ============================================ */
 .stat--hp, .stat--attack, .stat--mana, .stat--accuracy,
 .stat--hp .stat__value, .stat--attack .stat__value,
@@ -99,7 +99,7 @@
 }
 
 /* ============================================
-   Stats Total Display
+   Affichage Total de Statistiques
    ============================================ */
 .stats-total {
     text-align: center;
@@ -115,7 +115,7 @@
 }
 
 /* ============================================
-   Legacy Class Aliases (backward compatibility)
+   Alias de Classes Héritées (compatibilité ascendante)
    ============================================ */
 .morpion-stats {
     display: flex;

@@ -1,5 +1,5 @@
 /* ============================================
-   Morpion Selector Component (components/morpion_selector.html)
+   Composant Sélecteur de Morpion (components/morpion_selector.html)
    ============================================ */
 .morpion-selector {
   margin: var(--spacing-xl) 0;
@@ -143,10 +143,10 @@
   letter-spacing: 0.4px;
 }
 
-/* Play Actions */
+/* Actions de Jeu */
 .play-actions {
   text-align: center;
   margin-top: var(--spacing-lg);
 }
 
-/* Responsive styles moved to layout/responsive.css */
+/* Styles Responsive déplacées vers layout/responsive.css */

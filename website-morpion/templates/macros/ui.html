@@ -1,13 +1,13 @@
 {#
   Macros: ui.html
-  Purpose: Reusable macros for UI elements
+  Purpose: Macros réutilisables pour les éléments d'interface utilisateur
   
   Available Macros:
-    - hero_section(title, description): Display hero section with title and description
-    - empty_state(message, action_text, action_url): Display empty state with optional CTA
+    - hero_section(title, description): Affiche une section hero avec titre et description
+    - empty_state(message, action_text, action_url): Affiche un état vide avec CTA optionnel
 #}
 
-{# Macro: Hero Section #}
+{# Macro: Section hero #}
 {% macro hero_section(title, description) %}
 <section class="hero">
   <h2>{{ title }}</h2>
@@ -15,7 +15,7 @@
 </section>
 {% endmacro %}
 
-{# Macro: Empty State #}
+{# Macro: État vide #}
 {% macro empty_state(message, action_text=None, action_url=None) %}
 <p class="empty-message">{{ message }}</p>
 {% if action_text and action_url %}

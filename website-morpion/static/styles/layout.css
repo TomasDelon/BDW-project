@@ -1,5 +1,5 @@
 /* ============================================
-   Header
+   En-tête
    ============================================ */
 header {
     background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-blue) 80%);
@@ -67,7 +67,7 @@ header strong {
 }
 
 /* ============================================
-   Layout principal
+   Mise en Page Principale
    ============================================ */
 #div-central {
     display: flex;
@@ -136,9 +136,11 @@ nav a:hover::before {
 
 nav a:hover {
     background: rgba(255, 255, 255, 0.2);
-    border-color: var(--accent-cyan);
+    border-color: var(--accent-gold);
     transform: translateX(5px);
-    box-shadow: 0 4px 12px rgba(0, 255, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+    text-decoration: none;
+    color: var(--accent-gold);
 }
 
 nav a:active {
@@ -146,7 +148,7 @@ nav a:active {
 }
 
 /* ============================================
-   Main content
+   Contenu Principal
    ============================================ */
 main {
     max-width: 1500px;
@@ -216,7 +218,7 @@ section h3 {
 }
 
 /* ============================================
-   Cards grid
+   Grille de Cartes
    ============================================ */
 .cards-grid {
     display: grid;
@@ -225,7 +227,7 @@ section h3 {
     margin-top: 1.5rem;
 }
 
-/* Stats card specific styles - used in cards-grid for home page */
+/* Styles spécifiques de carte de statistiques - utilisées dans cards-grid pour la page d'accueil */
 .cards-grid .card {
     background: linear-gradient(135deg, var(--primary-blue) 0%, var(--blue-dark) 100%);
     padding: 2rem;
@@ -277,7 +279,7 @@ section h3 {
 }
 
 /* ============================================
-   Tables
+   Tableaux
    ============================================ */
 table {
     width: 100%;
@@ -338,7 +340,7 @@ tbody tr:nth-child(3) td:first-child {
 }
 
 /* ============================================
-   Lists
+   Listes
    ============================================ */
 ul {
     list-style: none;
@@ -370,7 +372,7 @@ ul {
     color: var(--text-secondary);
 }
 
-/* Badge styles moved to components/badges.css */
+/* Styles de badge déplacées vers components/badges.css */
 
 .vs-separator,
 .arrow-separator {
@@ -396,11 +398,11 @@ ul {
     color: var(--text-secondary);
 }
 
-/* Messages styles moved to components/alerts.css */
-/* Footer styles moved to components/footer.css */
+/* Styles de messages déplacées vers components/alerts.css */
+/* Styles de pied de page déplacées vers components/footer.css */
 
 /* ============================================
-   Responsive Breakpoints
+   Points de Rupture Responsive
    ============================================ */
 @media (max-width: 968px) {
     #div-central {

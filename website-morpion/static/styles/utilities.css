@@ -1,6 +1,6 @@
 /* ============================================
-   Utility Classes
-   Clases reutilizables para efectos comunes
+   Classes Utilitaires
+   Classes réutilisables pour effets communs
    ============================================ */
 
 .sr-only {
@@ -15,7 +15,7 @@
   border: 0;
 }
 
-/* Hover Effects */
+/* Effets de Survol */
 .hover-lift:hover {
   transform: translateY(-2px);
   transition: var(--transition-base);
@@ -31,7 +31,7 @@
   transition: var(--transition-base);
 }
 
-/* Text Utilities */
+/* Utilitaires de Texte */
 .text-glow {
   text-shadow: var(--shadow-cyan);
 }
@@ -49,7 +49,7 @@
   letter-spacing: 1px;
 }
 
-/* Card Containers */
+/* Conteneurs de Cartes */
 .card {
   background: var(--bg-card);
   border-radius: var(--radius-lg);
@@ -66,7 +66,7 @@
   box-shadow: var(--shadow-lg);
 }
 
-/* Spacing Utilities */
+/* Utilitaires d'Espacement */
 .mt-sm { margin-top: var(--spacing-sm); }
 .mt-md { margin-top: var(--spacing-md); }
 .mt-lg { margin-top: var(--spacing-lg); }
@@ -82,12 +82,12 @@
 .p-lg { padding: var(--spacing-lg); }
 .p-xl { padding: var(--spacing-xl); }
 
-/* Gap Utilities */
+/* Utilitaires d'Écart */
 .gap-sm { gap: var(--spacing-sm); }
 .gap-md { gap: var(--spacing-md); }
 .gap-lg { gap: var(--spacing-lg); }
 
-/* Flexbox Utilities */
+/* Utilitaires Flexbox */
 .flex {
   display: flex;
 }
@@ -155,7 +155,7 @@
 }
 
 /* ============================================
-   Grid Patterns
+   Motifs de Grille
    ============================================ */
 .grid-auto-fit {
   display: grid;

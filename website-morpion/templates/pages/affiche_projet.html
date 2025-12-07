@@ -8,10 +8,10 @@ mermaid.initialize({
   startOnLoad: true,
   theme: "neutral",
   themeVariables: {
-    primaryColor: "#101b2f",
+    primaryColor: "#24364b",
     primaryTextColor: "#e5f3ff",
     primaryBorderColor: "#37c5ff",
-    lineColor: "#35b1ff",
+    lineColor: "#24364b",
     secondaryColor: "#0b223d",
     tertiaryColor: "#0c2f54",
     fontSize: "14px"
@@ -37,10 +37,10 @@ mermaid.initialize({
   <section class="affiche-section">
     <h2>Diagramme Entité-Association</h2>
     <div class="diagram-box">
-<pre class="mermaid">
+<pre class="mermaid" style="color:black;">
 flowchart LR
-  classDef entity fill:#0f1b33,stroke:#37c5ff,stroke-width:2px,color:#e5f3ff,rx:8,ry:8;
-  classDef rel fill:#0c253f,stroke:#37c5ff,stroke-width:1.5px,color:#9ad7ff,rx:32,ry:32;
+  classDef entity fill:#EDEDED,stroke:#2436b,stroke-width:2px,color:#2436b,rx:8,ry:8;
+  classDef rel fill:#EDEDED,stroke:#2436b,stroke-width:1.5px,color:#2436b,rx:32,ry:32;
 
   MORPION["<b>MORPION</b><br/><u>id_morpion</u><br/>name, hp, attack<br/>mana, accuracy<br/>image_url, created_at"]:::entity
   TEAM["<b>TEAM</b><br/><u>id_team</u><br/>name UNIQUE<br/>color UNIQUE<br/>created_at"]:::entity
@@ -73,13 +73,12 @@ flowchart LR
     <h2>Schéma relationnel</h2>
     <div class="schema-box">
       <pre class="schema-text">
-        MORPION( <u>id_morpion</u>, name, hp, attack, mana, accuracy, image_url, created_at )
-        TEAM( <u>id_team</u>, name, color, created_at )
-        BELONGS( <u>#team_id</u>, <u>#morpion_id</u> )
-        GAME_CONFIG( <u>id_config</u>, grid_size, max_turns, game_mode, created_at )
-        GAME( <u>id_game</u>, #id_config, id_team1, id_team2, id_winner, started_at, ended_at )
-        GAME_LOG( <u>id_log</u>, <u style="text-decoration-style:dotted">#id_game</u>, log_num, message, created_at )
-      </pre>
+  MORPION( <u>id_morpion</u>, name, hp, attack, mana, accuracy, image_url, created_at )
+  TEAM( <u>id_team</u>, name, color, created_at )
+  BELONGS( <u>#team_id</u>, <u>#morpion_id</u> )
+  GAME_CONFIG( <u>id_config</u>, grid_size, max_turns, game_mode, created_at )
+  GAME( <u>id_game</u>, #id_config, id_team1, id_team2, id_winner, started_at, ended_at )
+  GAME_LOG( <u>id_log</u>, <u style="text-decoration-style:dotted">#id_game</u>, log_num, message, created_at )</pre>
     </div>
   </section>
 
@@ -208,6 +207,16 @@ flowchart LR
   <section class="affiche-section capture-section page-break-before">
     <h2>Capture 6 — Partie avancée</h2>
     <img class="capture-img" src="{{ SESSION['DIRECTORY'] }}/static/img/screenshots/partie_avancee.png" alt="Partie avancée combat">
+  </section>
+
+  <section class="affiche-section capture-section page-break-before">
+    <h2>Capture 7 — Statistiques avancées</h2>
+    <img class="capture-img" src="{{ SESSION['DIRECTORY'] }}/static/img/screenshots/stats_avancee.png" alt="Dashboard statistiques avancées">
+  </section>
+
+  <section class="affiche-section capture-section page-break-before">
+    <h2>Capture 8 — Diagramme de données</h2>
+    <img class="capture-img" src="{{ SESSION['DIRECTORY'] }}/static/img/screenshots/diagramme.png" alt="Diagramme de données interactif">
   </section>
 
   <!-- Footer -->

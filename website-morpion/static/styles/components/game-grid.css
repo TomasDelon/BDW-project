@@ -1,5 +1,5 @@
 /* ============================================
-   Game Grid Component (components/game_grid.html + game_cell.html)
+   Composant Grille de Jeu (components/game_grid.html + game_cell.html)
    ============================================ */
 .game-grid {
   margin: var(--spacing-lg) auto;
@@ -53,7 +53,7 @@
   box-shadow: 0 4px 16px rgba(0, 255, 255, 0.3);
 }
 
-/* Celdas vacías cuando hay un morpion seleccionado */
+/* Cellules vides lorsqu'un morpion est sélectionné */
 .game-grid__cell--empty.game-grid__cell--selectable {
   cursor: pointer;
   opacity: 1;
@@ -105,7 +105,7 @@
   pointer-events: none;
 }
 
-/* Animations moved to core/animations.css */
+/* Animations déplacées vers core/animations.css */
 
 .game-grid__cell-content--advanced:hover {
   transform: scale(1.05);
@@ -163,7 +163,7 @@
   margin-bottom: 0.3rem;
 }
 
-/* Estadísticas de morpions en celdas avanzadas */
+/* Statistiques de morpions dans les cellules avancées */
 .morpion-stats {
   display: flex;
   flex-direction: row;
@@ -202,7 +202,7 @@
   color: #ffd700;
 }
 
-/* Celdas destruidas */
+/* Cellules détruites */
 .game-grid__cell--destroyed {
   background: rgba(100, 0, 0, 0.3);
   border-color: rgba(200, 0, 0, 0.6);
@@ -421,6 +421,6 @@
   pointer-events: none;
   transition: opacity 0.2s ease;
 }
-/* Spell roulette animations removed */
+/* Animations de roulette de sorts supprimées */
 
-/* Responsive styles moved to layout/responsive.css */
+/* Styles Responsive déplacées vers layout/responsive.css */

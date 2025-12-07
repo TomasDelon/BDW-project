@@ -1,4 +1,4 @@
--- Schema SQL pour Morpion Masters (script non destructif)
+-- Schéma SQL pour Morpion Masters (script non destructif)
 -- Base de données: PostgreSQL
 -- Utiliser reset.sql pour tout effacer/recréer, ce fichier ne fait que créer/remplir.
 
@@ -187,14 +187,14 @@ INSERT INTO game_log (id_game, log_num, message) VALUES
   (10, 2, 'Gardiens Turquoise gagnent grâce à Armageddon.');
 
 /* ============================================
-   EQUIPO DE IA (Oponente controlado por computadora)
+   ÉQUIPE D'IA 
    ============================================ */
 
--- Crear equipo especial para la IA
+-- Créer l'équipe spéciale pour l'IA
 INSERT INTO team (name, color) VALUES 
   ('🤖 IA Opponent', 'gray');
 
--- Asignar 6 morpions equilibrados a la IA
+-- Assigner 6 morpions équilibrés à l'IA
 INSERT INTO team_morpion (team_id, morpion_id)
 SELECT 
   (SELECT id_team FROM team WHERE name = '🤖 IA Opponent'),

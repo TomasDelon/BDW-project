@@ -1,42 +1,42 @@
 {#
   Macros: teams.html
-  Purpose: Reusable macros for team display
+  Purpose: Macros réutilisables pour l'affichage des équipes
   
   Available Macros:
-    - team_badge(color, size, extra_class): Display a team color badge with size variants
-    - team_badge_winner(color): Display a winner badge with special styling
-    - team_badge_large(color): Display a large team badge
-    - team_vs_display(team1, team2, winner, show_colors): Display team vs team
-    - morpions_grid(morpions, mode): Display grid of morpions
+    - team_badge(color, size, extra_class): Affiche un badge de couleur d'équipe avec variantes de taille
+    - team_badge_winner(color): Affiche un badge de vainqueur avec style spécial
+    - team_badge_large(color): Affiche un grand badge d'équipe
+    - team_vs_display(team1, team2, winner, show_colors): Affiche équipe vs équipe
+    - morpions_grid(morpions, mode): Affiche une grille de morpions
 #}
 
-{# Macro: Team Badge (Unified with size variants) #}
+{# Macro: Badge d'équipe (unifié avec variantes de taille) #}
 {% macro team_badge(color, size='sm', extra_class='') %}
 <span class="badge badge--{{ size }} {{ extra_class }}" 
       style="background-color: {{ color }};" 
-      aria-label="Team color"></span>
+      aria-label="Couleur de l'équipe"></span>
 {% endmacro %}
 
-{# Macro: Team Badge Winner (Special styling) #}
+{# Macro: Badge de vainqueur (style spécial) #}
 {% macro team_badge_winner(color) %}
 <span class="badge badge--md badge--winner" 
       style="background-color: {{ color }};" 
-      aria-label="Winner team"></span>
+      aria-label="Équipe gagnante"></span>
 {% endmacro %}
 
-{# Macro: Team Badge Large (For team headers) #}
+{# Macro: Grand badge d'équipe (pour les en-têtes d'équipe) #}
 {% macro team_badge_large(color) %}
 <span class="badge badge--lg" 
       style="background-color: {{ color }};" 
-      aria-label="Team color"></span>
+      aria-label="Couleur de l'équipe"></span>
 {% endmacro %}
 
-{# Legacy Alias: team_color_badge for backward compatibility #}
+{# Alias hérité: team_color_badge pour compatibilité ascendante #}
 {% macro team_color_badge(color) %}
 {{ team_badge(color, 'sm') }}
 {% endmacro %}
 
-{# Macro: Team vs Display (for future use) #}
+{# Macro: Affichage équipe vs équipe (pour utilisation future) #}
 {% macro team_vs_display(team1_name, team1_color, team2_name, team2_color, winner_name=None, winner_color=None) %}
 <span class="team-name">{{ team1_name }}</span>
 {{ team_badge(team1_color) }}

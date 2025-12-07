@@ -1,6 +1,6 @@
 """
 Fonctions pour les statistiques avancées (página extra).
-Queries SQL complejas para análisis profundo de datos.
+Requêtes SQL complexes pour analyse approfondie des données.
 """
 
 from .db_utils import execute_select_query_dict
@@ -22,8 +22,8 @@ __all__ = [
 
 def get_team_performance_stats(connexion, limit=10):
     """
-    Estadísticas de rendimiento de equipos: victorias, derrotas, tasa de victoria.
-    Muestra todos los equipos, incluso sin partidas jugadas.
+    Récupère les statistiques de performance des équipes : victoires, défaites, taux de victoire.
+    Affiche toutes les équipes, même celles n'ayant pas joué de parties.
     """
     query = """
         WITH team_games AS (
@@ -64,8 +64,8 @@ def get_team_performance_stats(connexion, limit=10):
 
 def get_morpion_usage_stats(connexion, limit=10):
     """
-    Morpions más usados en equipos.
-    Muestra todos los morpions, incluso si no están en equipos.
+    Morpions les plus utilisés dans les équipes.
+    Affiche tous les morpions, même s'ils ne sont pas dans des équipes.
     """
     query = """
         SELECT
@@ -89,7 +89,7 @@ def get_morpion_usage_stats(connexion, limit=10):
 
 def get_spell_usage_stats(connexion):
     """
-    Análisis de uso de sorts en logs (busca keywords en mensajes).
+    Analyse de l'utilisation des sorts dans les logs (cherche des mots-clés dans les messages).
     """
     query = """
         SELECT
@@ -114,7 +114,7 @@ def get_spell_usage_stats(connexion):
 
 def get_game_duration_distribution(connexion):
     """
-    Distribución de duraciones de partidas en rangos.
+    Distribution des durées de parties en tranches.
     """
     query = """
         WITH durations AS (
@@ -165,7 +165,7 @@ def get_game_duration_distribution(connexion):
 
 def get_win_methods_distribution(connexion):
     """
-    Métodos de victoria inferidos de los logs.
+    Méthodes de victoire déduites des logs.
     """
     query = """
         WITH last_logs AS (
@@ -204,9 +204,9 @@ def get_win_methods_distribution(connexion):
 
 def get_team_win_rate_ranking(connexion, min_games=1):
     """
-    Ranking de equipos por tasa de victoria (mínimo de partidas jugadas).
-    Si min_games=1, muestra equipos con al menos 1 partida.
-    Si min_games=0, muestra todos los equipos.
+    Classement des équipes par taux de victoire (minimum de parties jouées).
+    Si min_games=1, affiche les équipes avec au moins 1 partie.
+    Si min_games=0, affiche toutes les équipes.
     """
     query = """
         WITH team_stats AS (
@@ -244,7 +244,7 @@ def get_team_win_rate_ranking(connexion, min_games=1):
 
 def get_most_deadly_morpions(connexion, limit=10):
     """
-    Morpions con mayor ataque o características destacadas.
+    Morpions avec le plus d'attaques ou caractéristiques remarquables.
     """
     query = """
         SELECT
@@ -292,7 +292,7 @@ def get_top_killers_from_logs(connexion, limit=5):
 
 def get_grid_size_preferences(connexion):
     """
-    Preferencias de tamaño de grille.
+    Préférences de taille de grille.
     """
     query = """
         SELECT
@@ -309,7 +309,7 @@ def get_grid_size_preferences(connexion):
 
 def get_monthly_activity(connexion):
     """
-    Actividad mensual: número de partidas creadas por mes.
+    Activité mensuelle : nombre de parties créées par mois.
     """
     query = """
         SELECT
@@ -327,7 +327,7 @@ def get_monthly_activity(connexion):
 
 def get_advanced_stats_all(connexion):
     """
-    Recopila todas las estadísticas avanzadas en un solo diccionario.
+    Rassemble toutes les statistiques avancées dans un seul dictionnaire.
     """
     return {
         "team_performance": get_team_performance_stats(connexion, limit=10),

@@ -1,6 +1,6 @@
 {#
   Macros: forms.html
-  Purpose: Reusable macros for form elements
+  Purpose: Macros réutilisables pour les éléments de formulaire
   
   Available Macros:
     - input_text(name, label, value, placeholder, required, maxlength, help_text)
@@ -9,7 +9,7 @@
     - form_actions(submit_text, cancel_url, submit_disabled, reset_text)
 #}
 
-{# Macro: Text Input #}
+{# Macro: Champ de texte #}
 {% macro input_text(name, label, value='', placeholder='', required=false, maxlength=None, help_text=None) %}
 <div class="form-group">
   <label for="{{ name }}">{{ label }}{% if required %} *{% endif %}</label>
@@ -26,7 +26,7 @@
 </div>
 {% endmacro %}
 
-{# Macro: Select Dropdown #}
+{# Macro: Menu déroulant #}
 {% macro select_dropdown(name, label, options, selected_value='', required=false, help_text=None, empty_option_text='-- Choisir --') %}
 <div class="form-group">
   <label for="{{ name }}">{{ label }}{% if required %} *{% endif %}</label>
@@ -46,7 +46,7 @@
 </div>
 {% endmacro %}
 
-{# Macro: Number Input #}
+{# Macro: Champ numérique #}
 {% macro input_number(name, label, value='', min=None, max=None, required=false, help_text=None) %}
 <div class="form-group">
   <label for="{{ name }}">{{ label }}{% if required %} *{% endif %}</label>
@@ -63,7 +63,7 @@
 </div>
 {% endmacro %}
 
-{# Macro: Form Actions (submit, cancel, reset) #}
+{# Macro: Actions de formulaire (soumettre, annuler, réinitialiser) #}
 {% macro form_actions(submit_text='Enregistrer', cancel_url=None, submit_disabled=false, reset_text=None, reset_url=None) %}
 <div class="form-actions">
   <button type="submit" 

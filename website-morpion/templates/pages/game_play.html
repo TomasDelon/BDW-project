@@ -1,6 +1,6 @@
 {#
   Page: game_play.html
-  Purpose: Active game interface for playing
+  Purpose: Interface de jeu actif pour jouer
   Replaces: partie.html (play mode)
   Route: /partie?game_id=X
 #}
@@ -20,13 +20,13 @@
          data-ai-just-played="{{ 'true' if REQUEST_VARS.get('ai_just_played') and not game_over else 'false' }}">
   <h2>🎮 Partie en cours</h2>
   
-  {# Game Info Header #}
+  {# En-tête des informations de jeu #}
   {% include 'components/game_info_header.html' %}
 
-  {# Flash Message #}
+  {# Message flash #}
   {% include 'components/message.html' %}
 
-  {# Indicador de turno de IA #}
+  {# Indicateur de tour de l'IA #}
   {% if is_ai_turn and not game_over %}
   <div class="alert alert-info ai-thinking-alert">
     <p style="font-size: 1.2em;">🤖 <strong>L'IA est en train de réfléchir...</strong></p>
@@ -35,7 +35,7 @@
   {% endif %}
 
   {% if not game_over %}
-    {# Formulario único que envuelve todo #}
+    {# Formulaire unique qui entoure tout #}
     {% if REQUEST_VARS['available_morpions']|length > 0 %}
     <form method="POST" action="partie/{{ game['id_game'] }}#classic-game-play" class="play-form ajax-form" id="game-form">
       <input type="hidden" name="game_id" value="{{ game['id_game'] }}">
@@ -65,7 +65,7 @@
       </div>
     </form>
     {% else %}
-      {# Game Grid sin formulario si no hay morpions #}
+      {# Grille de jeu sans formulaire si pas de morpions #}
       {% include 'components/game_grid.html' %}
     <div class="alert alert-warning">
       <p>😰 Plus de morpions disponibles pour cette équipe !</p>
@@ -73,10 +73,10 @@
     </div>
     {% endif %}
   {% else %}
-    {# Game Grid sin formulario si partie terminada #}
+    {# Grille de jeu sans formulaire si partie terminée #}
     {% include 'components/game_grid.html' %}
     
-  {# Game Over Actions #}
+  {# Actions fin de partie #}
   <div class="game-over-actions">
     <a href="partie" class="btn btn-primary">🔄 Nouvelle partie</a>
     <a href="liste-equipes" class="btn btn-secondary">📋 Liste des équipes</a>
@@ -84,7 +84,7 @@
   </div>
   {% endif %}
 
-  {# Game Logs #}
+  {# Journaux de jeu #}
 {% if REQUEST_VARS.get('logs') %}
 {% set logs = REQUEST_VARS['logs'] %}
 {% include 'components/game_logs.html' %}
@@ -108,5 +108,5 @@
 {% if not game_over %}
 <script src="{{ SESSION['DIRECTORY'] }}/static/js/game_minimal.js"></script>
 {% endif %}
-{# AJAX handler pour partie classique #}
+{# Gestionnaire AJAX pour partie classique #}
 <script src="{{ SESSION['DIRECTORY'] }}/static/js/game_classic.js"></script>

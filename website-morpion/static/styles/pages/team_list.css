@@ -1,6 +1,6 @@
 /* ============================================
-   Liste des équipes - Page Specific Styles
-   Team card styles moved to components/team-card.css
+   Liste des Équipes - Styles de Page Spécifique
+   Les styles de carte d'équipe sont déplacés vers components/team-card.css
    ============================================ */
 .teams-list-section {
     max-width: 1400px;
@@ -66,9 +66,9 @@
     width: 100%;
 }
 
-/* Botones movidos a buttons.css */
+/* Boutons déplacés vers buttons.css */
 
-/* Game Items inside Team Card */
+/* Éléments de Jeu à l'intérieur de la Carte d'Équipe */
 .team-games {
     margin-bottom: var(--spacing-md);
     padding: 0.2rem;

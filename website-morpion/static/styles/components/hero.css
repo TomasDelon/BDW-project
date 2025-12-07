@@ -1,5 +1,5 @@
 /* ============================================
-   Hero Component (macros/ui.html)
+   Composant Héros (macros/ui.html)
    ============================================ */
 .hero {
   text-align: center;
@@ -22,7 +22,7 @@
   margin: 0 auto;
 }
 
-/* Section Description (similar to hero) */
+/* Description de Section (similaire au héros) */
 .section-description {
   text-align: center;
   color: var(--text-secondary);

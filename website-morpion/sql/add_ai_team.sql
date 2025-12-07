@@ -1,53 +1,53 @@
--- Script de actualización para añadir equipo de IA
--- Ejecutar este script en bases de datos existentes
+-- Script de mise à jour pour ajouter l'équipe d'IA
+-- Exécuter ce script sur les bases de données existantes
 
--- Crear equipo de IA si no existe
+-- Créer l'équipe d'IA si elle n'existe pas
 INSERT INTO team (name, color) 
 VALUES ('🤖 IA Opponent', 'gray')
 ON CONFLICT (name, color) DO NOTHING;
 
--- Asignar morpions a la IA (6 morpions equilibrados)
--- Solo si no tiene morpions asignados
+-- Assigner des morpions à l'IA (6 morpions équilibrés)
+-- Uniquement si elle n'a pas de morpions assignés
 DO $$
 DECLARE
     ai_team_id INTEGER;
     morpion_count INTEGER;
 BEGIN
-    -- Obtener ID del equipo IA
+    -- Obtenir l'ID de l'équipe IA
     SELECT id_team INTO ai_team_id 
     FROM team 
     WHERE name = '🤖 IA Opponent' 
     LIMIT 1;
     
-    -- Si el equipo existe, verificar y asignar morpions
+    -- Si l'équipe existe, vérifier et assigner des morpions
     IF ai_team_id IS NOT NULL THEN
-        -- Contar morpions asignados
+        -- Compter les morpions assignés
         SELECT COUNT(*) INTO morpion_count
         FROM team_morpion
         WHERE team_id = ai_team_id;
         
-        -- Si no tiene morpions, asignarlos
+        -- Si elle n'a pas de morpions, les assigner
         IF morpion_count = 0 THEN
             INSERT INTO team_morpion (team_id, morpion_id)
             SELECT ai_team_id, id_morpion
             FROM morpion
             WHERE id_morpion IN (1, 2, 3, 5, 8, 10);
             
-            RAISE NOTICE 'Equipo IA creado con 6 morpions (ID: %)', ai_team_id;
+            RAISE NOTICE 'Équipe IA créée avec 6 morpions (ID: %)', ai_team_id;
         ELSE
-            RAISE NOTICE 'El equipo IA ya tiene % morpions asignados', morpion_count;
+            RAISE NOTICE 'L''équipe IA a déjà % morpions assignés', morpion_count;
         END IF;
     ELSE
-        RAISE NOTICE 'No se pudo crear el equipo IA';
+        RAISE NOTICE 'Impossible de créer l''équipe IA';
     END IF;
 END $$;
 
--- Verificar resultado
+-- Vérifier le résultat
 SELECT 
-    t.id_team AS "ID Equipo",
-    t.name AS "Nombre",
-    t.color AS "Color",
-    COUNT(tm.morpion_id) AS "Cantidad Morpions"
+    t.id_team AS "ID Équipe",
+    t.name AS "Nom",
+    t.color AS "Couleur",
+    COUNT(tm.morpion_id) AS "Quantité Morpions"
 FROM team t
 LEFT JOIN team_morpion tm ON t.id_team = tm.team_id
 WHERE t.name LIKE '%IA Opponent%'

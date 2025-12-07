@@ -1,8 +1,8 @@
 /* ============================================
-   Empty State Component - Consolidated
+   Composant État Vide - Consolidé
    ============================================ */
    
-/* Base empty state */
+/* État vide de base */
 .empty,
 .empty-message,
 .empty-logs,
@@ -13,7 +13,7 @@
   padding: 2rem;
 }
 
-/* Empty state with border and background */
+/* État vide avec bordure et arrière-plan */
 .empty-state {
   text-align: center;
   padding: 3rem 1.5rem;

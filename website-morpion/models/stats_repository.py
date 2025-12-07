@@ -15,6 +15,16 @@ __all__ = [
 
 
 def get_counts_for_tables(connexion, table_names):
+    """
+    Récupère le nombre d'enregistrements pour chaque table spécifiée.
+    
+    Args:
+        connexion: Connexion à la base de données
+        table_names: Liste des noms de tables à compter
+    
+    Returns:
+        list: Liste de dictionnaires avec 'table' et 'count'
+    """
     results = []
     for name in table_names:
         results.append({"table": name, "count": count_instances(connexion, name)})
@@ -22,6 +32,16 @@ def get_counts_for_tables(connexion, table_names):
 
 
 def get_top_teams_by_wins(connexion, limit=3):
+    """
+    Récupère les équipes avec le plus de victoires.
+    
+    Args:
+        connexion: Connexion à la base de données
+        limit: Nombre maximum d'équipes à retourner (par défaut 3)
+    
+    Returns:
+        list: Liste de dictionnaires avec 'id_team', 'name', 'wins'
+    """
     query = """
         SELECT
             t.id_team,
@@ -38,6 +58,15 @@ def get_top_teams_by_wins(connexion, limit=3):
 
 
 def get_fastest_and_longest_games(connexion):
+    """
+    Récupère la partie la plus rapide et la plus longue.
+    
+    Args:
+        connexion: Connexion à la base de données
+    
+    Returns:
+        tuple: (partie_la_plus_rapide, partie_la_plus_longue) ou (None, None)
+    """
     base_query = """
         SELECT
             g.id_game,
@@ -101,6 +130,15 @@ def _normalize_duration_row(row):
 
 
 def _format_duration_text(seconds):
+    """
+    Formate une durée en secondes au format HH:MM:SS.
+    
+    Args:
+        seconds: Durée en secondes (int ou float)
+    
+    Returns:
+        str: Durée formatée en HH:MM:SS
+    """
     seconds = int(round(seconds))
     hours = seconds // 3600
     minutes = (seconds % 3600) // 60
@@ -109,6 +147,15 @@ def _format_duration_text(seconds):
 
 
 def get_avg_logs_per_month_year(connexion):
+    """
+    Calcule la moyenne de logs par mois et par année.
+    
+    Args:
+        connexion: Connexion à la base de données
+    
+    Returns:
+        list: Liste de dictionnaires avec 'year', 'month', 'avg_logs'
+    """
     query = """
         WITH per_game_month AS (
             SELECT
@@ -130,6 +177,17 @@ def get_avg_logs_per_month_year(connexion):
 
 
 def get_functionality_one_stats(connexion, table_names=None, top_limit=3):
+    """
+    Agrège toutes les statistiques de la fonctionnalité 1.
+    
+    Args:
+        connexion: Connexion à la base de données
+        table_names: Liste des tables à compter (par défaut ["team", "morpion", "game"])
+        top_limit: Nombre d'équipes à afficher dans le classement (par défaut 3)
+    
+    Returns:
+        dict: Dictionnaire contenant tous les indicateurs statistiques
+    """
     if table_names is None:
         table_names = ["team", "morpion", "game"]
 

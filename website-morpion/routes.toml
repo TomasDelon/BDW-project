@@ -57,3 +57,4 @@ template = "templates/pages/stats_advanced.html"
 url = "affiche-projet"
 controleur = "controllers/affiche.py"
 template = "templates/pages/affiche_projet.html"
+

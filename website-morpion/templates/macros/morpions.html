@@ -1,6 +1,6 @@
 {#
   Macros: morpions.html
-  Purpose: Helpers for rendering morpion images and stats in different contexts
+  Purpose: Helpers pour afficher les images et statistiques des morpions dans différents contextes
 #}
 
 {% macro morpion_image(morpion, size='default', extra_class='', title=None, style=None) -%}
@@ -72,7 +72,7 @@
   {% endif %}
 {%- endmacro %}
 
-{# Macro: Morpion Selector Card (Unified) #}
+{# Macro: Carte de sélection de morpion (unifiée) #}
 {% macro morpion_selector_card(morpion, input_type='radio', input_name='morpion_id', is_checked=false, show_stats=true) %}
 <div class="morpion-selector__option">
   <input type="{{ input_type }}"

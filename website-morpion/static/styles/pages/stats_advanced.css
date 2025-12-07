@@ -1,9 +1,9 @@
 /* ============================================
-   Advanced Statistics Page - Minimal Custom Styles
-   Most styles reused from components/charts.css and existing components
+   Page de Statistiques Avancées - Styles Minimaux Personnalisés
+   La plupart des styles réutilisés des composants/charts.css et des composants existants
    ============================================ */
 
-/* Stats Section - Reuses design-system section-card */
+/* Section de Statistiques - Réutilise section-card du design-system */
 .stats-section {
   margin-bottom: var(--spacing-xl);
   padding: var(--spacing-lg);
@@ -30,7 +30,7 @@
   letter-spacing: 1px;
 }
 
-.section-description {
+.stats-section .section-description {
   color: var(--text-secondary);
   font-size: 0.95rem;
   margin-bottom: var(--spacing-md);
@@ -38,14 +38,14 @@
   line-height: 1.6;
 }
 
-/* Stats Grid - Generic grid for stat cards */
+/* Grille de Statistiques - Grille générique pour les cartes de statistiques */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: var(--spacing-md);
 }
 
-/* Morpion Grid Override - Wider cards for this page only */
+/* Grille de Morpions - Cartes plus larges pour cette page seulement */
 .stats-section .morpions-mini-grid {
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: var(--spacing-md);
@@ -81,7 +81,7 @@
   justify-content: center;
 }
 
-/* Ranking Table - Reuses home page table styles */
+/* Tableau de Classement - Réutilise les styles de tableau de la page d'accueil */
 .ranking-table {
   overflow-x: auto;
 }
@@ -157,7 +157,7 @@
   height: 16px;
 }
 
-/* Summary Section - Special styling */
+/* Section de Résumé - Style Spécial */
 .summary-section {
   background: var(--gradient-blue);
   color: var(--text-primary);

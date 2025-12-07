@@ -1,6 +1,6 @@
 /* ============================================
-   TEAM CARD - Reusable Component
-   Used in team list and statistics pages
+   Carte d'Équipe - Composant Réutilisable
+   Utilisé dans la liste d'équipes et les pages de statistiques
    ============================================ */
 
 .team-card {
@@ -88,7 +88,7 @@
     color: var(--text-secondary);
 }
 
-/* Morpion Mini Grid - Reusable */
+/* Grille Mini de Morpions - Réutilisable */
 .morpions-mini-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));

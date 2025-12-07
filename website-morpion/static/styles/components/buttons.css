@@ -1,8 +1,8 @@
 /* ============================================
-   Buttons Component (used in macros/forms.html and throughout)
+   Composant Boutons (utilisé dans macros/forms.html et partout)
    ============================================ */
 
-/* Base Button Class - Propiedades comunes a todos los botones */
+/* Classe de Bouton de Base - Propiedades comunes a todos los botones */
 .btn {
   padding: 1rem 1.5rem;
   border-radius: var(--radius-md);
@@ -32,7 +32,7 @@
   transform: none;
 }
 
-/* Primary Button */
+/* Bouton Principal */
 .btn-primary {
   background: var(--gradient-blue);
   color: var(--text-primary);
@@ -47,7 +47,7 @@
   border-color: var(--accent-gold);
 }
 
-/* Secondary Button */
+/* Bouton Secondaire */
 .btn-secondary {
   background: rgba(62, 65, 164, 0.3);
   color: var(--text-secondary);
@@ -61,19 +61,19 @@
   border-color: var(--accent-cyan);
 }
 
-/* Large Button Variant */
+/* Variante de Bouton Large */
 .btn-large {
   font-size: 1.3rem !important;
   padding: 1.2rem 3rem !important;
   letter-spacing: 2px;
 }
 
-/* Submit Button Variant (full width in forms) */
+/* Variante de Bouton de Soumission (pleine largeur dans les formulaires) */
 .btn-submit {
   width: 100%;
 }
 
-/* Reset Button */
+/* Bouton de Réinitialisation */
 .btn-reset {
   width: 100%;
   padding: 0.9rem;
@@ -89,7 +89,7 @@
   border-color: var(--primary-red);
 }
 
-/* Create Link Button (used in empty states) */
+/* Bouton de Lien de Création (utilisé dans les états vides) */
 .btn-create-link {
   display: inline-block;
   margin-top: var(--spacing-md);
@@ -106,7 +106,7 @@
   border-color: var(--accent-gold);
 }
 
-/* Delete Button (for team deletion) */
+/* Bouton de Suppression (pour la suppression d'équipe) */
 .btn-delete-team {
   padding: 0.6rem 1.2rem;
   background: var(--gradient-red);

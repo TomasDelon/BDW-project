@@ -1,5 +1,5 @@
 /* ============================================
-   Confirmation Dialog Component (components/confirmation_dialog.html)
+   Composant Boîte de Confirmation (components/confirmation_dialog.html)
    ============================================ */
 .confirmation-dialog {
   background: linear-gradient(135deg, rgba(255, 200, 0, 0.15) 0%, rgba(200, 150, 0, 0.15) 100%);
@@ -85,7 +85,7 @@
   min-width: 200px;
 }
 
-/* Botones de confirmación - usando estilos estándar con variante danger */
+/* Boutons de confirmation - utilisant des styles standards avec variante danger */
 .btn-confirm-delete {
   width: 100%;
   background: var(--gradient-red);
@@ -116,4 +116,4 @@
   border-color: var(--accent-gold);
 }
 
-/* Responsive styles moved to layout/responsive.css */
+/* Styles Responsive déplacées vers layout/responsive.css */

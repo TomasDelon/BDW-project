@@ -34,7 +34,6 @@ html{
 
 
 
-
 @media print {
   body {
     margin: 0;
@@ -771,7 +770,7 @@ a:hover {
   content: "🎥";
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .doc-main {
     padding: 0 14px 46px;
   }

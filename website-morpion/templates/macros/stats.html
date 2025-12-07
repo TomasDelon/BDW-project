@@ -1,15 +1,15 @@
 {#
   Macros: stats.html
-  Purpose: Reusable macros for statistics display
+  Purpose: Macros réutilisables pour l'affichage des statistiques
   
   Available Macros:
-    - stat_card(label, value): Display a single statistic card
-    - top_teams_table(teams): Display top teams table
-    - game_duration_item(game, label): Display a game duration with teams
-    - logs_table(logs): Display logs average table
+    - stat_card(label, value): Affiche une carte de statistique unique
+    - top_teams_table(teams): Affiche le tableau des meilleures équipes
+    - game_duration_item(game, label): Affiche une durée de partie avec équipes
+    - logs_table(logs): Affiche le tableau des moyennes de logs
 #}
 
-{# Macro: Stat Card #}
+{# Macro: Carte de statistique #}
 {% macro stat_card(label, value) %}
 <article class="card">
   <p class="card-label">{{ label }}</p>
@@ -17,13 +17,13 @@
 </article>
 {% endmacro %}
 
-{# Macro: Top Teams Table #}
+{# Macro: Tableau des meilleures équipes #}
 {% macro top_teams_table(teams) %}
   {% if teams and teams|length > 0 %}
   <table>
     <thead>
       <tr>
-        <th>Rang</th>
+        <th>Classement</th>
         <th>Équipe</th>
         <th>Victoires</th>
       </tr>
@@ -43,7 +43,7 @@
   {% endif %}
 {% endmacro %}
 
-{# Macro: Game Duration Item #}
+{# Macro: Élément de durée de partie #}
 {% macro game_duration_item(game, label) %}
   <li>
     <strong>{{ label }} :</strong>
@@ -68,7 +68,7 @@
   </li>
 {% endmacro %}
 
-{# Macro: Logs Table #}
+{# Macro: Tableau de logs #}
 {% macro logs_table(logs) %}
   {% if logs and logs|length > 0 %}
   <table>
