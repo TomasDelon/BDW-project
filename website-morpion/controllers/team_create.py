@@ -14,6 +14,7 @@ from constants import (
     MAX_MORPIONS_PER_TEAM,
     ERROR_MESSAGES,
 )
+from session_utils import clear_morpions_cache
 
 REQUEST_VARS.setdefault('message', None)
 REQUEST_VARS.setdefault('message_class', None)

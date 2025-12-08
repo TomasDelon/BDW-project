@@ -384,32 +384,42 @@ def check_all_morpions_dead(grid, morpions_state, team_id, team_morpion_ids=None
     # Si aucun morpion de l'équipe dans la grille :
     # - Si aucun morpion n'a encore été placé (grille vide), la partie vient de commencer -> False
     # - Si des morpions sont dans morpions_state mais pas dans la grille, tous sont morts -> True
+    # - MAIS il faut vérifier s'il reste des morpions non utilisés dans le deck
     if len(team_morpion_ids_in_grid) == 0:
-        team_set = set(team_morpion_ids) if team_morpion_ids is not None else None
-        if team_set is not None:
-            used_set = {mid for mid in (used_morpions or []) if mid in team_set}
-        else:
-            used_set = set(used_morpions) if used_morpions is not None else None
-
-        # Si on connaît le roster complet de l'équipe et qu'aucun n'a été utilisé, il n'est pas éliminé
-        if team_set is not None:
-            if used_set is None or len(used_set) < len(team_set):
-                return False
-
-        # Construire la liste complète des morpions à vérifier (idéalement tous les du roster)
-        candidates = team_set if team_set is not None else set(morpions_state.keys())
-        if not candidates:
+        # Si on ne connaît pas le roster complet de l'équipe, on ne peut pas déterminer => False (prudent)
+        if team_morpion_ids is None:
             return False
 
-        for morpion_id in candidates:
-            morpion_state = morpions_state.get(morpion_id)
-            if morpion_state is None:
-                # Manque d'info => prudence, le considérer vivant
-                return False
-            hp = morpion_state.get('hp', 0)
-            if hp > 0:
-                return False  # Au moins un vivant
-        return True  # Tous les morpions du roster connu sont morts
+        team_set = set(team_morpion_ids)
+        used_set = set(used_morpions or [])
+
+        # DEBUG: Afficher l'état actuel
+        print(f"[DEBUG] check_all_morpions_dead for team_id={team_id}")
+        print(f"[DEBUG]   team_set (roster complet): {team_set}")
+        print(f"[DEBUG]   used_set (utilisés): {used_set}")
+        print(f"[DEBUG]   morpions_state: {morpions_state}")
+
+        # S'il reste des morpions non utilisés dans le deck, l'équipe n'est PAS éliminée
+        unused_morpions = team_set - used_set
+        print(f"[DEBUG]   unused_morpions (disponibles): {unused_morpions}")
+        if len(unused_morpions) > 0:
+            print(f"[DEBUG]   -> FALSE (morpions disponibles dans le deck)")
+            return False
+
+        # Tous les morpions du roster ont été utilisés
+        # Vérifier s'il y a au moins un morpion vivant (HP > 0) parmi les utilisés
+        for morpion_id in team_set:
+            # Seulement vérifier les morpions qui ont été utilisés
+            if morpion_id in used_set:
+                morpion_state = morpions_state.get(morpion_id)
+                if morpion_state and morpion_state.get('hp', 0) > 0:
+                    # Au moins un morpion vivant trouvé
+                    print(f"[DEBUG]   -> FALSE (morpion {morpion_id} vivant avec HP={morpion_state.get('hp')})")
+                    return False
+
+        # Tous les morpions utilisés sont morts ET aucun morpion disponible dans le deck
+        print(f"[DEBUG]   -> TRUE (tous morts et aucun disponible)")
+        return True
     
     # Vérifier que tous les morpions de l'équipe dans la grille ont HP <= 0
     for morpion_id in team_morpion_ids_in_grid:
@@ -470,20 +480,25 @@ def check_game_end_conditions_avancee(grid, grid_size, current_turn, max_turns, 
     # Vérifier l'élimination complète des morpions (même si la grille est vide)
     team1_morpion_ids = {m['id_morpion'] for m in team1_morpions} if team1_morpions else None
     team2_morpion_ids = {m['id_morpion'] for m in team2_morpions} if team2_morpions else None
-    
+
+    # Filtrer used_morpions par équipe
+    used_morpions_set = set(used_morpions) if used_morpions else set()
+    used_team1 = list(team1_morpion_ids & used_morpions_set) if team1_morpion_ids else []
+    used_team2 = list(team2_morpion_ids & used_morpions_set) if team2_morpion_ids else []
+
     team1_all_dead = check_all_morpions_dead(
         grid,
         morpions_state,
         team1_id,
         team1_morpion_ids,
-        used_morpions=used_morpions,
+        used_morpions=used_team1,
     )
     team2_all_dead = check_all_morpions_dead(
         grid,
         morpions_state,
         team2_id,
         team2_morpion_ids,
-        used_morpions=used_morpions,
+        used_morpions=used_team2,
     )
     
     if team1_all_dead and team2_all_dead:

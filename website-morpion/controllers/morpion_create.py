@@ -8,6 +8,7 @@ from logzero import logger
 import os
 import base64
 from pathlib import Path
+from session_utils import clear_morpions_cache
 
 connexion = SESSION['CONNEXION']
 
@@ -137,6 +138,8 @@ if 'morpion_name' in POST:
                 if morpion_id:
                     REQUEST_VARS['message'] = f"Morpion '{name}' créé avec succès (ID: {morpion_id})"
                     REQUEST_VARS['message_class'] = "alert-success"
+                    # Invalider le cache pour que le nouveau morpion apparaisse dans la liste
+                    clear_morpions_cache(SESSION)
                     # Réinitialiser le formulaire après succès
                     name = ''
                     hp = attack = mana = accuracy = ''
