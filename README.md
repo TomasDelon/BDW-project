@@ -13,18 +13,6 @@ Projet BDW (Bases de Données & Web) : un morpion complet avec mode normal (IA M
 - Public : étudiants qui reprennent le code et jury de soutenance.
 - Routes principales : `/partie`, `/partie-avancee`, `/statistiques-avancees`, `/affiche-projet`.
 
-## Démo vidéo
-- Démo courte (1 min 21 s) : https://www.youtube.com/watch?v=MiDwoaK5XH4
-- Présentation complète (5 min 54 s) : https://www.youtube.com/watch?v=oddrVlaIsCo
-
-La vidéo courte montre rapidement l'application en fonctionnement. La version longue détaille davantage le parcours utilisateur, les modes de jeu et les pages principales.
-
-## Affiche du projet
-- Version PDF (dans le dépôt) : [docs/affiche-projet.pdf](docs/affiche-projet.pdf)
-- Version web locale : `http://localhost:4242/affiche-projet`
-
-Pour un jury ou un lecteur GitHub, le PDF est le point d'entrée le plus simple. La version web permet de revoir l'affiche dans son contexte directement depuis l'application.
-
 ## Prérequis
 - Python 3.11+ (`python3 --version`)
 - PostgreSQL sur bd-pedago avec schéma obligatoire `morpion`
