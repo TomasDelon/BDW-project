@@ -1,4 +1,16 @@
-# Morpion Masters – site web
+# Morpion Masters
+
+**A web-based strategy game built with Python, PostgreSQL and JavaScript.**
+
+Developed as an individual university project at Université Claude Bernard Lyon 1. It extends classic tic-tac-toe with a Minimax-based opponent, an RPG-inspired advanced mode featuring attacks and spells, and game statistics. The backend follows a model-controller-template structure, with PostgreSQL persistence and a browser-based interface.
+
+**See it before installing:** [Short demo (1 min 21 s)](https://www.youtube.com/watch?v=MiDwoaK5XH4) · [Full walkthrough (5 min 54 s)](https://www.youtube.com/watch?v=oddrVlaIsCo) · [Project poster (PDF)](docs/affiche-projet.pdf).
+
+> **Running locally:** this student project uses a PostgreSQL database hosted by Lyon 1. The setup below assumes access to the university database; the video and PDF provide an installation-free overview.
+
+---
+
+## Documentation (français)
 
 ## Accès rapide
 - Affiche du projet (PDF, sans installation) : [Consulter le PDF](docs/affiche-projet.pdf)
@@ -9,7 +21,7 @@
 Le PDF et les vidéos permettent de découvrir le projet sans lancer l'application. La version web locale reste disponible pour la démonstration complète en soutenance.
 
 ## Vue rapide
-Projet BDW (Bases de Données & Web) : un morpion complet avec mode normal (IA Minimax), mode avancé type RPG, statistiques avancées et page d'affiche exportable. Ce README reste bref pour GitHub (Markdown pur).
+Projet BDW (Bases de Données & Web) : un morpion complet avec mode normal (IA Minimax), mode avancé type RPG, statistiques avancées et page d'affiche exportable. Le README contient une présentation du projet, les commandes de démarrage et les tests.
 - Public : étudiants qui reprennent le code et jury de soutenance.
 - Routes principales : `/partie`, `/partie-avancee`, `/statistiques-avancees`, `/affiche-projet`.
 
@@ -24,7 +36,7 @@ Placeholders :
 
 ## Installation et démarrage
 ```bash
-git clone {{REPO_URL}} && cd project
+git clone https://github.com/TomasDelon/BDW-project.git\ncd BDW-project
 python3 -m venv .venv && source .venv/bin/activate
 python -m pip install --upgrade pip
 python -m pip install -r requirements.in
