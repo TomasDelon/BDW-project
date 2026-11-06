@@ -31,12 +31,12 @@ Projet BDW (Bases de Données & Web) : un morpion complet avec mode normal (IA M
 - Identifiants personnels `pXXXXXXX` (même valeur pour `POSTGRESQL_USER` et `POSTGRESQL_DATABASE`)
 
 Placeholders :
-- `{{REPO_URL}}` : URL du dépôt (HTTPS ou SSH)
 - `pXXXXXXX` : utilisateur BDW personnel
 
 ## Installation et démarrage
 ```bash
-git clone https://github.com/TomasDelon/BDW-project.git\ncd BDW-project
+git clone https://github.com/TomasDelon/BDW-project.git
+cd BDW-project
 python3 -m venv .venv && source .venv/bin/activate
 python -m pip install --upgrade pip
 python -m pip install -r requirements.in
